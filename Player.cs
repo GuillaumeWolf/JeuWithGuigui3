@@ -148,10 +148,10 @@ namespace JeuWithGuigui3
         {
             int kas = 0; 
             Console.Write("What kind of potion do you want to take? ");
-            if (potions > 0)
+            if (potions > 0 && HP != BaseHP)
             { 
                 Console.Write("(heal");
-                if (PotionMaxHP > 0 && HP != BaseHP)
+                if (PotionMaxHP > 0 )
                 {
                     Console.Write(" or maxHP)");
                     kas = 2;
@@ -238,54 +238,72 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                int NumberOfPotions = 0;
+                int NumberOfPotionsMax = 0;
                 Console.Write("How many potions do you want to take ? ");
                 if (ChoosePotions == "heal")
                 {
-                    NumberOfPotions = potions;
+                    NumberOfPotionsMax = potions;
+                    int maxPotions = (BaseHP - HP) / 30 ;
+                    if ((BaseHP - HP) % 30 != 0)
+                    {
+                        maxPotions++;
+                    }
+                    if (maxPotions < NumberOfPotionsMax)
+                    {
+                        NumberOfPotionsMax = maxPotions;
+                    }
+
                 }
                 else if (ChoosePotions == "maxHP")
                 {
-                    NumberOfPotions = PotionMaxHP;
+                    NumberOfPotionsMax = PotionMaxHP;
                 }
-                Console.WriteLine("(max {0})\nWrite \"back\" to go back to commande.\n--> ", NumberOfPotions);
+                
+                Console.WriteLine("(max {0})\nWrite \"back\" to go back to commande. ", NumberOfPotionsMax);
+                Console.Write("--> ");
 
                 string Rep = Console.ReadLine();
-                int intRep = 0;
+                if (Rep == "back")
+                {
+                    return 0;
+                }
+
+                int usedPotion = 0;
                 try
                 {
-                    intRep = Convert.ToInt32(Rep);
+                    usedPotion = Convert.ToInt32(Rep);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Choose a number");
                     continue;
                 }
-                if (intRep <= 0)
+                if (usedPotion <= 0 || usedPotion > NumberOfPotionsMax)
                 {
                     Console.WriteLine("The choosen number isn't correct.");
                     continue;
+                }
+                else
+                {
+                    return usedPotion;
                 }
                 
             }
         }
 
-        private void ConsomePotions(string ChoosePotions, int intRep)
+        private void ConsomePotions(string ChoosePotions, int usedPotion)
         {
-            for (int i = 0; i < intRep; i++)
+            for (int i = 0; i < usedPotion; i++)
             {
                 if (ChoosePotions == "heal")
-                {
-                    Heal(30);
-                    Console.Write("You used a heal potions.");
-                }
+                { potions--; Heal(30);}
                 else if (ChoosePotions == "maxHP")
-                {
-                    UpHP(30);
-                    Console.Write("You used a MaxHP potions.");
-                }
+                { PotionMaxHP--; UpHP(30);}
             }
-            Console.WriteLine("You used {0} postions.",intRep);
+            if (ChoosePotions == "heal")
+            {Console.WriteLine("You used {0} heal postions.", usedPotion);}
+            else if (ChoosePotions == "maxHP")
+            {Console.WriteLine("You used {0} MaxHP potions.", usedPotion);}
         }
 
         //Modifie les stats
