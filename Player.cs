@@ -10,7 +10,7 @@ namespace JeuWithGuigui3
 
         //Charactéristique 
         public readonly string name;
-        public string Race;
+        public Race RaceOfPlayer = null ;
         public static int BaseHP = 100;
         public int HP;
         //Dégats physique
@@ -36,7 +36,7 @@ namespace JeuWithGuigui3
 
         #endregion
 
-        private Player(string name)
+        public Player(string name)
         {
             this.name = name;
             this.HP = BaseHP;
@@ -47,37 +47,64 @@ namespace JeuWithGuigui3
         //Appelée dans Game.Main()
         public static Player CreatePlayer()
         {
-            Console.WriteLine("What's your name ?");
-            string PlayerName = Console.ReadLine();
-            Console.WriteLine("What is your race ?\n(elf +5 damage or dwarf +10 HP)");
-            string Race;
+            //Nom du joueur
+            string PlayerName;
             while (true)
             {
-                Race = Console.ReadLine();
-                if (Race == "elf" || Race == "dwarf")
+                Console.WriteLine("What's your name ?");
+                Console.Write("--> ");
+                PlayerName = Console.ReadLine();
+                //Check si sur
+                Console.WriteLine("Are you sure {0} is your name ? (yes)", PlayerName);
+                Console.Write("--> ");
+                string rep = Console.ReadLine();
+                if (rep == "yes")
                 {
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Choose again.");
+                }
+            }
+            Player p1 = new Player(PlayerName);
+
+
+            //Race du joueur
+            string race;
+            while (true)
+            {
+                Console.WriteLine("What is your race ?\n(elf - dwarf - Cracheur de feu)\n(Tap \"info\" for more information about the race.");
+                Console.Write("--> ");
+                race = Console.ReadLine();
+                if (race == "elf" || race == "dwarf" || race == "cf")
+                {
+                    break;
+                }
+                else if (race == "info")
+                {
+                    Console.WriteLine(Race.GetInfos());
                 }
                 else
                 {
                     Console.WriteLine("Choose a correct race.");
                 }
             }
-            Player p1 = new Player(PlayerName);
-            if (Race == "elf")
+            if (race == "elf")
             {
-                p1.Race = "elf";
-                p1.Damage += 5;
-                p1.MagicDmg += 5;
+                p1.RaceOfPlayer = new Elf(p1);
             }
-            else if (Race == "dwarf")
+            if (race == "dwarf")
             {
-                p1.Race = "dwarf";
-                BaseHP += 10;
-                p1.HP += 10;
+                p1.RaceOfPlayer = new Dwarf(p1);
+            }
+            if (race == "cf")
+            {
+                p1.RaceOfPlayer = new Cracheurdefeu(p1);
             }
             return p1;
         }
+
 
         //Fonction attaque
         public void Attak(Monster m1)

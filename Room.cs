@@ -24,7 +24,7 @@ namespace JeuWithGuigui3
             Console.WriteLine();
             Console.WriteLine();
             bool isDead = false;
-            int total = RoomsChances.Sum();
+            int total = ChanceMonster;
 
             int x = RandomInt(total + 1);
             var indexRoom = RoomsChances.Count()- RoomsChances
@@ -69,7 +69,6 @@ namespace JeuWithGuigui3
             Weapon w1 = new LegendarySword();
             Weapon.AddWeapon(p1, w1);
             LegendaryRoom = 0;
-            ChanceMonster += 1;
         }
 
         static private bool EnterTrapRoom(Player p1)
@@ -130,7 +129,7 @@ namespace JeuWithGuigui3
             Console.Write("You enter a room and there is a monster. ");
             Monster m1 = Monster.CreatRandomMonster(p1);
             Console.WriteLine("It's a {0}.", m1.Name);
-            bool Won = Game.Fight(p1, m1);
+            bool Won = Fight_Organizer.Fight(p1, m1);
             if (!Won)
             {
                 return !Won;

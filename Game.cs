@@ -34,32 +34,32 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.WriteLine("What do you want to do ? (enter room - stats - objects - weapons - use potion - exit)");
+                Console.WriteLine("What do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - use potion: up - exit: e)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
 
-                if (PlayerCommande == "exit")
+                if (PlayerCommande == "e")
                 {
                     Console.WriteLine("Goodbye");
                     return;
                 }
 
 
-                else if (PlayerCommande == "stats")
+                else if (PlayerCommande == "s")
                 {
-                    Console.WriteLine("Name: {0}. Race: {1}. HP: {2}/{3}. Classic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.Race, p1.HP, Player.BaseHP, p1.Damage, p1.MagicDmg);
+                    Console.WriteLine("Name: {0}. Race: {1}. HP: {2}/{3}. Classic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, Player.BaseHP, p1.Damage, p1.MagicDmg);
                 }
 
 
-                else if (PlayerCommande == "objects")
+                else if (PlayerCommande == "o")
                 {
                     Console.Write("Potions: {0}. ", p1.potions);
                     Console.WriteLine("MaxHP+ Potions: {0}.", p1.PotionMaxHP);
                 }
 
 
-                else if (PlayerCommande == "weapons")
+                else if (PlayerCommande == "w")
                 {
                     if (p1.weapon1 == null && p1.weapon2 == null)
                     {
@@ -94,7 +94,7 @@ namespace JeuWithGuigui3
                 }
 
 
-                else if (PlayerCommande == "use potion")
+                else if (PlayerCommande == "up")
                 {
                     bool usedPotions = p1.UsePotions();
                     if (!usedPotions)
@@ -106,7 +106,7 @@ namespace JeuWithGuigui3
                 }
 
 
-                else if (PlayerCommande == "enter room")
+                else if (PlayerCommande == "er")
                 {
                     RoomCount++;
                     Console.WriteLine();
@@ -125,23 +125,23 @@ namespace JeuWithGuigui3
 
 
 
-        static bool CommandeFight(Player p1, Monster m1)
+        public static bool CommandeFight(Player p1, Monster m1)
         {
             while (true)
             {
-                Console.WriteLine("What do you want to do ? (stats - objects - weapons - Attack - MonsterStats - use potion - Exit)");
+                Console.WriteLine("What do you want to do ? (stats: s - objects: o - weapons: w - attack: a - monster stats: ms - use potion: up - exit: e)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
 
-                if (PlayerCommande == "Exit")
+                if (PlayerCommande == "e")
                 {
                     Console.WriteLine("Goodbye");
                     return true;
                 }
 
 
-                else if (PlayerCommande == "stats")
+                else if (PlayerCommande == "s")
                 {
 
                     Console.Write("Name: {0}. HP: {1}/{2}. Classic Damage: {3}. Magic Damage : {4}. ", p1.name, p1.HP, Player.BaseHP, p1.Damage, p1.MagicDmg);
@@ -157,12 +157,12 @@ namespace JeuWithGuigui3
                 }
 
 
-                else if (PlayerCommande == "objects")
+                else if (PlayerCommande == "o")
                 {
                     Console.WriteLine("Potions: {0}. MaxHP+ Potions: {1}.", p1.potions, p1.PotionMaxHP);
                 }
 
-                else if (PlayerCommande == "weapons")
+                else if (PlayerCommande == "w")
                 {
                     if (p1.weapon1 == null && p1.weapon2 == null)
                     {
@@ -197,14 +197,14 @@ namespace JeuWithGuigui3
                 }
 
 
-                else if (PlayerCommande == "Attack")
+                else if (PlayerCommande == "a")
                 {
                     p1.Attak(m1);
                     return false;
                 }
 
 
-                else if (PlayerCommande == "MonsterStats")
+                else if (PlayerCommande == "ms")
                 {
                     Console.Write("HP: {0}. Damage: {1}.", m1.Vie, m1.Dmg);
                     if (m1.MagicResistance)
@@ -232,7 +232,7 @@ namespace JeuWithGuigui3
                 }
 
 
-                else if (PlayerCommande == "use potion")
+                else if (PlayerCommande == "up")
                 {
                     bool usedPotions = p1.UsePotions();
                     if (usedPotions)
@@ -247,76 +247,6 @@ namespace JeuWithGuigui3
                 }
             }
         }
-
-
-
-        static public bool Fight(Player p1, Monster m1)
-        {
-            bool FightWon = false;
-            tour = 1;
-            if (m1.MagicResistance)
-            {
-                p1.MagicDmg /= 2;
-                p1.EnemyMagicRes = true;
-            }
-            while (true)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Turn {0}.", tour);
-                bool exit = CommandeFight(p1, m1);
-                if (exit)
-                {
-                    return false;
-                }
-                //Joueur attaque
-                if (p1.Poison)
-                {
-                    int y = 5 * tour;
-                    m1.Vie -= y;
-                    Console.WriteLine("The {0} is poisonned! He has {1} HP. ", m1.Name, m1.Vie);
-                }
-                if (p1.Fire)
-                {
-                    m1.Vie -= 10;
-                    Console.WriteLine("The {0} is on fire! He has {1} HP.", m1.Name, m1.Vie);
-                }
-                bool isDead = m1.CheckDie();
-
-                //Check si le monstre est mort
-                if (isDead == true)
-                {
-                    tour = 0;
-                    Console.Write("You win the fight. ");
-                    FightWon = true;
-                    return FightWon;
-                }
-
-                //monstre attaque
-                Console.Write("The {0} attack you ! ", m1.Name);
-                m1.Attak(p1);
-                if (m1.PoisonDmg)
-                {
-                    int poisonDmg = 3 * (tour);
-                    p1.HP -= poisonDmg;
-                    Console.WriteLine("You're poisonned! You have {0} HP.", p1.HP);
-                }
-                if (m1.FireDmg)
-                {
-                    p1.HP -= 10;
-                    Console.WriteLine("You're on fire! You have {0} HP.", p1.HP);
-                }
-                //check si le joueur est mort
-                bool playerisDead = p1.CheckDie();
-                if (playerisDead)
-                {
-                    Console.WriteLine("You lost...");
-                    return FightWon;
-                }
-                tour++;
-            }
-        }
-
-
 
         static public void GetLoot(Player p1, Monster m1)
         {
