@@ -113,6 +113,7 @@ namespace JeuWithGuigui3
             Console.WriteLine("You can choose between a magic attack or a classic attack");
             while (true)
             {
+                Console.Write("--> ");
                 string chooseattak = Console.ReadLine();
                 if (chooseattak == "magic attack")
                 {

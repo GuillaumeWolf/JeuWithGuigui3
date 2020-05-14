@@ -12,7 +12,7 @@ namespace JeuWithGuigui3
         public override string ToString()
         {
 
-            return Name + "\n" + string.Join("\n  - ", Propreties);
+            return Name + "\n  - " + string.Join("\n  - ", Propreties) ;
         }
 
         public static string GetInfos()
@@ -22,7 +22,7 @@ namespace JeuWithGuigui3
             Dwarf dwarf1 = new Dwarf(p2);
             Cracheurdefeu cracheur1 = new Cracheurdefeu(p2);
 
-            return elf1.ToString() + ":\n" + dwarf1.ToString() + "\n" + cracheur1.ToString() + "\n\n"; 
+            return "\n" + elf1.ToString() + "\n\n" + dwarf1.ToString() + "\n\n" + cracheur1.ToString() + "\n\n"; 
         }
     }
 
