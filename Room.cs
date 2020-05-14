@@ -10,9 +10,9 @@ namespace JeuWithGuigui3
     {
         //Sall
         static private int LegendaryRoom = 1;
-        static private int ChanceNothing = 10;
-        static private int ChanceTrap = 20;
-        static private int ChanceMonster = 69;
+        static private int ChanceNothing = 10 + LegendaryRoom;
+        static private int ChanceTrap = 200 + ChanceNothing;
+        static private int ChanceMonster = 69 + ChanceTrap;
 
         static int[] RoomsChances = { LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster };
                 // - Sall temporelle          

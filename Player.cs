@@ -27,8 +27,8 @@ namespace JeuWithGuigui3
         public bool Fire = false;
 
         //Objets
-        public int potions = 2;
-        public int PotionMaxHP = 1;
+        public int potions = 20;
+        public int PotionMaxHP = 10;
 
         //Armes
         public Weapon weapon1 = null;
@@ -79,6 +79,7 @@ namespace JeuWithGuigui3
             return p1;
         }
 
+        //Fonction attaque
         public void Attak(Monster m1)
         {
             int Finaldmg;
@@ -140,104 +141,154 @@ namespace JeuWithGuigui3
 
             Console.WriteLine("The enemy lost {0} HP. He is {1} HP left.", Finaldmg, m1.Vie);
         }
-
+        
+        
+        //Fonction potion
         public bool UsePotions()
         {
-            Console.WriteLine("What kind of potion do you want to take? (Heal or MaxHP)\nWrite \"back\" to go back to commande.");
-            while (true)
-            {
-                string rep = Console.ReadLine();
-                if (rep == "Heal")
+            int kas = 0; 
+            Console.Write("What kind of potion do you want to take? ");
+            if (potions > 0)
+            { 
+                Console.Write("(heal");
+                if (PotionMaxHP > 0 && HP != BaseHP)
                 {
-                    if (HP != BaseHP)
-                    {
-                        if (potions != 0)
-                        {
-                            Console.WriteLine("How many potions do you want to take ? (max {0})\nWrite \"back\" to go back to commande.", potions);
-                            while (true)
-                            {
-                                string stringPotions = Console.ReadLine();
-                                if (stringPotions == "back")
-                                {
-                                    return false;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Choose a correct value.");
-                                }
-                                int numPotions = Convert.ToInt32(stringPotions);
-                                if (numPotions <= potions)
-                                {
-                                    for (int i = 0; i < numPotions; i++)
-                                    {
-                                        potions -= 1;
-                                        Console.WriteLine("You used a Heal potion.");
-                                        Heal(30);
-                                    }
-                                    return true;
-                                }
-                                if (stringPotions == "back")
-                                {
-                                    return false;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("You don't have  Heal potions.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Your HP is alreay full.");
-                    }
-                }
-                else if (rep == "MaxHP")
-                {
-                    if (PotionMaxHP != 0)
-                    {
-                        Console.WriteLine("How many potions do you want to take ? (max {0})", PotionMaxHP);
-                        while (true)
-                        {
-                            string stringPotions = Console.ReadLine();
-                            int numPotions = Convert.ToInt32(stringPotions);
-                            if (numPotions <= PotionMaxHP)
-                            {
-                                for (int i = 0; i < numPotions; i++)
-                                {
-                                    PotionMaxHP -= 1;
-                                    Console.WriteLine("You used a MaxHP+ potion.");
-                                    UpHP(30);
-                                }
-                                return true;
-                            }
-                            if (stringPotions == "back")
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("You don't have enough potion. (max potion {0})", PotionMaxHP);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("You don't have MaxHP+ potions.");
-                        return false;
-                    }
-                }
-                else if (rep == "back")
-                {
-                    return false;
+                    Console.Write(" or maxHP)");
+                    kas = 2;
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a correct value. (Heal or MaxHP)");
+                    Console.Write(")");
+                    kas = 1;
+                }
+            }
+            else if (PotionMaxHP > 0)
+            {
+                Console.Write("(maxHP)");
+                kas = 3;
+            }
+            Console.WriteLine("\nWrite \"go back\" to go back to commande.");
+
+            if (kas == 0)
+            {
+                Console.WriteLine("You have zero potion.");
+                return false;
+            }
+
+            //Premiere fonction
+            string typePotion = ChoosePotions(kas);
+            
+            if (typePotion == "go back")
+            {
+                return false;
+            }
+
+            //Deuxieme fonction
+            int numPotion = ChooseNumPotions(typePotion);
+            if (numPotion == 0)
+            {
+                return false;
+            }
+
+            //Troisième fonction
+            ConsomePotions(typePotion, numPotion);
+
+            return true;
+        }
+
+        private string ChoosePotions(int kas)
+        {
+            while (true)
+            {
+                Console.Write("--> ");
+                string ChoosePotions = Console.ReadLine();
+                if (kas == 1 && (ChoosePotions == "heal" || ChoosePotions == "go back"))
+                {
+                    return ChoosePotions;
+                }
+                else if (kas == 2 && (ChoosePotions == "heal" || ChoosePotions == "maxHP" || ChoosePotions == "go back"))
+                {
+                    return ChoosePotions;
+                }
+                else if (kas == 3 && (ChoosePotions == "maxHP" || ChoosePotions == "go back"))
+                {
+                    return ChoosePotions;
+                }
+                else
+                {
+                    Console.Write("Choose a correct value.");
+                    if (kas == 1)
+                    {
+                        Console.Write(" (heal or go back");
+                    }
+                    else if (kas == 2)
+                    {
+                        Console.Write(" (heal or maxHP or go back)");
+                    }
+                    else if (kas == 3)
+                    {
+                        Console.Write(" (maxHP or go back)");
+                    }
+                    Console.WriteLine();
                 }
             }
         }
 
+        private int ChooseNumPotions(string ChoosePotions)
+        {
+            while (true)
+            {
+                int NumberOfPotions = 0;
+                Console.Write("How many potions do you want to take ? ");
+                if (ChoosePotions == "heal")
+                {
+                    NumberOfPotions = potions;
+                }
+                else if (ChoosePotions == "maxHP")
+                {
+                    NumberOfPotions = PotionMaxHP;
+                }
+                Console.WriteLine("(max {0})\nWrite \"back\" to go back to commande.\n--> ", NumberOfPotions);
+
+                string Rep = Console.ReadLine();
+                int intRep = 0;
+                try
+                {
+                    intRep = Convert.ToInt32(Rep);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Choose a number");
+                    continue;
+                }
+                if (intRep <= 0)
+                {
+                    Console.WriteLine("The choosen number isn't correct.");
+                    continue;
+                }
+                
+            }
+        }
+
+        private void ConsomePotions(string ChoosePotions, int intRep)
+        {
+            for (int i = 0; i < intRep; i++)
+            {
+                if (ChoosePotions == "heal")
+                {
+                    Heal(30);
+                    Console.Write("You used a heal potions.");
+                }
+                else if (ChoosePotions == "maxHP")
+                {
+                    UpHP(30);
+                    Console.Write("You used a MaxHP potions.");
+                }
+            }
+            Console.WriteLine("You used {0} postions.",intRep);
+        }
+
+        //Modifie les stats
         private void Heal(int x)
         {
             if (HP + x > BaseHP)
@@ -258,6 +309,7 @@ namespace JeuWithGuigui3
             BaseHP += x;
         }
 
+        //Mort
         public bool CheckDie()
         {
             bool isDead = false;
@@ -274,6 +326,8 @@ namespace JeuWithGuigui3
             return true;
         }
 
+
+        //Augmente les objets
         public void GetPotions(int x)
         {
             potions += x;
@@ -285,6 +339,8 @@ namespace JeuWithGuigui3
             Console.WriteLine("You find {0} MaxHP+ potions. You have {1} MaxHP+ potions.", x, PotionMaxHP);
         }
 
+
+        //Rafraichi les damages
         public void ChangeDamage()
         {
             if (weapon1 == null && weapon2 == null)
