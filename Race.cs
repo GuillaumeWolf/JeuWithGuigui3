@@ -62,7 +62,7 @@ namespace JeuWithGuigui3
     class Cracheurdefeu : Race
     {
         static private string proprties1 = "+5 classic damage";
-        static private string proprties2 = "Has a fire permanent effect";
+        static private string proprties2 = "Has a permanent fire effect";
 
         public Cracheurdefeu(Player p1)
         {
