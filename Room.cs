@@ -9,9 +9,9 @@ namespace JeuWithGuigui3
     class Room
     {
         //Sall
-        static private int LegendaryRoom = 1000;
+        static private int LegendaryRoom = 1;
         static private int ChanceNothing = 10 + LegendaryRoom;
-        static private int ChanceTrap = 200 + ChanceNothing;
+        static private int ChanceTrap = 20 + ChanceNothing;
         static private int ChanceMonster = 69 + ChanceTrap;
 
         static int[] RoomsChances = { LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
@@ -47,16 +47,16 @@ namespace JeuWithGuigui3
                     break;
             }
 
+            if (isDead)
+            {
+                return;
+            }
+
             int z = RandomInt(100);
             if (z < 20)
             {
                 Console.WriteLine("You are lucky, there is another loot here.");
                 Game.GetLoot(p1, null);
-            }
-
-            if (isDead)
-            {
-                return;
             }
 
             Game.Commande(p1);

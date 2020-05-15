@@ -34,7 +34,7 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.WriteLine("What do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - use potion: up - exit: e)");
+                Console.WriteLine("What do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - use potion: up - exit: exit)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
