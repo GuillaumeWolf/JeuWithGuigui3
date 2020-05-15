@@ -42,6 +42,7 @@ namespace JeuWithGuigui3
             {
                 ChangeWeapon(p1, w1);
                 p1.ChangeDamage();
+                COfP.
             }
         }
 
