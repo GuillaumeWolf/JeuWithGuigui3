@@ -11,7 +11,7 @@ namespace JeuWithGuigui3
         //Charactéristique 
         public readonly string name;
         public Race RaceOfPlayer = null ;
-        public ClassPlayer ClassOfPlayer = null;
+        public ClassPlayer COfP = null;
         public int BaseHP = 100;
         public int HP;
         //Dégats physique
@@ -112,7 +112,7 @@ namespace JeuWithGuigui3
             /* classe du joueur : 
             - Mage  (plus de dégat magique, (un sort?))
             - Guerrier  (plus de dégat classic, (un mode rage?))
-            - voleur  (peut fuire les combats)
+            - voleur  (plus de chance d'avoir un meilleur loot)
             - druide  (vole les stats du monstre?)
             */
 
@@ -137,16 +137,16 @@ namespace JeuWithGuigui3
             switch (classep)
             {
                 case "m":
-                    p1.ClassOfPlayer = new Mage(p1);
+                    p1.COfP = new Mage();
                     break;
                 case "w":
-                    p1.ClassOfPlayer = new Warrior(p1);
+                    p1.COfP = new Warrior();
                     break;
                 case "t":
-                    p1.ClassOfPlayer = new Thief(p1);
+                    p1.COfP = new Thief();
                     break;
                 case "d":
-                    p1.ClassOfPlayer = new Druide(p1);
+                    p1.COfP = new Druide();
                     break;
             }
             return p1;

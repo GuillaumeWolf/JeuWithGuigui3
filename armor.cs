@@ -120,7 +120,7 @@ namespace JeuWithGuigui3
 
         public SmallArmor()
         {
-            Name = "Small Armor"
+            Name = "Small Armor";
             ClassicResistance = 5;
             MagicResistance = 0;
         }

@@ -9,6 +9,7 @@ namespace JeuWithGuigui3
     {
         public string Name { get; protected set; }
         public string[] Propreties;
+
         public override string ToString()
         {
 

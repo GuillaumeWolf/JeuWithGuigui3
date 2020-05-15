@@ -48,7 +48,7 @@ namespace JeuWithGuigui3
 
                 else if (PlayerCommande == "s")
                 {
-                    Console.WriteLine("Name: {0}. Race: {1}. HP: {2}/{3}. Classic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg);
+                    Console.WriteLine("Name: {0}. Race: {1}. Classe : {6}. HP: {2}/{3}. Classic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg, p1.COfP.ClassName);
                 }
 
 
@@ -260,6 +260,7 @@ namespace JeuWithGuigui3
 
             if (m1 != null)
             {
+                p1.COfP.ClassCapacity(p1, m1);
                 ChanceWeapon += m1.ChanceOfLoot;
                 ChanceArmor += m1.ChanceOfLoot;
                 Chance2Potions += m1.ChanceOfLoot;
