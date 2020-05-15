@@ -9,12 +9,12 @@ namespace JeuWithGuigui3
     class Room
     {
         //Sall
-        static private int LegendaryRoom = 1000;
+        static private int LegendaryRoom = 1;
         static private int ChanceNothing = 10 + LegendaryRoom;
-        static private int ChanceTrap = 200 + ChanceNothing;
+        static private int ChanceTrap = 20 + ChanceNothing;
         static private int ChanceMonster = 69 + ChanceTrap;
 
-        static int[] RoomsChances = { LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
+        static int[] RoomsChances = {LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
                 // - Sall temporelle          
                 //static private int Chance2Monster = 10;
 
@@ -46,17 +46,17 @@ namespace JeuWithGuigui3
                     isDead = EnterMonsterRoom(p1);
                     break;
             }
+            
+            if (isDead)
+            {
+                return;
+            }
 
             int z = RandomInt(100);
             if (z < 20)
             {
                 Console.WriteLine("You are lucky, there is another loot here.");
                 Game.GetLoot(p1, null);
-            }
-
-            if (isDead)
-            {
-                return;
             }
 
             Game.Commande(p1);
@@ -68,7 +68,7 @@ namespace JeuWithGuigui3
             Console.WriteLine("You enter the Legendary Room and you found the Legendary Sword.");
             Weapon w1 = new LegendarySword();
             Weapon.AddWeapon(p1, w1);
-            LegendaryRoom = 0;
+            LegendaryRoom = -1;
         }
 
         static private bool EnterTrapRoom(Player p1)

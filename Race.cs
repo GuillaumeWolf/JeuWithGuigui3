@@ -28,9 +28,9 @@ namespace JeuWithGuigui3
 
     class Elf : Race
     {
-        static private string proprties1 = "+5 classic damage";
-        static private string proprties2 = "+5 magic damage";
-        static private string proprties3 = "Star the game with a dague";
+        static private string proprties1 = "+10 classic damage";
+        static private string proprties2 = "+10 magic damage";
+        static private string proprties3 = "Start the game with a dague";
 
         public Elf(Player p1)
         {
@@ -45,8 +45,8 @@ namespace JeuWithGuigui3
     }
     class Dwarf : Race
     {
-        static private string proprties1 = "+15 HP";
-        static private string proprties2 = "Star the game with a Armor";
+        static private string proprties1 = "+30 HP";
+        static private string proprties2 = "Start the game with a Armor";
 
         public Dwarf(Player p1)
         {
@@ -55,14 +55,15 @@ namespace JeuWithGuigui3
 
             p1.HP += 15;
             p1.BaseHP += 15;
-            //p1.weapon1 = new Armor();
+            p1.armor= new MediumArmor();
+            p1.ChangeDamage();
         }
 
     }
     class Cracheurdefeu : Race
     {
         static private string proprties1 = "+5 classic damage";
-        static private string proprties2 = "Has a fire permanent effect";
+        static private string proprties2 = "Has a permanent fire effect";
 
         public Cracheurdefeu(Player p1)
         {
@@ -75,5 +76,24 @@ namespace JeuWithGuigui3
         }
 
     }
-    
+
+    class Minautore : Race
+    {
+        static private string proprties1 = "+20 classic damage";
+        static private string proprties2 = "+10 HP";
+        static private string proprtie3 = "Can't have Armor.";
+
+        public Minautore(Player p1)
+        {
+            Name = "Minautore";
+            Propreties = new string[] { proprties1, proprties2, proprtie3 };
+
+            p1.BaseDamage += 20;
+            p1.BaseHP += 10;
+            p1.HP += 10;
+            p1.ChangeDamage();
+        }
+
+    }
+
 }

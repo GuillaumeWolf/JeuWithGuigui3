@@ -11,14 +11,15 @@ namespace JeuWithGuigui3
         //Charactéristique 
         public readonly string name;
         public Race RaceOfPlayer = null ;
+        public ClassPlayer ClassOfPlayer = null;
         public int BaseHP = 100;
         public int HP;
         //Dégats physique
         public int BaseDamage = 10;
-        public int Damage;
+        public double Damage;
         //Dégats magiques
         public int BaseMagicDmg = 20;
-        public int MagicDmg;
+        public double MagicDmg;
 
         public bool EnemyMagicRes = false;
 
@@ -27,12 +28,13 @@ namespace JeuWithGuigui3
         public bool Fire = false;
 
         //Objets
-        public int potions = 20;
-        public int PotionMaxHP = 10;
+        public int potions = 2;
+        public int PotionMaxHP = 0;
 
         //Armes
         public Weapon weapon1 = null;
         public Weapon weapon2 = null;
+        public Armor armor = null;
 
         #endregion
 
@@ -93,11 +95,11 @@ namespace JeuWithGuigui3
                     Console.WriteLine("Choose a correct race.");
                 }
             }
-            if (race == "elf")
+            if (race == "e")
             {
                 p1.RaceOfPlayer = new Elf(p1);
             }
-            if (race == "dwarf")
+            if (race == "d")
             {
                 p1.RaceOfPlayer = new Dwarf(p1);
             }
@@ -105,258 +107,100 @@ namespace JeuWithGuigui3
             {
                 p1.RaceOfPlayer = new Cracheurdefeu(p1);
             }
+
+
+            /* classe du joueur : 
+            - Mage  (plus de dégat magique, (un sort?))
+            - Guerrier  (plus de dégat classic, (un mode rage?))
+            - voleur  (peut fuire les combats)
+            - druide  (vole les stats du monstre?)
+            */
+
+            Console.WriteLine("Choose your Class : Mage (m), Warrior (w), Thief (t) or Druide (d).");
+            string classep;
+            while (true)
+            {
+                classep = Console.ReadLine();
+                if (classep == "m" || classep == "w" || classep == "t" || classep == "d")
+                {
+                    break;            
+                }
+                if (classep == "I")
+                {
+                    Console.Write("Mage : +10 % of Magic damage.\nWarrior : +10 % of Classic damage.\nThief : Is able to run away from a fight.\nDruide : Can transform itself in a monster.");
+                }
+                if (classep != "m" && classep != "w" && classep != "t" && classep != "d" && classep != "I")
+                {
+                    Console.Write("Choose a valid command");
+                }
+            }
+            switch (classep)
+            {
+                case "m":
+                    p1.ClassOfPlayer = new Mage(p1);
+                    break;
+                case "w":
+                    p1.ClassOfPlayer = new Warrior(p1);
+                    break;
+                case "t":
+                    p1.ClassOfPlayer = new Thief(p1);
+                    break;
+                case "d":
+                    p1.ClassOfPlayer = new Druide(p1);
+                    break;
+            }
             return p1;
         }
+
+
 
 
         //Fonction attaque
         public void Attak(Monster m1)
         {
-            int Finaldmg;
-            Console.WriteLine("You can choose between a magic attack or a classic attack");
+            double Finaldmg;
+            Console.WriteLine("You can choose between a magic attack (ma) or a classic attack (ca)");
             while (true)
             {
                 Console.Write("--> ");
                 string chooseattak = Console.ReadLine();
-                if (chooseattak == "magic attack")
+                if (chooseattak == "ma")
                 {
                     Finaldmg = MagicDmg;
                     break;
                 }
-                if (chooseattak == "classic attack")
+                else if (chooseattak == "ca")
                 {
                     Finaldmg = Damage;
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Choose a correct command (magic attack or clasic attack).");
+                    Console.WriteLine("Choose a correct command (ma or ca).");
                 }
             }
 
-            m1.Vie -= Finaldmg;
-            if (weapon1 != null)
+            if (Poison)
             {
-                if (weapon1.PoisonDamage)
-                {
-                    Poison = true;
-                }
-                if (weapon1.FireDamage)
-                {
-                    Fire = true;
-                }
-                if (weapon1.VoldeVie)
-                {
-                    Heal(weapon1.Dmg);
-                }
+                int y = 5 * Game.tour;
+                Finaldmg += y;
+                Console.Write("The {0} take {1} damages from poisonning ! ", m1.Name);
             }
-            if (weapon2 != null)
+
+            if (Fire)
             {
-                if (weapon2.FireDamage)
-                {
-                    Fire = true;
-                }
-                if (weapon2.PoisonDamage)
-                {
-                    Poison = true;
-                }
-                if (weapon2.VoldeVie)
-                {
-                    Heal(weapon2.Dmg);
-                }
+                Finaldmg += 10;
+                Console.Write("The {0} take {1} damages from fire ! ", m1.Name);
             }
+
             if (m1.Vie < 0)
             {
                 m1.Vie = 0;
             }
 
-            Console.WriteLine("The enemy lost {0} HP. He is {1} HP left.", Finaldmg, m1.Vie);
-        }
-        
-        
-        //Fonction potion
-        public bool UsePotions()
-        {
-            int kas = 0; 
-            Console.Write("What kind of potion do you want to take? ");
-            if (potions > 0 && HP != BaseHP)
-            { 
-                Console.Write("(heal");
-                if (PotionMaxHP > 0 )
-                {
-                    Console.Write(" or maxHP)");
-                    kas = 2;
-                }
-                else
-                {
-                    Console.Write(")");
-                    kas = 1;
-                }
-            }
-            else if (PotionMaxHP > 0)
-            {
-                Console.Write("(maxHP)");
-                kas = 3;
-            }
-            Console.WriteLine("\nWrite \"go back\" to go back to commande.");
-
-            if (kas == 0)
-            {
-                Console.WriteLine("You have zero potion.");
-                return false;
-            }
-
-            //Premiere fonction
-            string typePotion = ChoosePotions(kas);
-            
-            if (typePotion == "go back")
-            {
-                return false;
-            }
-
-            //Deuxieme fonction
-            int numPotion = ChooseNumPotions(typePotion);
-            if (numPotion == 0)
-            {
-                return false;
-            }
-
-            //Troisième fonction
-            ConsomePotions(typePotion, numPotion);
-
-            return true;
+            Console.WriteLine("The enemy lost {0} HP total. He is {1} HP left.", Finaldmg, m1.Vie);
         }
 
-        private string ChoosePotions(int kas)
-        {
-            while (true)
-            {
-                Console.Write("--> ");
-                string ChoosePotions = Console.ReadLine();
-                if (kas == 1 && (ChoosePotions == "heal" || ChoosePotions == "go back"))
-                {
-                    return ChoosePotions;
-                }
-                else if (kas == 2 && (ChoosePotions == "heal" || ChoosePotions == "maxHP" || ChoosePotions == "go back"))
-                {
-                    return ChoosePotions;
-                }
-                else if (kas == 3 && (ChoosePotions == "maxHP" || ChoosePotions == "go back"))
-                {
-                    return ChoosePotions;
-                }
-                else
-                {
-                    Console.Write("Choose a correct value.");
-                    if (kas == 1)
-                    {
-                        Console.Write(" (heal or go back");
-                    }
-                    else if (kas == 2)
-                    {
-                        Console.Write(" (heal or maxHP or go back)");
-                    }
-                    else if (kas == 3)
-                    {
-                        Console.Write(" (maxHP or go back)");
-                    }
-                    Console.WriteLine();
-                }
-            }
-        }
-
-        private int ChooseNumPotions(string ChoosePotions)
-        {
-            while (true)
-            {
-                int NumberOfPotionsMax = 0;
-                Console.Write("How many potions do you want to take ? ");
-                if (ChoosePotions == "heal")
-                {
-                    NumberOfPotionsMax = potions;
-                    int maxPotions = (BaseHP - HP) / 30 ;
-                    if ((BaseHP - HP) % 30 != 0)
-                    {
-                        maxPotions++;
-                    }
-                    if (maxPotions < NumberOfPotionsMax)
-                    {
-                        NumberOfPotionsMax = maxPotions;
-                    }
-
-                }
-                else if (ChoosePotions == "maxHP")
-                {
-                    NumberOfPotionsMax = PotionMaxHP;
-                }
-                
-                Console.WriteLine("(max {0})\nWrite \"back\" to go back to commande. ", NumberOfPotionsMax);
-                Console.Write("--> ");
-
-                string Rep = Console.ReadLine();
-                if (Rep == "back")
-                {
-                    return 0;
-                }
-
-                int usedPotion = 0;
-                try
-                {
-                    usedPotion = Convert.ToInt32(Rep);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Choose a number");
-                    continue;
-                }
-                if (usedPotion <= 0 || usedPotion > NumberOfPotionsMax)
-                {
-                    Console.WriteLine("The choosen number isn't correct.");
-                    continue;
-                }
-                else
-                {
-                    return usedPotion;
-                }
-                
-            }
-        }
-
-        private void ConsomePotions(string ChoosePotions, int usedPotion)
-        {
-            for (int i = 0; i < usedPotion; i++)
-            {
-                if (ChoosePotions == "heal")
-                { potions--; Heal(30);}
-                else if (ChoosePotions == "maxHP")
-                { PotionMaxHP--; UpHP(30);}
-            }
-            if (ChoosePotions == "heal")
-            {Console.WriteLine("You used {0} heal postions.", usedPotion);}
-            else if (ChoosePotions == "maxHP")
-            {Console.WriteLine("You used {0} MaxHP potions.", usedPotion);}
-        }
-
-        //Modifie les stats
-        private void Heal(int x)
-        {
-            if (HP + x > BaseHP)
-            {
-                Console.WriteLine("You heal {0} HP. You are full HP.", BaseHP - HP);
-                HP = BaseHP;
-            }
-
-            else
-            {
-                HP += x;
-                Console.WriteLine("You heal {0} HP.", x);
-            }
-        }
-
-        private void UpHP(int x)
-        {
-            BaseHP += x;
-        }
 
         //Mort
         public bool CheckDie()
@@ -376,18 +220,6 @@ namespace JeuWithGuigui3
         }
 
 
-        //Augmente les objets
-        public void GetPotions(int x)
-        {
-            potions += x;
-            Console.WriteLine("You find {0} potions. You have {1} potions.", x, potions);
-        }
-        public void GetMaxHPPotions(int x)
-        {
-            PotionMaxHP += x;
-            Console.WriteLine("You find {0} MaxHP+ potions. You have {1} MaxHP+ potions.", x, PotionMaxHP);
-        }
-
 
         //Rafraichi les damages
         public void ChangeDamage()
@@ -397,20 +229,51 @@ namespace JeuWithGuigui3
                 Damage = BaseDamage;
                 MagicDmg = BaseMagicDmg;
             }
+
+
             else if (weapon1 == null && weapon2 != null)
             {
                 MagicDmg = BaseMagicDmg + weapon2.MagicDamage;
                 Damage = BaseDamage + weapon2.Dmg;
+                if (weapon2.PoisonDamage)
+                {Poison = true;}
+                else
+                {Poison = false;}
+                if (weapon2.FireDamage)
+                { Fire = true;}
+                else if (RaceOfPlayer.Name != "Cracheur de feu")
+                {Fire = false;}
             }
+
+
             else if (weapon1 != null && weapon2 == null)
             {
                 MagicDmg = BaseMagicDmg + weapon1.MagicDamage;
                 Damage = BaseDamage + weapon1.Dmg;
+                if (weapon1.PoisonDamage)
+                { Poison = true; }
+                else
+                { Poison = false; }
+                if (weapon1.FireDamage)
+                { Fire = true; }
+                else if (RaceOfPlayer.Name != "Cracheur de feu")
+                { Fire = false; }
+
             }
+
+
             else if (weapon1 != null && weapon2 != null)
             {
                 MagicDmg = BaseMagicDmg + weapon2.MagicDamage + weapon1.MagicDamage;
                 Damage = BaseDamage + weapon1.Dmg + weapon2.Dmg;
+                if (weapon1.PoisonDamage || weapon2.PoisonDamage)
+                { Poison = true; }
+                else
+                { Poison = false; }
+                if (weapon2.FireDamage || weapon1.PoisonDamage)
+                { Fire = true; }
+                else if (RaceOfPlayer.Name != "Cracheur de feu")
+                { Fire = false; }
             }
         }
     }

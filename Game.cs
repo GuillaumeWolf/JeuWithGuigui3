@@ -96,7 +96,7 @@ namespace JeuWithGuigui3
 
                 else if (PlayerCommande == "up")
                 {
-                    bool usedPotions = p1.UsePotions();
+                    bool usedPotions = Potion.UsePotions(p1);
                     if (!usedPotions)
                     {
                         Commande(p1);
@@ -234,7 +234,7 @@ namespace JeuWithGuigui3
 
                 else if (PlayerCommande == "up")
                 {
-                    bool usedPotions = p1.UsePotions();
+                    bool usedPotions = Potion.UsePotions(p1);
                     if (usedPotions)
                     {
                         return false;
@@ -250,15 +250,18 @@ namespace JeuWithGuigui3
 
         static public void GetLoot(Player p1, Monster m1)
         {
-            int x = RandomInt(101);
             int ChanceWeapon = 40;
-            int ChanceMaxhpPotion = 20 + ChanceWeapon;
-            int Chance2Potions = 25 + ChanceMaxhpPotion;
-            int ChancePotion = 15 + Chance2Potions;
+            int ChanceArmor = 25 + ChanceWeapon;
+            int ChanceMaxhpPotion = 20 + ChanceArmor;
+            int Chance2Potions = 20 + ChanceMaxhpPotion;
+            int ChancePotion = 10 + Chance2Potions;
+
+            int x = RandomInt(ChancePotion);
 
             if (m1 != null)
             {
                 ChanceWeapon += m1.ChanceOfLoot;
+                ChanceArmor += m1.ChanceOfLoot;
                 Chance2Potions += m1.ChanceOfLoot;
                 ChancePotion += m1.ChanceOfLoot;
                 ChanceMaxhpPotion += m1.ChanceOfLoot;
@@ -269,19 +272,24 @@ namespace JeuWithGuigui3
                 Weapon.CreateRandomWeapon(p1, m1);
                 return;
             }
+            else if (x < ChanceArmor)
+            {
+                Armor.CreateRandomArmor(p1, m1);
+                return;
+            }
             else if (x < ChanceMaxhpPotion)
             {
-                p1.GetMaxHPPotions(1);
+                Potion.GetMaxHPPotions(1, p1);
                 return;
             }
             else if (x < Chance2Potions)
             {
-                p1.GetPotions(2);
+                Potion.GetPotions(2, p1);
                 return;
             }
             else if (x < ChancePotion)
             {
-                p1.GetPotions(1);
+                Potion.GetPotions(1, p1);
                 return;
             }
 

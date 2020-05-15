@@ -6,6 +6,8 @@ namespace JeuWithGuigui3
 {
     abstract class Monster
     {
+        //crée des dégats magique pour les monstres
+
         public int Vie; //Fight
         public int Dmg; //Fight
         public bool FireDmg;
@@ -16,7 +18,20 @@ namespace JeuWithGuigui3
         
         public void Attak(Player p1)
         {
-            p1.HP -= Dmg;
+            int finalDmg = Dmg;
+            if (PoisonDmg)
+            {
+                int poisonDmg = 3 * Game.tour;
+                finalDmg += poisonDmg;
+                Console.Write("You take {0} damage from poisonning.", poisonDmg);
+            }
+            if (FireDmg)
+            {
+                finalDmg += 10;
+                Console.Write("You take {0} damage from fire.", p1.HP);
+            }
+            //Inflige les degats
+            p1.HP -= finalDmg;
 
             if (p1.HP < 0)
             {
@@ -24,7 +39,7 @@ namespace JeuWithGuigui3
             }
             else
             {
-                Console.WriteLine("You lost {0} HP. You are {1} HP left.", Dmg, p1.HP);
+                Console.WriteLine("You lost {0} HP. You are {1} HP left.", finalDmg, p1.HP);
             }
         }
         
