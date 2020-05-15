@@ -48,7 +48,7 @@ namespace JeuWithGuigui3
 
                 else if (PlayerCommande == "s")
                 {
-                    Console.WriteLine("Name: {0}. Race: {1}. HP: {2}/{3}. Classic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, Player.BaseHP, p1.Damage, p1.MagicDmg);
+                    Console.WriteLine("Name: {0}. Race: {1}. HP: {2}/{3}. Classic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg);
                 }
 
 
@@ -144,7 +144,7 @@ namespace JeuWithGuigui3
                 else if (PlayerCommande == "s")
                 {
 
-                    Console.Write("Name: {0}. HP: {1}/{2}. Classic Damage: {3}. Magic Damage : {4}. ", p1.name, p1.HP, Player.BaseHP, p1.Damage, p1.MagicDmg);
+                    Console.Write("Name: {0}. HP: {1}/{2}. Classic Damage: {3}. Magic Damage : {4}. ", p1.name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg);
                     if (m1.PoisonDmg)
                     {
                         Console.Write("You are Poisoned. ");

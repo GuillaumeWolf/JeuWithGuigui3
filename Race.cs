@@ -36,8 +36,8 @@ namespace JeuWithGuigui3
         {
             Name = "Elf";
             Propreties = new string[] { proprties1, proprties2, proprties3};
-            p1.Damage += 5;
-            p1.MagicDmg += 5;
+            p1.BaseDamage += 5;
+            p1.BaseMagicDmg += 5;
             p1.weapon1 = new Dague();
             p1.ChangeDamage();
         }
@@ -54,7 +54,7 @@ namespace JeuWithGuigui3
             Propreties = new string[] { proprties1, proprties2};
 
             p1.HP += 15;
-            Player.BaseHP += 15;
+            p1.BaseHP += 15;
             //p1.weapon1 = new Armor();
         }
 
@@ -69,8 +69,9 @@ namespace JeuWithGuigui3
             Name = "Cracheur de feu";
             Propreties = new string[] { proprties1, proprties2};
 
-            p1.Damage += 5;
+            p1.BaseDamage += 5;
             p1.Fire = true;
+            p1.ChangeDamage();
         }
 
     }

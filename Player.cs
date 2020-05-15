@@ -11,13 +11,13 @@ namespace JeuWithGuigui3
         //Charactéristique 
         public readonly string name;
         public Race RaceOfPlayer = null ;
-        public static int BaseHP = 100;
+        public int BaseHP = 100;
         public int HP;
         //Dégats physique
-        public static int BaseDamage = 10;
+        public int BaseDamage = 10;
         public int Damage;
         //Dégats magiques
-        public static int BaseMagicDmg = 20;
+        public int BaseMagicDmg = 20;
         public int MagicDmg;
 
         public bool EnemyMagicRes = false;
@@ -55,6 +55,7 @@ namespace JeuWithGuigui3
                 Console.Write("--> ");
                 PlayerName = Console.ReadLine();
                 //Check si sur
+                /*
                 Console.WriteLine("Are you sure {0} is your name ? (yes)", PlayerName);
                 Console.Write("--> ");
                 string rep = Console.ReadLine();
@@ -66,6 +67,8 @@ namespace JeuWithGuigui3
                 {
                     Console.WriteLine("Choose again.");
                 }
+                */
+                break;
             }
             Player p1 = new Player(PlayerName);
 
@@ -74,10 +77,10 @@ namespace JeuWithGuigui3
             string race;
             while (true)
             {
-                Console.WriteLine("What is your race ?\n(elf - dwarf - Cracheur de feu)\n(Tap \"info\" for more information about the race.");
+                Console.WriteLine("What is your race ?\n(elf (e) - dwarf (d) - Cracheur de feu (cf))\n(Tap \"info\" for more information about the race.");
                 Console.Write("--> ");
                 race = Console.ReadLine();
-                if (race == "elf" || race == "dwarf" || race == "cf")
+                if (race == "e" || race == "d" || race == "cf")
                 {
                     break;
                 }

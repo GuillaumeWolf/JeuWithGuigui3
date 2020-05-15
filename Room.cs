@@ -9,12 +9,12 @@ namespace JeuWithGuigui3
     class Room
     {
         //Sall
-        static private int LegendaryRoom = 1;
+        static private int LegendaryRoom = 1000;
         static private int ChanceNothing = 10 + LegendaryRoom;
         static private int ChanceTrap = 200 + ChanceNothing;
         static private int ChanceMonster = 69 + ChanceTrap;
 
-        static int[] RoomsChances = { LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster };
+        static int[] RoomsChances = { LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
                 // - Sall temporelle          
                 //static private int Chance2Monster = 10;
 
@@ -24,7 +24,7 @@ namespace JeuWithGuigui3
             Console.WriteLine();
             Console.WriteLine();
             bool isDead = false;
-            int total = ChanceMonster;
+            int total = ChanceMonster + 1;
 
             int x = RandomInt(total + 1);
             var indexRoom = RoomsChances.Count()- RoomsChances
@@ -139,8 +139,6 @@ namespace JeuWithGuigui3
                 p1.MagicDmg *= 2;
                 p1.EnemyMagicRes = false;
             }
-            p1.Poison = false;
-            p1.Fire = false;
 
             Game.GetLoot(p1, m1);
             return !Won;
