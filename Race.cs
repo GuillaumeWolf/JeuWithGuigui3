@@ -21,9 +21,10 @@ namespace JeuWithGuigui3
             Player p2 = new Player("wejhfvw");
             Elf elf1 = new Elf(p2);
             Dwarf dwarf1 = new Dwarf(p2);
+            Minautore minautore1 = new Minautore(p2);
             Cracheurdefeu cracheur1 = new Cracheurdefeu(p2);
 
-            return "\n" + elf1.ToString() + "\n\n" + dwarf1.ToString() + "\n\n" + cracheur1.ToString() + "\n\n"; 
+            return "\n" + elf1.ToString() + "\n\n" + dwarf1.ToString() + "\n\n" + cracheur1.ToString() + "\n\n" + minautore1.ToString() + "\n\n"; 
         }
     }
 

@@ -7,14 +7,17 @@ namespace JeuWithGuigui3
 
 /*
 à faire: 
-- crée un perso #
-- crée l'event "entré dans la salle" #
-- crée le monstre (possède vie + dmg)  #
-- crée le combat #
-- crée le loot  ~ (manque l'aléatoire)#
-- crée des armes ~ (crée plus d'arme)
-- crée une protection 
-- créé un compteur de salle #
+
+    Obligatoirement :
+        - Faire une class pour le systeme de loot
+
+
+    Nouveau (idée):
+        - créer un systeme d'argent(Guillaume -> confirmation de lidée par leander ??)  (enleve juste les poitn d'interogation si tu es daccord)
+        - room pour acheter des armes(Guillaume -> confirmation de lidée par leander ??)  (enleve juste les poitn d'interogation si tu es daccord)
+
+
+
 */
 {
     class Game
@@ -36,7 +39,7 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.WriteLine("What do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - use potion: up - exit: e)");
+                Console.WriteLine("\nWhat do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - use potion: up - exit: e)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
@@ -131,7 +134,7 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.WriteLine("What do you want to do ? (stats: s - objects: o - weapons: w - attack: a - monster stats: ms - use potion: up - exit: e)");
+                Console.WriteLine("\nWhat do you want to do ? (stats: s - objects: o - weapons: w - attack: a - monster stats: ms - use potion: up - exit: e)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
@@ -208,18 +211,18 @@ namespace JeuWithGuigui3
 
                 else if (PlayerCommande == "ms")
                 {
-                    Console.Write("HP: {0}. Damage: {1}.", m1.Vie, m1.Dmg);
+                    Console.Write("name: {0}. HP: {1}. Damage: {2}. ",m1.Name, m1.Vie, m1.Dmg);
                     if (m1.MagicResistance)
                     {
-                        Console.WriteLine("Magic resistance. ");
+                        Console.Write("Magic resistance. ");
                     }
                     if (m1.FireDmg)
                     {
-                        Console.WriteLine("Fire damage. ");
+                        Console.Write("Fire damage. ");
                     }
                     if (m1.PoisonDmg)
                     {
-                        Console.WriteLine("Poison damage. ");
+                        Console.Write("Poison damage. ");
                     }
                     Console.WriteLine();
                     if (p1.Poison)

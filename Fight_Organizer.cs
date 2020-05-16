@@ -10,11 +10,6 @@ namespace JeuWithGuigui3
         {
             bool FightWon = false;
             int tour = Game.tour = 1;
-            if (m1.MagicResistance)
-            {
-                p1.MagicDmg /= 2;
-                p1.EnemyMagicRes = true;
-            }
             while (true)
             {
                 Console.WriteLine();

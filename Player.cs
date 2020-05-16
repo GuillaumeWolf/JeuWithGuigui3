@@ -21,8 +21,6 @@ namespace JeuWithGuigui3
         public int BaseMagicDmg = 20;
         public double MagicDmg;
 
-        public bool EnemyMagicRes = false;
-
         //Charactérisitque des armes
         public bool Poison = false;
         public bool Fire = false;
@@ -31,7 +29,7 @@ namespace JeuWithGuigui3
         public int potions = 2;
         public int PotionMaxHP = 0;
 
-        //Armes
+        //Armes 
         public Weapon weapon1 = null;
         public Weapon weapon2 = null;
         public Armor armor = null;
@@ -79,10 +77,10 @@ namespace JeuWithGuigui3
             string race;
             while (true)
             {
-                Console.WriteLine("What is your race ?\n(elf (e) - dwarf (d) - Cracheur de feu (cf))\n(Tap \"info\" for more information about the race.");
+                Console.WriteLine("What is your race ?\n(elf (e) - dwarf (d) - Cracheur de feu (cf) - Minautaure (m))\n(Tap \"info\" for more information about the race.");
                 Console.Write("--> ");
                 race = Console.ReadLine();
-                if (race == "e" || race == "d" || race == "cf")
+                if (race == "e" || race == "d" || race == "cf" || race == "m")
                 {
                     break;
                 }
@@ -95,31 +93,29 @@ namespace JeuWithGuigui3
                     Console.WriteLine("Choose a correct race.");
                 }
             }
-            if (race == "e")
+            switch (race)
             {
-                p1.RaceOfPlayer = new Elf(p1);
-            }
-            if (race == "d")
-            {
-                p1.RaceOfPlayer = new Dwarf(p1);
-            }
-            if (race == "cf")
-            {
-                p1.RaceOfPlayer = new Cracheurdefeu(p1);
+                case "e":
+                    p1.RaceOfPlayer = new Elf(p1);
+                    break;
+                case "d":
+                    p1.RaceOfPlayer = new Dwarf(p1);
+                    break;
+                case "cf":
+                    p1.RaceOfPlayer = new Cracheurdefeu(p1);
+                    break;
+                case "m":
+                    p1.RaceOfPlayer = new Minautore(p1);
+                    break;
             }
 
 
-            /* classe du joueur : 
-            - Mage  (plus de dégat magique, (un sort?))
-            - Guerrier  (plus de dégat classic, (un mode rage?))
-            - voleur  (plus de chance d'avoir un meilleur loot)
-            - druide  (vole les stats du monstre?)
-            */
-
-            Console.WriteLine("Choose your Class : Mage (m), Warrior (w), Thief (t) or Druide (d).");
+            //Classe du joueur : 
             string classep;
             while (true)
             {
+                Console.WriteLine("What is your class?\n Mage (m), Warrior (w), Thief (t) or Druide (d). \nWrite \"I\" to get more informations.");
+                Console.Write("--> ");
                 classep = Console.ReadLine();
                 if (classep == "m" || classep == "w" || classep == "t" || classep == "d")
                 {
@@ -127,11 +123,11 @@ namespace JeuWithGuigui3
                 }
                 if (classep == "I")
                 {
-                    Console.Write("Mage : +10 % of Magic damage.\nWarrior : +10 % of Classic damage.\nThief : Increase your chance of getting better loot.\nDruide : Can transform itself in a monster.");
+                    Console.Write("\nMage : + {0}% of Magic damage.\nWarrior : + {1}% of Classic damage.\nThief : Increase your chance of getting better loot. \nDruide : Can transform itself in a monster.\n", Mage.MagicUp, Warrior.ClassicUp);
                 }
                 if (classep != "m" && classep != "w" && classep != "t" && classep != "d" && classep != "I")
                 {
-                    Console.Write("Choose a valid command");
+                    Console.WriteLine("Choose a valid command.");
                 }
             }
             switch (classep)
@@ -167,6 +163,10 @@ namespace JeuWithGuigui3
                 if (chooseattak == "ma")
                 {
                     Finaldmg = MagicDmg;
+                    if(m1.MagicResistance)
+                    {
+                        Finaldmg /= 2;
+                    }
                     break;
                 }
                 else if (chooseattak == "ca")
@@ -192,13 +192,16 @@ namespace JeuWithGuigui3
                 Finaldmg += 10;
                 Console.Write("The {0} take {1} damages from fire ! ", m1.Name);
             }
+            //Applique les dégats
+            int finaldamageint = Convert.ToInt32(Finaldmg);
+            m1.Vie -= finaldamageint;
 
             if (m1.Vie < 0)
             {
                 m1.Vie = 0;
             }
 
-            Console.WriteLine("The enemy lost {0} HP total. He is {1} HP left.", Finaldmg, m1.Vie);
+            Console.WriteLine("The enemy lost {0} HP total. He is {1} HP left.", finaldamageint, m1.Vie);
         }
 
 

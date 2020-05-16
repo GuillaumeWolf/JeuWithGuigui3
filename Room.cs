@@ -135,11 +135,6 @@ namespace JeuWithGuigui3
             {
                 return !Won;
             }
-            if (p1.EnemyMagicRes)
-            {
-                p1.MagicDmg *= 2;
-                p1.EnemyMagicRes = false;
-            }
 
             Game.GetLoot(p1, m1);
             return !Won;

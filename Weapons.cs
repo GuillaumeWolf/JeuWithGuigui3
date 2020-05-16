@@ -12,6 +12,7 @@ namespace JeuWithGuigui3
         public bool VoldeVie;
         public bool FireDamage;
         public bool PoisonDamage;
+
         public string Name { get; set; }
 
         public static void DeleteWeapon(Player p1, int position)
@@ -196,6 +197,7 @@ namespace JeuWithGuigui3
             MagicDamage = 30;
             Name = "Magic Wand";
             Magic = true;
+            ChanceOfLooting /= 2;
         }
 
     }
@@ -208,6 +210,7 @@ namespace JeuWithGuigui3
             Dmg = 25;
             Name = "Sword";
             Magic = false;
+            ChanceOfLooting /= 2;
         }
     }
     class Dague : Weapon
@@ -218,6 +221,7 @@ namespace JeuWithGuigui3
             Dmg = 15;
             Name = "Dague";
             Magic = false;
+            ChanceOfLooting /= 2;
         }
     }
     class MagicSword : Weapon    //épée magique
@@ -230,6 +234,7 @@ namespace JeuWithGuigui3
             MagicDamage = 30;
             Name = "Magic Sword";
             Magic = true;
+            ChanceOfLooting /= 2;
         }
 
     }
@@ -242,6 +247,7 @@ namespace JeuWithGuigui3
             Name = "LeechSword";
             Magic = false;
             VoldeVie = true;
+            ChanceOfLooting /= 2;
         }
     }
     class LegendarySword : Weapon
@@ -254,6 +260,7 @@ namespace JeuWithGuigui3
             Magic = false;
             FireDamage = true;
             PoisonDamage = true;
+            ChanceOfLooting /= 2;
         }
     }
 }

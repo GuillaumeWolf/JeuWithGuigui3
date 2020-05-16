@@ -30,12 +30,20 @@ namespace JeuWithGuigui3
                 Console.Write("(maxHP)");
                 kas = 3;
             }
-            Console.WriteLine("\nWrite \"go back\" to go back to commande.");
+            Console.WriteLine("\nWrite \"gb\" to go back to commande.");
 
             if (kas == 0)
             {
                 Console.WriteLine("You have zero potion.");
-                return false;
+                while (true)
+                {
+                    Console.Write("--> ");
+                    string rep1 = Console.ReadLine();
+                    if (rep1 == "gb")
+                    {
+                        return false;
+                    }
+                }
             }
 
             //Premiere fonction

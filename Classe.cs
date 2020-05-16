@@ -16,6 +16,7 @@ namespace JeuWithGuigui3
     
     class Mage : ClassPlayer
     {
+        public static int MagicUp = 25;
         public Mage()
         {
             ClassName = "Mage";
@@ -24,13 +25,14 @@ namespace JeuWithGuigui3
         {
             if (ClassName == "Mage")
             {
-                p1.MagicDmg *= 1.25;
+                p1.MagicDmg *= (100 + MagicUp)/100 ;
             }
         }
 
     }
     class Warrior : ClassPlayer
     {
+        public static int ClassicUp = 25;
         public Warrior()
         {
             ClassName = "Warrior";
@@ -39,7 +41,7 @@ namespace JeuWithGuigui3
         {
             if (ClassName == "Warrior")
             {
-                p1.Damage *= 1.25;
+                p1.Damage *= (100 + ClassicUp) / 100;
             }
         }
     }
