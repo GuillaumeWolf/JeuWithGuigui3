@@ -19,6 +19,7 @@ namespace JeuWithGuigui3
 {
     class Game
     {
+        //Attribut du jeu
         static public int RoomCount = 0;
         static public int tour = 0;
         static public Monster m1 = null;
