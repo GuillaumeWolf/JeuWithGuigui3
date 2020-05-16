@@ -29,9 +29,9 @@ namespace JeuWithGuigui3
 
     class Elf : Race
     {
-        static private string proprties1 = "+10 classic damage";
-        static private string proprties2 = "+10 magic damage";
-        static private string proprties3 = "Start the game with a dague";
+        private static readonly string proprties1 = "+10 classic damage";
+        private static readonly string proprties2 = "+10 magic damage";
+        private static readonly string proprties3 = "Start the game with a dague";
 
         public Elf(Player p1)
         {
@@ -46,8 +46,8 @@ namespace JeuWithGuigui3
     }
     class Dwarf : Race
     {
-        static private string proprties1 = "+30 HP";
-        static private string proprties2 = "Start the game with a Armor";
+        private static readonly string proprties1 = "+30 HP";
+        private static readonly string proprties2 = "Start the game with a Armor";
 
         public Dwarf(Player p1)
         {
@@ -63,8 +63,8 @@ namespace JeuWithGuigui3
     }
     class Cracheurdefeu : Race
     {
-        static private string proprties1 = "+5 classic damage";
-        static private string proprties2 = "Has a permanent fire effect";
+        private static readonly string proprties1 = "+5 classic damage";
+        private static readonly string proprties2 = "Has a permanent fire effect";
 
         public Cracheurdefeu(Player p1)
         {
@@ -80,9 +80,9 @@ namespace JeuWithGuigui3
 
     class Minautore : Race
     {
-        static private string proprties1 = "+20 classic damage";
-        static private string proprties2 = "+10 HP";
-        static private string proprtie3 = "Can't have Armor.";
+        private static readonly string proprties1 = "+20 classic damage";
+        private static readonly string proprties2 = "+10 HP";
+        private static readonly string proprtie3 = "Can't have Armor.";
 
         public Minautore(Player p1)
         {

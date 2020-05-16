@@ -10,16 +10,16 @@ namespace JeuWithGuigui3
     {
         //Sall
         static private int LegendaryRoom = 1;
-        static private int ChanceNothing = 10 + LegendaryRoom;
-        static private int ChanceTrap = 20 + ChanceNothing;
-        static private int ChanceMonster = 69 + ChanceTrap;
+        static private readonly int ChanceNothing = 10 + LegendaryRoom;
+        static private readonly int ChanceTrap = 20 + ChanceNothing;
+        static private readonly int ChanceMonster = 69 + ChanceTrap;
 
-        static int[] RoomsChances = {LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
+        static readonly int[] RoomsChances = {LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
                 // - Sall temporelle          
                 //static private int Chance2Monster = 10;
 
 
-        static public void EnterRoom(Player p1)
+        static public void EnterRoom(Player p1, Monster m1)
         {
             Console.WriteLine();
             Console.WriteLine();
@@ -34,7 +34,7 @@ namespace JeuWithGuigui3
             switch(indexRoom)
             {
                 case 0:
-                    EnterLegendaryRoom(p1);
+                    EnterLegendaryRoom(p1, m1);
                     break;
                 case 1:
                     EnterEmptyRoom(p1);
@@ -63,11 +63,11 @@ namespace JeuWithGuigui3
             return;
         }
 
-        static private void EnterLegendaryRoom(Player p1)
+        static private void EnterLegendaryRoom(Player p1, Monster m1)
         {
             Console.WriteLine("You enter the Legendary Room and you found the Legendary Sword.");
             Weapon w1 = new LegendarySword();
-            Weapon.AddWeapon(p1, w1);
+            Weapon.AddWeapon(p1, w1, m1);
             LegendaryRoom = -1;
         }
 
@@ -129,6 +129,7 @@ namespace JeuWithGuigui3
             Console.Write("You enter a room and there is a monster. ");
             Monster m1 = Monster.CreatRandomMonster(p1);
             Console.WriteLine("It's a {0}.", m1.Name);
+            p1.COfP.ClassCapacity(p1, m1);
             bool Won = Fight_Organizer.Fight(p1, m1);
             if (!Won)
             {

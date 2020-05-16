@@ -26,27 +26,27 @@ namespace JeuWithGuigui3
             }
         }
 
-        static public void AddWeapon(Player p1, Weapon w1)
+        static public void AddWeapon(Player p1, Weapon w1, Monster m1)
         {
             if (p1.weapon1 == null)
             {
-                ADDWeaponToPlayer(p1, w1, 1);
+                ADDWeaponToPlayer(p1, w1, 1, m1);
                 return;
             }
             else if (p1.weapon2 == null)
             {
-                ADDWeaponToPlayer(p1, w1, 2);
+                ADDWeaponToPlayer(p1, w1, 2, m1);
                 return;
             }
             else
             {
-                ChangeWeapon(p1, w1);
+                ChangeWeapon(p1, w1, m1);
                 p1.ChangeDamage();
-                COfP.
+                p1.COfP.ClassCapacity(p1, m1);
             }
         }
 
-        static public void ADDWeaponToPlayer(Player p1, Weapon w1, int x)
+        static public void ADDWeaponToPlayer(Player p1, Weapon w1, int x, Monster m1)
         {
             if (x == 1)
             {
@@ -57,10 +57,11 @@ namespace JeuWithGuigui3
                 p1.weapon2 = w1;
             }
             p1.ChangeDamage();
+            p1.COfP.ClassCapacity(p1, m1);
             Console.WriteLine("You got a {0}.", w1.Name);
         }
 
-        static private void ChangeWeapon(Player p1, Weapon w1)
+        static private void ChangeWeapon(Player p1, Weapon w1, Monster m1)
         {
             while (true)
             {
@@ -94,13 +95,13 @@ namespace JeuWithGuigui3
                 else if (rep2 == "1")
                 {
                     DeleteWeapon(p1, 1);
-                    ADDWeaponToPlayer(p1, w1, 1);
+                    ADDWeaponToPlayer(p1, w1, 1, m1);
                     break;
                 }
                 else if (rep2 == "2")
                 {
                     DeleteWeapon(p1, 2);
-                    ADDWeaponToPlayer(p1, w1, 2);
+                    ADDWeaponToPlayer(p1, w1, 2, m1);
                     break;
                 }
                 else
@@ -134,37 +135,37 @@ namespace JeuWithGuigui3
             if (y < ChanceLegendarySword)
             {
                 Weapon w1 = new LegendarySword();
-                AddWeapon(p1, w1);
+                AddWeapon(p1, w1, m1);
                 return;
             }
             else if (y < ChanceLeechSword)
             {
                 Weapon w1 = new LeechSword();
-                AddWeapon(p1, w1);
+                AddWeapon(p1, w1, m1);
                 return;
             }
             else if (y < ChanceMagicSword)
             {
                 Weapon w1 = new MagicSword();
-                AddWeapon(p1, w1);
+                AddWeapon(p1, w1, m1);
                 return;
             }
             else if (y < ChanceMagicWand)
             {
                 Weapon w1 = new MagicWand();
-                AddWeapon(p1, w1);
+                AddWeapon(p1, w1, m1);
                 return;
             }
             else if (y < ChanceSword)
             {
                 Weapon w1 = new Sword();
-                AddWeapon(p1, w1);
+                AddWeapon(p1, w1, m1);
                 return;
             }
             else if (y < ChanceDague)
             {
                 Weapon w1 = new Dague();
-                AddWeapon(p1, w1);
+                AddWeapon(p1, w1, m1);
                 return;
             }
 

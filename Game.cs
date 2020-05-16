@@ -21,8 +21,9 @@ namespace JeuWithGuigui3
     {
         static public int RoomCount = 0;
         static public int tour = 0;
+        static public Monster m1 = null;
 
-        static void Main(string[] args)
+        static void Main()
         {
             Player p1 = Player.CreatePlayer();
             Commande(p1);
@@ -111,7 +112,7 @@ namespace JeuWithGuigui3
                     RoomCount++;
                     Console.WriteLine();
                     Console.Write("(room {0}). ", RoomCount);
-                    Room.EnterRoom(p1);
+                    Room.EnterRoom(p1, m1);
                     return;
                 }
 

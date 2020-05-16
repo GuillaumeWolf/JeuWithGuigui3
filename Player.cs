@@ -11,7 +11,7 @@ namespace JeuWithGuigui3
         //Charactéristique 
         public readonly string name;
         public Race RaceOfPlayer = null ;
-        public ClassPlayer COfP = null;
+        public ClassPlayer COfP = new ClassPlayer();
         public int BaseHP = 100;
         public int HP;
         //Dégats physique
@@ -127,7 +127,7 @@ namespace JeuWithGuigui3
                 }
                 if (classep == "I")
                 {
-                    Console.Write("Mage : +10 % of Magic damage.\nWarrior : +10 % of Classic damage.\nThief : Is able to run away from a fight.\nDruide : Can transform itself in a monster.");
+                    Console.Write("Mage : +10 % of Magic damage.\nWarrior : +10 % of Classic damage.\nThief : Increase your chance of getting better loot.\nDruide : Can transform itself in a monster.");
                 }
                 if (classep != "m" && classep != "w" && classep != "t" && classep != "d" && classep != "I")
                 {
@@ -256,7 +256,7 @@ namespace JeuWithGuigui3
                 { Poison = false; }
                 if (weapon1.FireDamage)
                 { Fire = true; }
-                else if (RaceOfPlayer.Name != "Cracheur de feu")
+                else if (RaceOfPlayer != null && RaceOfPlayer.Name != "Cracheur de feu")
                 { Fire = false; }
 
             }
