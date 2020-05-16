@@ -4,6 +4,9 @@ using System.Text;
 
 namespace JeuWithGuigui3
 {
+    /// <summary>
+    /// Commentaire
+    /// </summary>
     class Weapon
     {
         public int Dmg;
