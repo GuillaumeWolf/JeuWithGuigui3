@@ -7,6 +7,9 @@ namespace JeuWithGuigui3
     /// <summary>
     /// Commentaire
     /// </summary>
+    ///
+    /// Comantaire 2
+    ///
     class Weapon
     {
         public int Dmg;
