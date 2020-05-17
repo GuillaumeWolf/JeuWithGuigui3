@@ -10,6 +10,7 @@ namespace JeuWithGuigui3
 
         //Charactéristique 
         public readonly string name;
+        public string changableName;
         public Race RaceOfPlayer = null ;
         public ClassPlayer COfP = new ClassPlayer();
         public int BaseHP = 100;
@@ -26,13 +27,19 @@ namespace JeuWithGuigui3
         public bool Fire = false;
 
         //Objets
-        public int potions = 2;
-        public int PotionMaxHP = 0;
+        public int potions = 233;
+        public int PotionMaxHP = 33;
+        public int PuissancePotions = 331;
 
         //Armes 
         public Weapon weapon1 = null;
         public Weapon weapon2 = null;
         public Armor armor = null;
+
+        //Situation
+        public bool InFight = false;
+        public int PuissancePotionsused = 0;
+
 
         #endregion
 
@@ -42,10 +49,12 @@ namespace JeuWithGuigui3
             this.HP = BaseHP;
             this.Damage = BaseDamage;
             this.MagicDmg = BaseMagicDmg;
-        }
+            this.changableName = name;
 
-        //Appelée dans Game.Main()
-        public static Player CreatePlayer()
+    }
+
+    //Appelée dans Game.Main()
+    public static Player CreatePlayer()
         {
             //Nom du joueur
             string PlayerName;
@@ -123,7 +132,7 @@ namespace JeuWithGuigui3
                 }
                 if (classep == "I")
                 {
-                    Console.Write("\nMage : + {0}% of Magic damage.\nWarrior : + {1}% of Classic damage.\nThief : Increase your chance of getting better loot. \nDruide : Can transform itself in a monster.\n", Mage.MagicUp, Warrior.ClassicUp);
+                    Console.Write("\nMage : + {0}% of Magic damage.\n\nWarrior : + {1}% of Classic damage.\n\nThief : Increase your chance of getting better loot. \n\nDruide : Can transform itself in a monster.\n\n", Mage.MagicUp, Warrior.ClassicUp);
                 }
                 if (classep != "m" && classep != "w" && classep != "t" && classep != "d" && classep != "I")
                 {
@@ -145,6 +154,7 @@ namespace JeuWithGuigui3
                     p1.COfP = new Druide();
                     break;
             }
+            ChangeDamage(p1);
             return p1;
         }
 
@@ -182,15 +192,15 @@ namespace JeuWithGuigui3
 
             if (Poison)
             {
-                int y = 5 * Game.tour;
+                int y = 3 * Fight_Organizer.tour;
                 Finaldmg += y;
-                Console.Write("The {0} take {1} damages from poisonning ! ", m1.Name);
+                Console.Write("The {0} take {1} damages from poisonning ! ", m1.Name, y);
             }
 
             if (Fire)
             {
                 Finaldmg += 10;
-                Console.Write("The {0} take {1} damages from fire ! ", m1.Name);
+                Console.Write("The {0} take 10 damages from fire ! ", m1.Name);
             }
             //Applique les dégats
             int finaldamageint = Convert.ToInt32(Finaldmg);
@@ -225,59 +235,61 @@ namespace JeuWithGuigui3
 
 
         //Rafraichi les damages
-        public void ChangeDamage()
+        static public void ChangeDamage(Player p1)
         {
-            if (weapon1 == null && weapon2 == null)
+            if (p1.weapon1 == null && p1.weapon2 == null)
             {
-                Damage = BaseDamage;
-                MagicDmg = BaseMagicDmg;
+                p1.Damage = p1.BaseDamage;
+                p1.MagicDmg = p1.BaseMagicDmg;
             }
 
 
-            else if (weapon1 == null && weapon2 != null)
+            else if (p1.weapon1 == null && p1.weapon2 != null)
             {
-                MagicDmg = BaseMagicDmg + weapon2.MagicDamage;
-                Damage = BaseDamage + weapon2.Dmg;
-                if (weapon2.PoisonDamage)
-                {Poison = true;}
+                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon2.MagicDamage;
+                p1.Damage = p1.BaseDamage + p1.weapon2.Dmg;
+                if (p1.weapon2.PoisonDamage)
+                { p1.Poison = true;}
                 else
-                {Poison = false;}
-                if (weapon2.FireDamage)
-                { Fire = true;}
-                else if (RaceOfPlayer.Name != "Cracheur de feu")
-                {Fire = false;}
+                { p1.Poison = false;}
+                if (p1.weapon2.FireDamage)
+                { p1.Fire = true;}
+                else if (p1.RaceOfPlayer.Name != "Cracheur de feu")
+                { p1.Fire = false;}
             }
 
 
-            else if (weapon1 != null && weapon2 == null)
+            else if (p1.weapon1 != null && p1.weapon2 == null)
             {
-                MagicDmg = BaseMagicDmg + weapon1.MagicDamage;
-                Damage = BaseDamage + weapon1.Dmg;
-                if (weapon1.PoisonDamage)
-                { Poison = true; }
+                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon1.MagicDamage;
+                p1.Damage = p1.BaseDamage + p1.weapon1.Dmg;
+                if (p1.weapon1.PoisonDamage)
+                { p1.Poison = true; }
                 else
-                { Poison = false; }
-                if (weapon1.FireDamage)
-                { Fire = true; }
-                else if (RaceOfPlayer != null && RaceOfPlayer.Name != "Cracheur de feu")
-                { Fire = false; }
+                { p1.Poison = false; }
+                if (p1.weapon1.FireDamage)
+                { p1.Fire = true; }
+                else if (p1.RaceOfPlayer != null && p1.RaceOfPlayer.Name != "Cracheur de feu")
+                { p1.Fire = false; }
 
             }
 
 
-            else if (weapon1 != null && weapon2 != null)
+            else if (p1.weapon1 != null && p1.weapon2 != null)
             {
-                MagicDmg = BaseMagicDmg + weapon2.MagicDamage + weapon1.MagicDamage;
-                Damage = BaseDamage + weapon1.Dmg + weapon2.Dmg;
-                if (weapon1.PoisonDamage || weapon2.PoisonDamage)
-                { Poison = true; }
+                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon2.MagicDamage + p1.weapon1.MagicDamage;
+                p1.Damage = p1.BaseDamage + p1.weapon1.Dmg + p1.weapon2.Dmg;
+                if (p1.weapon1.PoisonDamage || p1.weapon2.PoisonDamage)
+                { p1.Poison = true; }
                 else
-                { Poison = false; }
-                if (weapon2.FireDamage || weapon1.PoisonDamage)
-                { Fire = true; }
-                else if (RaceOfPlayer.Name != "Cracheur de feu")
-                { Fire = false; }
+                { p1.Poison = false; }
+                if (p1.weapon2.FireDamage || p1.weapon1.PoisonDamage)
+                { p1.Fire = true; }
+                else if (p1.RaceOfPlayer.Name != "Cracheur de feu")
+                { p1.Fire = false; }
             }
+            if (p1.COfP.ClassName == "Mage" || p1.COfP.ClassName == "Warrior")
+            { p1.COfP.ClassCapacity(p1, null); }
         }
     }
 }

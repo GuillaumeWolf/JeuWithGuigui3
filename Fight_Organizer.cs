@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace JeuWithGuigui3
 {
     class Fight_Organizer
     {
+        static public int tour = 0;
         static public bool Fight(Player p1, Monster m1)
         {
+            p1.InFight = true;
             bool FightWon = false;
-            int tour = Game.tour = 1;
+            tour = 1;
             while (true)
             {
                 Console.WriteLine();
@@ -26,9 +29,9 @@ namespace JeuWithGuigui3
 
                 if (MonsterisDead == true)
                 {
-                    Game.tour = 0;
-                    Console.Write("You win the fight. ");
+                    Console.WriteLine("You win the fight. ");
                     FightWon = true;
+                    EndOfFight(p1, m1);
                     return FightWon;
                 }
 
@@ -46,6 +49,15 @@ namespace JeuWithGuigui3
                 //Fin du tour
                 tour++;
             }
+        }
+
+
+        static public void EndOfFight(Player p1, Monster m1)
+        {
+            tour = 0;
+            p1.InFight = false;
+            p1.PuissancePotionsused = 0;
+            Player.ChangeDamage(p1);
         }
 
     }

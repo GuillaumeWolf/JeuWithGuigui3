@@ -41,7 +41,7 @@ namespace JeuWithGuigui3
             p1.BaseDamage += 5;
             p1.BaseMagicDmg += 5;
             p1.weapon1 = new Dague();
-            p1.ChangeDamage();
+            Player.ChangeDamage(p1);
         }
 
     }
@@ -58,7 +58,7 @@ namespace JeuWithGuigui3
             p1.HP += 15;
             p1.BaseHP += 15;
             p1.armor= new MediumArmor();
-            p1.ChangeDamage();
+            Player.ChangeDamage(p1);
         }
 
     }
@@ -66,15 +66,15 @@ namespace JeuWithGuigui3
     {
         private static readonly string proprties1 = "+5 classic damage";
         private static readonly string proprties2 = "Has a permanent fire effect";
-
+        private static readonly string proprties3 = "Do not take damage from fire";
         public Cracheurdefeu(Player p1)
         {
             Name = "Cracheur de feu";
-            Propreties = new string[] { proprties1, proprties2};
+            Propreties = new string[] { proprties1, proprties2, proprties3 };
 
             p1.BaseDamage += 5;
             p1.Fire = true;
-            p1.ChangeDamage();
+            Player.ChangeDamage(p1);
         }
 
     }
@@ -90,10 +90,11 @@ namespace JeuWithGuigui3
             Name = "Minautore";
             Propreties = new string[] { proprties1, proprties2, proprtie3 };
 
-            p1.BaseDamage += 20;
-            p1.BaseHP += 10;
+            p1.BaseDamage += 30;
+            p1.BaseHP += 30;
             p1.HP += 10;
-            p1.ChangeDamage();
+            Loot.ChanceOfGettingWeapon = -1;
+            Player.ChangeDamage(p1);
         }
 
     }

@@ -42,8 +42,7 @@ namespace JeuWithGuigui3
             else
             {
                 ChangeWeapon(p1, w1, m1);
-                p1.ChangeDamage();
-                p1.COfP.ClassCapacity(p1, m1);
+                Player.ChangeDamage(p1);
             }
         }
 
@@ -57,8 +56,7 @@ namespace JeuWithGuigui3
             {
                 p1.weapon2 = w1;
             }
-            p1.ChangeDamage();
-            p1.COfP.ClassCapacity(p1, m1);
+            Player.ChangeDamage(p1);
             Console.WriteLine("You got a {0}.", w1.Name);
         }
 

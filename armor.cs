@@ -22,11 +22,13 @@ namespace JeuWithGuigui3
             if (p1.armor == null)
             {
                 p1.armor = a1;
+                Console.WriteLine("You got a {0}.", a1.Name);
+
             }
             else
             {
                 ChangeArmor(p1, a1);
-                p1.ChangeDamage();
+                Player.ChangeDamage(p1);
             }
         }
 

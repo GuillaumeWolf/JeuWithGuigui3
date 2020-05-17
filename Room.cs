@@ -26,7 +26,7 @@ namespace JeuWithGuigui3
             bool isDead = false;
             int total = ChanceMonster + 1;
 
-            int x = RandomInt(total + 1);
+            int x = RandomInt(total);
             var indexRoom = RoomsChances.Count()- RoomsChances
                 .Where(y => y > x)
                 .Count();
@@ -56,7 +56,7 @@ namespace JeuWithGuigui3
             if (z < 20)
             {
                 Console.WriteLine("You are lucky, there is another loot here.");
-                Game.GetLoot(p1, null);
+                Loot.GetLoot(p1, null);
             }
 
             Game.Commande(p1);
@@ -107,7 +107,7 @@ namespace JeuWithGuigui3
 
         static private void EnterEmptyRoom(Player p1)
         {
-            Console.WriteLine("You enter a empty room.");
+            Console.Write("You enter a empty room. ");
             int y = RandomInt(101);
             int ChanceOfLooting = 30;
             int ChanceOfNothing = 70 + ChanceOfLooting;
@@ -115,7 +115,7 @@ namespace JeuWithGuigui3
             if (y < ChanceOfLooting)
             {
                 Console.WriteLine("But there is loot inside");
-                Game.GetLoot(p1, null);
+                Loot.GetLoot(p1, null);
             }
             else if (y < ChanceOfNothing)
             {
@@ -129,14 +129,15 @@ namespace JeuWithGuigui3
             Console.Write("You enter a room and there is a monster. ");
             Monster m1 = Monster.CreatRandomMonster(p1);
             Console.WriteLine("It's a {0}.", m1.Name);
-            p1.COfP.ClassCapacity(p1, m1);
+            if (p1.COfP.ClassName == "Druide")
+            { p1.COfP.ClassCapacity(p1, m1); }
             bool Won = Fight_Organizer.Fight(p1, m1);
             if (!Won)
             {
                 return !Won;
             }
 
-            Game.GetLoot(p1, m1);
+            Loot.GetLoot(p1, m1);
             return !Won;
         }
 
