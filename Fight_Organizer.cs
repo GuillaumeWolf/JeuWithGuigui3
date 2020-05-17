@@ -58,6 +58,10 @@ namespace JeuWithGuigui3
             p1.InFight = false;
             p1.PuissancePotionsused = 0;
             Player.ChangeDamage(p1);
+            if (m1.Name == "Golem of Armagedon" && m1.Vie < 500)
+            {
+                GolemOfArmagedon.GolemRage(m1);
+            }
         }
 
     }

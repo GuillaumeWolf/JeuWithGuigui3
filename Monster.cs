@@ -13,26 +13,32 @@ namespace JeuWithGuigui3
         public bool FireDmg;
         public bool PoisonDmg;
         public bool MagicResistance;
+        public bool inRage;
         public int ChanceOfLoot;
         public string Name { get; set; }
         
+
         public void Attak(Player p1)
         {
             int finalDmg = Dmg;
+            if (inRage)
+            { 
+                finalDmg *= 2;
+            }
             if (p1.armor != null)
             {
                 finalDmg -= p1.armor.ClassicResistance;
             }
             if (PoisonDmg)
             {
-                int poisonDmg = 3 * Fight_Organizer.tour;
+                int poisonDmg = 25 * Fight_Organizer.tour;
                 finalDmg += poisonDmg;
                 Console.Write("You take {0} damage from poisonning. ", poisonDmg);
             }
             if (FireDmg && p1.RaceOfPlayer.Name != "Cracheur de feu")
             {
-                finalDmg += 10;
-                Console.Write("You take {0} damage from fire.", p1.HP);
+                finalDmg += 15;
+                Console.Write("You take {0} damage from fire. ", p1.HP);
             }
             //Inflige les degats
             p1.HP -= finalDmg;
@@ -41,10 +47,7 @@ namespace JeuWithGuigui3
             {
                 p1.HP = 0;
             }
-            else
-            {
-                Console.WriteLine("You lost {0} HP. You are {1} HP left.", finalDmg, p1.HP);
-            }
+            Console.WriteLine("You lost {0} HP. You are {1} HP left.", finalDmg, p1.HP);
         }
         
         public bool CheckDie()
@@ -61,6 +64,7 @@ namespace JeuWithGuigui3
             Console.Write("The monster is dead. ");
             return true;
         }
+
         //Appelée avant dans Room
         static public Monster CreatRandomMonster(Player p1)
         {
@@ -190,5 +194,34 @@ namespace JeuWithGuigui3
             ChanceOfLoot = 30;
             MagicResistance = false;
         }
+    }
+    class GolemOfArmagedon : Monster
+    {
+        public static int ChanceOfSpawn = 1;
+
+        public GolemOfArmagedon()
+        {
+            Name = "Golem of Armagedon";
+            MaxLife = 1000;
+            Vie = MaxLife;
+            Dmg = 100;
+            FireDmg = false;
+            PoisonDmg = false;
+            ChanceOfLoot = 30;
+            MagicResistance = true;
+            inRage = false;
+
+
+        }
+        public static void GolemRage(Monster m1)
+        {
+            m1.inRage = true;
+            if (m1.inRage)
+            {
+                m1.FireDmg = true;
+                m1.PoisonDmg = true;
+            }
+        }
+
     }
 }

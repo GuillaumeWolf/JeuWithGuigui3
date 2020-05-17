@@ -30,8 +30,8 @@ namespace JeuWithGuigui3
 
     class Elf : Race
     {
-        private static readonly string proprties1 = "+10 classic damage";
-        private static readonly string proprties2 = "+10 magic damage";
+        private static readonly string proprties1 = "+5 classic damage";
+        private static readonly string proprties2 = "+5 magic damage";
         private static readonly string proprties3 = "Start the game with a dague";
 
         public Elf(Player p1)
@@ -55,8 +55,8 @@ namespace JeuWithGuigui3
             Name = "Dwarf";
             Propreties = new string[] { proprties1, proprties2};
 
-            p1.HP += 15;
-            p1.BaseHP += 15;
+            p1.HP += 30;
+            p1.BaseHP += 30;
             p1.armor= new MediumArmor();
             Player.ChangeDamage(p1);
         }
