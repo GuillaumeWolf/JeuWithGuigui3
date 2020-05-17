@@ -21,12 +21,20 @@ namespace JeuWithGuigui3
 
         static public void EnterRoom(Player p1, Monster m1)
         {
-            Console.WriteLine();
-            Console.WriteLine();
-            bool isDead = false;
-            int total = ChanceMonster + 1;
 
-            int x = RandomInt(total);
+            int _LegendaryRoom = 1 ;
+            int _ChanceNothing = 10 + _LegendaryRoom;
+            int _ChanceTrap = 20 + _ChanceNothing - (Game.RoomCount - 1) * 1;
+            int _ChanceMonster = 69 + _ChanceTrap + (Game.RoomCount - 1) * 1;
+
+            int[] RoomsChances = { _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster };
+            int x = RandomInt(100);
+
+            Console.WriteLine();
+            //Console.WriteLine("                                                    LegendaryRoom: {0}. ChanceNothing: {1}. ChanceTrap: {2}. ChanceMonster: {3}. x: {4}", _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster, x);
+            Console.WriteLine();
+
+            bool isDead = false;
             var indexRoom = RoomsChances.Count()- RoomsChances
                 .Where(y => y > x)
                 .Count();
@@ -53,11 +61,17 @@ namespace JeuWithGuigui3
             }
 
             int z = RandomInt(100);
-            if (z < 20)
+            if (z < 10)
             {
-                Console.WriteLine("You are lucky, there is another loot here.");
-                Loot.GetLoot(p1, null);
+                Console.Write("You are lucky, there is another loot here. ");
+                Loot.GetRandomLoot(p1, null);
             }
+            else if (z < 20)
+            {
+                Console.Write("Hey, there is other potions here ! ");
+                Loot.LootPotion(p1, z/10);
+            }
+            Console.WriteLine();
 
             Game.Commande(p1);
             return;
@@ -79,6 +93,9 @@ namespace JeuWithGuigui3
             int PicTrap = 195 + DeadTrap;
             int FireTrap = 300 + PicTrap;
             int RockTrap = 500 + FireTrap;
+            
+            //Console.WriteLine("                                                    DeadTrap: {0}. PicTrap: {1}. FireTrap: {2}. RockTrap: {3}. y: {4}", DeadTrap, PicTrap, FireTrap, RockTrap, y);
+
 
             if (y < RockTrap)
             {
@@ -115,7 +132,7 @@ namespace JeuWithGuigui3
             if (y < ChanceOfLooting)
             {
                 Console.WriteLine("But there is loot inside");
-                Loot.GetLoot(p1, null);
+                Loot.GetRandomLoot(p1, null);
             }
             else if (y < ChanceOfNothing)
             {
@@ -126,7 +143,8 @@ namespace JeuWithGuigui3
 
         static private bool EnterMonsterRoom(Player p1)
         {
-            Console.Write("You enter a room and there is a monster. ");
+            //Mettre write au lieu de writeline
+            Console.WriteLine("You enter a room and there is a monster. ");
             Monster m1 = Monster.CreatRandomMonster(p1);
             Console.WriteLine("It's a {0}.", m1.Name);
             if (p1.COfP.ClassName == "Druide")
@@ -137,7 +155,8 @@ namespace JeuWithGuigui3
                 return !Won;
             }
 
-            Loot.GetLoot(p1, m1);
+            Loot.GetRandomLoot(p1, m1);
+            Loot.LootPotion(p1, m1.Numpotion);
             return !Won;
         }
 

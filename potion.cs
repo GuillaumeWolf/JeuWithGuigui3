@@ -103,7 +103,7 @@ namespace JeuWithGuigui3
             {
                 Console.Write("--> ");
                 string ChoosePotions = Console.ReadLine();
-                if (poss.Contains(ChoosePotions))
+                if (poss.Contains(ChoosePotions) || ChoosePotions == "gb")
                 {
                     return ChoosePotions;
                 }
@@ -144,11 +144,11 @@ namespace JeuWithGuigui3
                     NumberOfPotionsMax = p1.PuissancePotions;
                 }
 
-                Console.WriteLine("(max {0})\nWrite \"back\" to go back to commande. ", NumberOfPotionsMax);
+                Console.WriteLine("(max {0})\nWrite \"gb\" to go back to commande. ", NumberOfPotionsMax);
                 Console.Write("--> ");
 
                 string Rep = Console.ReadLine();
-                if (Rep == "back")
+                if (Rep == "gb")
                 {
                     return 0;
                 }
@@ -250,7 +250,7 @@ namespace JeuWithGuigui3
         public static void GetPotions(int x, Player p1)
         {
             p1.potions += x;
-            Console.WriteLine("You find {0} potions. You have {1} potions.", x, p1.potions);
+            Console.WriteLine("You find {0} heal potions. You have {1} potions.", x, p1.potions);
         }
         public static void GetMaxHPPotions(int x, Player p1)
         {

@@ -27,9 +27,9 @@ namespace JeuWithGuigui3
         public bool Fire = false;
 
         //Objets
-        public int potions = 233;
-        public int PotionMaxHP = 33;
-        public int PuissancePotions = 331;
+        public int potions = 2;
+        public int PotionMaxHP = 0;
+        public int PuissancePotions = 1;
 
         //Armes 
         public Weapon weapon1 = null;
@@ -123,7 +123,7 @@ namespace JeuWithGuigui3
             string classep;
             while (true)
             {
-                Console.WriteLine("What is your class?\n Mage (m), Warrior (w), Thief (t) or Druide (d). \nWrite \"I\" to get more informations.");
+                Console.WriteLine("What is your class?\nMage (m), Warrior (w), Thief (t) or Druide (d). \nWrite \"I\" to get more informations.");
                 Console.Write("--> ");
                 classep = Console.ReadLine();
                 if (classep == "m" || classep == "w" || classep == "t" || classep == "d")
@@ -205,7 +205,7 @@ namespace JeuWithGuigui3
             //Applique les dégats
             int finaldamageint = Convert.ToInt32(Finaldmg);
             m1.Vie -= finaldamageint;
-
+            m1.DieNot(m1);
             if (m1.Vie < 0)
             {
                 m1.Vie = 0;

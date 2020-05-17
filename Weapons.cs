@@ -113,13 +113,13 @@ namespace JeuWithGuigui3
 
         static public void CreateRandomWeapon(Player p1, Monster m1)
         {
-            int y = RandomInt(1001);
             int ChanceLegendarySword = Convert.ToInt32(LegendarySword.ChanceOfLooting * 10);
             int ChanceLeechSword = Convert.ToInt32(LeechSword.ChanceOfLooting * 10) + ChanceLegendarySword;
             int ChanceMagicSword = MagicSword.ChanceOfLooting * 10 + ChanceLeechSword;
             int ChanceMagicWand = MagicWand.ChanceOfLooting * 10 + ChanceMagicSword;
             int ChanceSword = Sword.ChanceOfLooting * 10 + ChanceMagicWand;
             int ChanceDague = Dague.ChanceOfLooting * 10 + ChanceSword;
+            int y = RandomInt(ChanceDague);
 
             if (m1 != null)
             {
@@ -130,7 +130,7 @@ namespace JeuWithGuigui3
                 ChanceMagicSword += m1.ChanceOfLoot * 10;
                 ChanceLegendarySword += m1.ChanceOfLoot * 10;
             }
-            //Console.WriteLine("y: {0}, LegendarySword: {1}. ChanceLeechSword: {3}. ChanceTrap: {2}. ChanceMonster: {4}.", y, LegendarySword, ChanceLeechSword, ChanceNothing, ChanceMonster);
+            //Console.WriteLine("                                                    ChanceLegendarySword: {0}. ChanceLeechSword: {1}. ChanceMagicSword: {2}. ChanceMagicWand: {3}. ChanceSword: {4}. ChanceDague: {5}. x: {6}.",  ChanceLegendarySword, ChanceLeechSword, ChanceMagicSword, ChanceMagicWand, ChanceSword, ChanceDague, y);
             if (y < ChanceLegendarySword)
             {
                 Weapon w1 = new LegendarySword();

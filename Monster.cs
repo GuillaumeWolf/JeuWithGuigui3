@@ -15,8 +15,18 @@ namespace JeuWithGuigui3
         public bool MagicResistance;
         public bool inRage;
         public int ChanceOfLoot;
+        public int Numpotion;
+        public bool Usepower;
         public string Name { get; set; }
-        
+
+        public void DieNot(Monster m1)
+        {
+            if (m1.Name == "Gobelin" && Vie <= 0 && !m1.Usepower)
+            {
+                Vie = 1;
+                m1.Usepower = true;
+            }
+        }
 
         public void Attak(Player p1)
         {
@@ -28,6 +38,10 @@ namespace JeuWithGuigui3
             if (p1.armor != null)
             {
                 finalDmg -= p1.armor.ClassicResistance;
+                if(finalDmg < 0)
+                {
+                    finalDmg = 0;
+                }
             }
             if (PoisonDmg)
             {
@@ -69,13 +83,14 @@ namespace JeuWithGuigui3
         static public Monster CreatRandomMonster(Player p1)
         {
             int basilic = Basilic.ChanceOfSpawn + (Game.RoomCount - 1) * 1;
-            int dragon = Dragon.ChanceOfSpawn + basilic;
-            int ghost = Ghost.ChanceOfSpawn + dragon;
-            int gobelin = Gobelin.ChanceOfSpawn + ghost;
-            int slime = Slime.ChanceOfSpawn + gobelin;
-            int x = RandomInt(slime);
+            int dragon = Dragon.ChanceOfSpawn + basilic + (Game.RoomCount - 1) * 1;
+            int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 3;
+            int gobelin = Gobelin.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
+            int slime = Slime.ChanceOfSpawn + gobelin + (Game.RoomCount - 1) * 1;
+            int x = RandomInt(101);
 
-            //Console.WriteLine("Basilic: {0}. Dragon: {1}. Ghost: {2}. Gobelin: {3}. Slime: {4}. x: {5}", basilic, dragon, ghost, gobelin, slime, x);
+            //Console.WriteLine("                                                    Basilic: {0}. Dragon: {1}. Ghost: {2}. Gobelin: {3}. Slime: {4}. x: {5}", basilic, dragon, ghost, gobelin, slime, x);
+
             Monster m1 = null;
             if (x < basilic)
             {
@@ -122,7 +137,7 @@ namespace JeuWithGuigui3
 
     class Slime : Monster
     {
-        public static int ChanceOfSpawn = 39;
+        public static int ChanceOfSpawn = 34;
         public Slime()
         {
             Name = "Slime";
@@ -131,7 +146,8 @@ namespace JeuWithGuigui3
             Dmg = 5;
             FireDmg = false;
             PoisonDmg = false;
-            ChanceOfLoot = 5;
+            ChanceOfLoot = 0;
+            Numpotion = 1;
             MagicResistance = true;
         }
     }
@@ -143,16 +159,18 @@ namespace JeuWithGuigui3
             Name = "Gobelin";
             MaxLife = 15;
             Vie = MaxLife;
-            Dmg = 10;
+            Dmg = 30;
             FireDmg = false;
             PoisonDmg = false;
-            ChanceOfLoot = 5;
+            ChanceOfLoot = 0;
+            Numpotion = 2;
             MagicResistance = false;
+            Usepower = false;
         }
     }
     class Ghost : Monster
     {
-        public static int ChanceOfSpawn = 25;
+        public static int ChanceOfSpawn = 30;
         public Ghost()
         {
             Name = "Ghost";
@@ -161,7 +179,8 @@ namespace JeuWithGuigui3
             Dmg = 30;
             FireDmg = false;
             PoisonDmg = false;
-            ChanceOfLoot = 10;
+            ChanceOfLoot = 4;
+            Numpotion = 3;
             MagicResistance = false;
         }
     }
@@ -177,6 +196,7 @@ namespace JeuWithGuigui3
             FireDmg = true;
             PoisonDmg = false;
             ChanceOfLoot = 30;
+            Numpotion = 5;
             MagicResistance = true;
         }
     }
@@ -192,6 +212,7 @@ namespace JeuWithGuigui3
             FireDmg = false;
             PoisonDmg = true;
             ChanceOfLoot = 30;
+            Numpotion = 5;
             MagicResistance = false;
         }
     }
@@ -207,7 +228,7 @@ namespace JeuWithGuigui3
             Dmg = 100;
             FireDmg = false;
             PoisonDmg = false;
-            ChanceOfLoot = 30;
+            ChanceOfLoot = 100;
             MagicResistance = true;
             inRage = false;
 
