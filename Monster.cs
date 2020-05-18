@@ -6,16 +6,21 @@ namespace JeuWithGuigui3
 {
     abstract class Monster
     {
-        //crée des dégats magique pour les monstres
+        // - crée des dégats magique pour les monstres
+
+        //Vie
         public int MaxLife; 
-        public int Vie; //Fight
-        public int Dmg; //Fight
+        public int Vie; 
+        public int Dmg; 
+        //Capacité de feu, poison, etc...
         public bool FireDmg;
         public bool PoisonDmg;
         public bool MagicResistance;
         public bool inRage;
+        // Pour les loots
         public int ChanceOfLoot;
         public int Numpotion;
+        //Capacité utilisé du monstre
         public bool Usepower;
         public string Name { get; set; }
 
@@ -23,8 +28,16 @@ namespace JeuWithGuigui3
         {
             if (m1.Name == "Gobelin" && Vie <= 0 && !m1.Usepower)
             {
-                Vie = 1;
+                m1.Vie = 1;
                 m1.Usepower = true;
+                Console.Write("The gobelin should has been killed but he survived with 1 HP: ");
+            }
+            if (m1.Name == "Zombie" && Vie <= 0 && !m1.Usepower)
+            {
+                m1.Vie = m1.MaxLife;
+                m1.Dmg -= 10; 
+                m1.Usepower = true;
+                Console.WriteLine("The Zombie is dead one time but you have to kill him twice. But now he is a little bit weaker. ");
             }
         }
 
@@ -85,8 +98,9 @@ namespace JeuWithGuigui3
             int golem = GolemOfArmagedon.ChanceOfSpawn ;
             int basilic = Basilic.ChanceOfSpawn + golem + (Game.RoomCount - 1) * 1;
             int dragon = Dragon.ChanceOfSpawn + basilic + (Game.RoomCount - 1) * 1;
-            int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 3;
-            int gobelin = Gobelin.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
+            int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 2;
+            int zombie = Zombie.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
+            int gobelin = Gobelin.ChanceOfSpawn + zombie + (Game.RoomCount - 1) * 1;
             int slime = Slime.ChanceOfSpawn + gobelin + (Game.RoomCount - 1) * 1;
             int x = RandomInt(101);
             
@@ -116,6 +130,11 @@ namespace JeuWithGuigui3
             else if (x < ghost)
             {
                 m1 = new Ghost();
+                return m1;
+            }
+            else if (x < zombie)
+            {
+                m1 = new Zombie();
                 return m1;
             }
             else if (x < gobelin)
@@ -148,11 +167,11 @@ namespace JeuWithGuigui3
 
     class Slime : Monster
     {
-        public static int ChanceOfSpawn = 35;
+        public static int ChanceOfSpawn = 25;
         public Slime()
         {
             Name = "Slime";
-            MaxLife = 20;
+            MaxLife = 40;
             Vie = MaxLife;
             Dmg = 5;
             FireDmg = false;
@@ -164,7 +183,7 @@ namespace JeuWithGuigui3
     }
     class Gobelin : Monster
     {
-        public static int ChanceOfSpawn = 30;
+        public static int ChanceOfSpawn = 25;
         public Gobelin()
         {
             Name = "Gobelin";
@@ -179,15 +198,33 @@ namespace JeuWithGuigui3
             Usepower = false;
         }
     }
+    class Zombie : Monster
+    {
+        public static int ChanceOfSpawn = 25;
+        public Zombie()
+        {
+            Name = "Zombie";
+            MaxLife = 60;
+            Vie = MaxLife;
+            Dmg = 20;
+            FireDmg = false;
+            PoisonDmg = true;
+            ChanceOfLoot = 4;
+            Numpotion = 3;
+            MagicResistance = false;
+            Usepower = false;
+        }
+        
+    }
     class Ghost : Monster
     {
-        public static int ChanceOfSpawn = 30;
+        public static int ChanceOfSpawn = 20;
         public Ghost()
         {
             Name = "Ghost";
-            MaxLife = 50;
+            MaxLife = 100;
             Vie = MaxLife;
-            Dmg = 30;
+            Dmg = 35;
             FireDmg = false;
             PoisonDmg = false;
             ChanceOfLoot = 4;

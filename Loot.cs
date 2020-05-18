@@ -80,7 +80,7 @@ namespace JeuWithGuigui3
                 return;
             }
 
-            Console.WriteLine("Pas normal");
+            Console.WriteLine("Pas normal (Loot.GetLoot())");
         }
 
         public static void LootPotion(Player p1, int x)

@@ -51,9 +51,16 @@ namespace JeuWithGuigui3
                 }
 
                 //armor
-                else if (PlayerCommande == "ar")
+                else if (PlayerCommande == "ar" )
                 {
-                    Console.WriteLine("Armor: {0}. Classic Resistance {1}. Magic Resistance: {2}.", p1.armor.Name, p1.armor.ClassicResistance, p1.armor.MagicResistance);
+                    if (p1.armor != null)
+                    {
+                        Console.WriteLine("Armor: {0}. Classic Resistance {1}. Magic Resistance: {2}.", p1.armor.Name, p1.armor.ClassicResistance, p1.armor.MagicResistance);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have armor.");
+                    }
                 }
 
                 //Use potions
@@ -106,29 +113,34 @@ namespace JeuWithGuigui3
         //Possibilité 2: On le remet full hp
         public static void SpecialBossCommande(Player p1)
         {
-            Console.WriteLine("\nYou can use consomables before fighting the boss. What do you want to do ? (use potion: up - continue: c)");
-            Console.Write("--> ");
-            string PlayerCommande = Console.ReadLine();
-            if (PlayerCommande == "c")
+            while (true)
             {
-                Console.WriteLine("Are you sure to continue ?");
+                /*
+                Console.WriteLine("\nYou can use consomables before fighting the boss. What do you want to do ? (use potion: up - continue: c)");
                 Console.Write("--> ");
-                string rep = Console.ReadLine();
-                if (rep == "yes")
+                string PlayerCommande = Console.ReadLine();
+                if (PlayerCommande == "c")
                 {
-                    return;
+                    Console.WriteLine("Are you sure to continue ?");
+                    Console.Write("--> ");
+                    string rep = Console.ReadLine();
+                    if (rep == "yes")
+                    {
+                        return;
+                    }
+
                 }
-
+                else if (PlayerCommande == "up")
+                {
+                    Potion.UsePotions(p1);
+                }
+                else
+                {
+                    Console.WriteLine("Choose a correct commande.");
+                }
             }
-            else if (PlayerCommande == "up")
-            {
-                Potion.UsePotions(p1);
-            }
-            else
-            {
-                Console.WriteLine("Choose a correct commande.");
-            }
-
+            */
+                int x = 2;
         }
 
 

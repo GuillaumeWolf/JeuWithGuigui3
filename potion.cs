@@ -203,10 +203,12 @@ namespace JeuWithGuigui3
                 else if (ChoosePotions == "pp")
                 { p1.PuissancePotions--; UpDamage(20, type, p1); }
             }
-            if (ChoosePotions == "heal")
+            if (ChoosePotions == "hp")
             { Console.WriteLine("You used {0} heal postions.", usedPotion); }
-            else if (ChoosePotions == "maxHP")
+            else if (ChoosePotions == "mhp")
             { Console.WriteLine("You used {0} MaxHP potions.", usedPotion); }
+            else if (ChoosePotions == "pp")
+            { Console.WriteLine("You used {0} Puissance Potions.", usedPotion); }
         }
 
 
