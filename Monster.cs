@@ -64,11 +64,15 @@ namespace JeuWithGuigui3
             Console.WriteLine("You lost {0} HP. You are {1} HP left.", finalDmg, p1.HP);
         }
         
-        public bool CheckDie()
+        public bool CheckDie(Monster m1)
         {
             bool isDead = false;
             if (Vie <= 0)
             {
+                if (m1.Name == "Zombie")
+                {
+                    Zombie.ReviveZ(m1);
+                }
                 isDead = Die();
             }
             return isDead;
@@ -179,7 +183,32 @@ namespace JeuWithGuigui3
             Usepower = false;
         }
     }
-    class Ghost : Monster
+    class Zombie : Monster
+    {
+        public static int ChanceOfSpawn = 20;
+        public Zombie()
+        {
+            Name = "Zombie";
+            MaxLife = 30;
+            Vie = MaxLife;
+            Dmg = 10;
+            FireDmg = false;
+            PoisonDmg = true;
+            ChanceOfLoot = 4;
+            Numpotion = 3;
+            MagicResistance = false;
+        }
+        //c'est un zombie
+        public static void ReviveZ(Monster m1)
+        {
+            int x = RandomInt(2);
+            if (x == 2)
+            {
+                m1.Vie = m1.MaxLife;
+            }
+        }
+    }
+        class Ghost : Monster
     {
         public static int ChanceOfSpawn = 30;
         public Ghost()
