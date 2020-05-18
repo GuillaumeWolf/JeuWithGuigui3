@@ -198,7 +198,7 @@ namespace JeuWithGuigui3
             Numpotion = 3;
             MagicResistance = false;
         }
-        //c'est un zombie
+        
         public static void ReviveZ(Monster m1)
         {
             int x = RandomInt(2);
