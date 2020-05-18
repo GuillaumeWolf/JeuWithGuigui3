@@ -58,13 +58,13 @@ namespace JeuWithGuigui3
 
         static public void CreateRandomArmor(Player p1, Monster m1)
         {
-            int ChanceBig = SmallArmor.ChanceOfLooting;
+            int ChanceBig = BigArmor.ChanceOfLooting;
             int ChanceMedium = MediumArmor.ChanceOfLooting + ChanceBig;
-            int ChanceSmall = BigArmor.ChanceOfLooting + ChanceMedium;
+            int ChanceSmall = SmallArmor.ChanceOfLooting + ChanceMedium;
 
 
 
-            int y = RandomInt(SmallArmor.ChanceOfLooting + MediumArmor.ChanceOfLooting + BigArmor.ChanceOfLooting);
+            int y = RandomInt(SmallArmor.ChanceOfLooting);
 
             if (m1 != null)
             {

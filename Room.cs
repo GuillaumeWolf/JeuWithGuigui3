@@ -60,19 +60,6 @@ namespace JeuWithGuigui3
                 return;
             }
 
-            int z = RandomInt(100);
-            if (z < 10)
-            {
-                Console.Write("You are lucky, there is another loot here. ");
-                Loot.GetRandomLoot(p1, null);
-            }
-            else if (z < 20)
-            {
-                Console.Write("Hey, there is other potions here ! ");
-                Loot.LootPotion(p1, z/10);
-            }
-            Console.WriteLine();
-
             Game.Commande(p1);
             return;
         }
@@ -119,6 +106,19 @@ namespace JeuWithGuigui3
             }
 
             bool isDead = p1.CheckDie();
+            //Autre loot
+            int z = RandomInt(100);
+            if (z < 10)
+            {
+                Console.Write("You are lucky, there is another loot here. ");
+                Loot.GetRandomLoot(p1, null);
+            }
+            else if (z < 20)
+            {
+                Console.Write("Hey, there is other potions here ! ");
+                Loot.LootPotion(p1, z / 10);
+            }
+            Console.WriteLine();
             return isDead;
         }
 
@@ -157,6 +157,18 @@ namespace JeuWithGuigui3
 
             Loot.GetRandomLoot(p1, m1);
             Loot.LootPotion(p1, m1.Numpotion);
+            int z = RandomInt(100);
+            if (z < 10)
+            {
+                Console.Write("You are lucky, there is another loot here. ");
+                Loot.GetRandomLoot(p1, null);
+            }
+            else if (z < 20)
+            {
+                Console.Write("Hey, there is other potions here ! ");
+                Loot.LootPotion(p1, z / 10);
+            }
+            Console.WriteLine();
             return !Won;
         }
 
