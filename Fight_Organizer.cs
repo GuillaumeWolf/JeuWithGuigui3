@@ -8,10 +8,9 @@ namespace JeuWithGuigui3
     class Fight_Organizer
     {
         static public int tour = 0;
-        static public bool Fight(Player p1, Monster m1)
+        static public string Fight(Player p1, Monster m1)
         {
             p1.InFight = true;
-            bool FightWon = false;
             tour = 1;
             while (true)
             {
@@ -19,10 +18,15 @@ namespace JeuWithGuigui3
                 Console.WriteLine("Turn {0}.", tour);
 
                 //Tour du joueur
-                bool exit = Game.CommandeFight(p1, m1);
-                if (exit)
+                string sortie = Commandes.Commande(p1, m1);
+
+                if (sortie == "ex")
                 {
-                    return false;
+                    return sortie;
+                }
+                else if (sortie == "es")
+                {
+                    return sortie;
                 }
                 //Check si le monstre est mort
                 bool MonsterisDead = m1.CheckDie();
@@ -30,9 +34,8 @@ namespace JeuWithGuigui3
                 if (MonsterisDead == true)
                 {
                     Console.WriteLine("You win the fight. ");
-                    FightWon = true;
                     EndOfFight(p1, m1);
-                    return FightWon;
+                    return "Alive";
                 }
 
                 //tour du monstre 
@@ -44,7 +47,7 @@ namespace JeuWithGuigui3
                 if (playerisDead)
                 {
                     Console.WriteLine("You lost...");
-                    return FightWon;
+                    return "Dead";
                 }
                 //Fin du tour
                 tour++;

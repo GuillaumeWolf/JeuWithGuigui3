@@ -31,6 +31,7 @@ namespace JeuWithGuigui3
         public int potions = 2;
         public int PotionMaxHP = 0;
         public int PuissancePotions = 1;
+        public int money = 0;
 
         //Armes 
         public Weapon weapon1 = null;
@@ -39,8 +40,8 @@ namespace JeuWithGuigui3
 
         //Situation
         public bool InFight = false;
-        public int PuissancePotionsused = 0;
-
+        public int PuissancePotionsused = 100;
+        public bool FightBoos = false;
 
         #endregion
 
@@ -213,7 +214,8 @@ namespace JeuWithGuigui3
             //Applique les dégats
             int finaldamageint = Convert.ToInt32(Finaldmg);
             m1.Vie -= finaldamageint;
-            m1.DieNot(m1);
+            m1.MonsterCapacity(m1); //Pour le Gobelin
+            
             if (m1.Vie < 0)
             {
                 m1.Vie = 0;

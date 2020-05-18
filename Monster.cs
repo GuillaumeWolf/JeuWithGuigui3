@@ -19,7 +19,7 @@ namespace JeuWithGuigui3
         public bool Usepower;
         public string Name { get; set; }
 
-        public void DieNot(Monster m1)
+        public void MonsterCapacity(Monster m1)
         {
             if (m1.Name == "Gobelin" && Vie <= 0 && !m1.Usepower)
             {
@@ -82,17 +82,28 @@ namespace JeuWithGuigui3
         //Appelée avant dans Room
         static public Monster CreatRandomMonster(Player p1)
         {
-            int basilic = Basilic.ChanceOfSpawn + (Game.RoomCount - 1) * 1;
+            int golem = GolemOfArmagedon.ChanceOfSpawn ;
+            int basilic = Basilic.ChanceOfSpawn + golem + (Game.RoomCount - 1) * 1;
             int dragon = Dragon.ChanceOfSpawn + basilic + (Game.RoomCount - 1) * 1;
             int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 3;
             int gobelin = Gobelin.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
             int slime = Slime.ChanceOfSpawn + gobelin + (Game.RoomCount - 1) * 1;
             int x = RandomInt(101);
+            
+            if (Game.RoomCount == 50)
+            {
+                golem = 10000;
+            }
 
             //Console.WriteLine("                                                    Basilic: {0}. Dragon: {1}. Ghost: {2}. Gobelin: {3}. Slime: {4}. x: {5}", basilic, dragon, ghost, gobelin, slime, x);
 
             Monster m1 = null;
-            if (x < basilic)
+            if (x < golem)
+            {
+                m1 = new GolemOfArmagedon();
+                return m1;
+            }
+            else if (x < basilic)
             {
                 m1 = new Basilic();
                 return m1;
@@ -137,7 +148,7 @@ namespace JeuWithGuigui3
 
     class Slime : Monster
     {
-        public static int ChanceOfSpawn = 34;
+        public static int ChanceOfSpawn = 35;
         public Slime()
         {
             Name = "Slime";
@@ -153,7 +164,7 @@ namespace JeuWithGuigui3
     }
     class Gobelin : Monster
     {
-        public static int ChanceOfSpawn = 34;
+        public static int ChanceOfSpawn = 30;
         public Gobelin()
         {
             Name = "Gobelin";
@@ -186,7 +197,7 @@ namespace JeuWithGuigui3
     }
     class Dragon : Monster
     {
-        public static int ChanceOfSpawn = 1;
+        public static int ChanceOfSpawn = 2;
         public Dragon()
         {
             Name = "Dragon";
@@ -202,7 +213,7 @@ namespace JeuWithGuigui3
     }
     class Basilic : Monster
     {
-        public static int ChanceOfSpawn = 1;
+        public static int ChanceOfSpawn = 2;
         public Basilic()
         {
             Name = "Basilic";
@@ -216,6 +227,7 @@ namespace JeuWithGuigui3
             MagicResistance = false;
         }
     }
+
     class GolemOfArmagedon : Monster
     {
         public static int ChanceOfSpawn = 1;
@@ -231,7 +243,7 @@ namespace JeuWithGuigui3
             ChanceOfLoot = 100;
             MagicResistance = true;
             inRage = false;
-
+            Console.WriteLine("It is the final Fight. You can not run away.");
 
         }
         public static void GolemRage(Monster m1)

@@ -27,11 +27,7 @@ namespace JeuWithGuigui3
             int Chance2Potion = ChanceOfGetting2Potion + ChancePuissancePotions;
             int ChanceNothing = nothing + Chance2Potion;
 
-            int total = ChanceWeapon + ChanceArmor + ChanceMaxhpPotion + ChancePuissancePotions + Chance2Potion + ChanceNothing;
-            if (total > 100)
-            {
-                total = 100;
-            }
+            int total = ChanceNothing;
             int x = RandomInt(total);
 
             if (m1 != null)
@@ -51,7 +47,7 @@ namespace JeuWithGuigui3
                 }
             }
 
-            //Console.WriteLine("                                                    ChanceWeapon: {0}. ChanceArmor: {1}. ChanceMaxhpPotion: {2}. ChancePuissancePotions: {3}. Chance2Potion: {4}. ChanceNothing; {5}.  x: {6}", ChanceWeapon, ChanceArmor, ChanceMaxhpPotion, ChancePuissancePotions, Chance2Potion, ChanceNothing, x);
+            Console.WriteLine("                                                    ChanceWeapon: {0}. ChanceArmor: {1}. ChanceMaxhpPotion: {2}. ChancePuissancePotions: {3}. Chance2Potion: {4}. ChanceNothing; {5}.  x: {6}", ChanceWeapon, ChanceArmor, ChanceMaxhpPotion, ChancePuissancePotions, Chance2Potion, ChanceNothing, x);
 
             if (x < ChanceWeapon)
             {
