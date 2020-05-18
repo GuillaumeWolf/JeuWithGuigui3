@@ -25,6 +25,7 @@ namespace JeuWithGuigui3
         //Charactérisitque des armes
         public bool Poison = false;
         public bool Fire = false;
+        public bool VoldeVie = false;
 
         //Objets
         public int potions = 2;
@@ -162,7 +163,7 @@ namespace JeuWithGuigui3
 
 
         //Fonction attaque
-        public void Attak(Monster m1)
+        public void Attak(Monster m1, Player p1)
         {
             double Finaldmg;
             Console.WriteLine("You can choose between a magic attack (ma) or a classic attack (ca)");
@@ -189,6 +190,13 @@ namespace JeuWithGuigui3
                     Console.WriteLine("Choose a correct command (ma or ca).");
                 }
             }
+
+            int Healling = Convert.ToInt32(Finaldmg);
+            if (VoldeVie)
+            {
+                Potion.Heal(Healling, p1);
+            }
+
 
             if (Poison)
             {
@@ -256,6 +264,11 @@ namespace JeuWithGuigui3
                 { p1.Fire = true;}
                 else if (p1.RaceOfPlayer.Name != "Cracheur de feu")
                 { p1.Fire = false;}
+                if (p1.weapon2.VoldeVie)
+                { p1.VoldeVie = true; }
+                else
+                { p1.VoldeVie = false; }
+
             }
 
 
@@ -271,6 +284,10 @@ namespace JeuWithGuigui3
                 { p1.Fire = true; }
                 else if (p1.RaceOfPlayer != null && p1.RaceOfPlayer.Name != "Cracheur de feu")
                 { p1.Fire = false; }
+                if (p1.weapon1.VoldeVie )
+                { p1.VoldeVie = true; }
+                else
+                { p1.VoldeVie = false; }
 
             }
 
@@ -287,6 +304,10 @@ namespace JeuWithGuigui3
                 { p1.Fire = true; }
                 else if (p1.RaceOfPlayer.Name != "Cracheur de feu")
                 { p1.Fire = false; }
+                if (p1.weapon1.VoldeVie || p1.weapon1.VoldeVie)
+                { p1.VoldeVie = true; }
+                else
+                { p1.VoldeVie = false; }
             }
             if (p1.COfP.ClassName == "Mage" || p1.COfP.ClassName == "Warrior")
             { p1.COfP.ClassCapacity(p1, null); }

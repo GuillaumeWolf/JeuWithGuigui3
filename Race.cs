@@ -92,8 +92,7 @@ namespace JeuWithGuigui3
 
             p1.BaseDamage += 30;
             p1.BaseHP += 30;
-            p1.HP += 10;
-            Loot.ChanceOfGettingWeapon = -1;
+            p1.HP += 30;
             Player.ChangeDamage(p1);
         }
 

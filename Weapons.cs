@@ -120,7 +120,7 @@ namespace JeuWithGuigui3
             int ChanceSword = Sword.ChanceOfLooting * 10 + ChanceMagicWand;
             int ChanceDague = Dague.ChanceOfLooting * 10 + ChanceSword;
             int y = RandomInt(ChanceDague);
-
+            //Console.WriteLine("ChanceDague : {0}", ChanceDague);
             if (m1 != null)
             {
                 ChanceMagicWand += m1.ChanceOfLoot * 10;
@@ -128,7 +128,6 @@ namespace JeuWithGuigui3
                 ChanceDague += m1.ChanceOfLoot * 10;
                 ChanceLeechSword += m1.ChanceOfLoot * 10;
                 ChanceMagicSword += m1.ChanceOfLoot * 10;
-                ChanceLegendarySword += m1.ChanceOfLoot * 10;
             }
             //Console.WriteLine("                                                    ChanceLegendarySword: {0}. ChanceLeechSword: {1}. ChanceMagicSword: {2}. ChanceMagicWand: {3}. ChanceSword: {4}. ChanceDague: {5}. x: {6}.",  ChanceLegendarySword, ChanceLeechSword, ChanceMagicSword, ChanceMagicWand, ChanceSword, ChanceDague, y);
             if (y < ChanceLegendarySword)
@@ -259,6 +258,7 @@ namespace JeuWithGuigui3
             FireDamage = true;
             PoisonDamage = true;
             ChanceOfLooting /= 2;
+            LegendarySword.ChanceOfLooting = 0;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace JeuWithGuigui3
 à faire: 
 
     Obligatoirement :
+        - Mettre le spawn du boss dans Monster.creatrandommonster()
 
 
     Nouveau (idée):
@@ -37,7 +38,7 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.WriteLine("\nWhat do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - use potion: up - exit: e)");
+                Console.WriteLine("\nWhat do you want to do ? (enter room: er - stats: s - objects: o - weapons: w - armor: ar - use potion: up - exit: e)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
@@ -79,19 +80,19 @@ namespace JeuWithGuigui3
                     }
                     else if (p1.weapon1 != null && p1.weapon2 == null)
                     {
-                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
+                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
                         if (p1.weapon1.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon1.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
                     }
                     else
                     {
-                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
+                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
                         if (p1.weapon1.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon1.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
 
-                        Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
+                        Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
                         if (p1.weapon2.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon2.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
@@ -139,7 +140,7 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.WriteLine("\nWhat do you want to do ? (stats: s - objects: o - weapons: w - attack: a - monster stats: ms - use potion: up - exit: e)");
+                Console.WriteLine("\nWhat do you want to do ? (stats: s - objects: o - weapons: w - armor: ar- attack: a - monster stats: ms - use potion: up - exit: e)");
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
 
@@ -181,26 +182,26 @@ namespace JeuWithGuigui3
                     }
                     else if (p1.weapon1 == null && p1.weapon2 != null)
                     {
-                        Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
+                        Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
                         if (p1.weapon2.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon2.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
                     }
                     else if (p1.weapon1 != null && p1.weapon2 == null)
                     {
-                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
+                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
                         if (p1.weapon1.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon1.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
                     }
                     else
                     {
-                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
+                        Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
                         if (p1.weapon1.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon1.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
 
-                        Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
+                        Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
                         if (p1.weapon2.PoisonDamage) { Console.Write("Poison Damage. "); }
                         if (p1.weapon2.FireDamage) { Console.Write("Fire Damage. "); }
                         Console.WriteLine();
@@ -210,7 +211,7 @@ namespace JeuWithGuigui3
 
                 else if (PlayerCommande == "a")
                 {
-                    p1.Attak(m1);
+                    p1.Attak(m1, p1);
                     return false;
                 }
 

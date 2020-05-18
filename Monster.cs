@@ -45,14 +45,14 @@ namespace JeuWithGuigui3
             }
             if (PoisonDmg)
             {
-                int poisonDmg = 25 * Fight_Organizer.tour;
+                int poisonDmg = 5 * Fight_Organizer.tour;
                 finalDmg += poisonDmg;
                 Console.Write("You take {0} damage from poisonning. ", poisonDmg);
             }
             if (FireDmg && p1.RaceOfPlayer.Name != "Cracheur de feu")
             {
                 finalDmg += 15;
-                Console.Write("You take {0} damage from fire. ", p1.HP);
+                Console.Write("You take 15 damage from fire. ");
             }
             //Inflige les degats
             p1.HP -= finalDmg;
