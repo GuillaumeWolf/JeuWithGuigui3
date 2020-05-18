@@ -30,6 +30,7 @@ namespace JeuWithGuigui3
             Console.WriteLine("(room 0)\n");
             Player p1 = Player.CreatePlayer();
             Commandes.Commande(p1, null);
+            //PlayAgain();
         }
     }
 }

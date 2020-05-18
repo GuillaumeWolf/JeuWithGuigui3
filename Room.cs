@@ -40,23 +40,32 @@ namespace JeuWithGuigui3
             var indexRoom = RoomsChances.Count()- RoomsChances
                 .Where(y => y > x)
                 .Count();
-            
-            switch(indexRoom)
+
+            Console.WriteLine("indexRoom = {0}.", indexRoom);
+
+            if (Game.RoomCount != 50)
             {
-                case 0:
-                    EnterLegendaryRoom(p1);
-                    break;
-                case 1:
-                    EnterEmptyRoom(p1);
-                    break;
-                case 2:
-                    isDead = EnterTrapRoom(p1);
-                    break;
-                case 3:
-                    sortie = EnterMonsterRoom(p1);
-                    break;
+                switch (indexRoom)
+                {
+                    case 0:
+                        EnterLegendaryRoom(p1);
+                        break;
+                    case 1:
+                        EnterEmptyRoom(p1);
+                        break;
+                    case 2:
+                        isDead = EnterTrapRoom(p1);
+                        break;
+                    case 3:
+                        sortie = EnterMonsterRoom(p1);
+                        break;
+                }
             }
-            
+            else 
+            {
+                sortie = EnterMonsterRoom(p1);        
+            }
+
             if (isDead)
             {
                 return;
@@ -109,7 +118,6 @@ namespace JeuWithGuigui3
             int RockTrap = 595 + PicTrap;
 
             //Console.WriteLine("                                                    DeadTrap: {0}. FireTrap: {1}. PicTrap: {2}. RockTrap: {3}. y: {4}", DeadTrap, FireTrap, PicTrap, RockTrap, y);
-
 
             if (y < DeadTrap)
             {
