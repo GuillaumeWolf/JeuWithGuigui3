@@ -64,11 +64,15 @@ namespace JeuWithGuigui3
             Console.WriteLine("You lost {0} HP. You are {1} HP left.", finalDmg, p1.HP);
         }
         
-        public bool CheckDie()
+        public bool CheckDie(Monster m1)
         {
             bool isDead = false;
             if (Vie <= 0)
             {
+                if (m1.Name == "Zombie")
+                {
+                    Zombie.ReviveZ(m1);
+                }
                 isDead = Die();
             }
             return isDead;
@@ -84,7 +88,8 @@ namespace JeuWithGuigui3
         {
             int basilic = Basilic.ChanceOfSpawn + (Game.RoomCount - 1) * 1;
             int dragon = Dragon.ChanceOfSpawn + basilic + (Game.RoomCount - 1) * 1;
-            int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 3;
+            int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 3;  //what pk y a un 3 ici?
+            int zombie = Zombie.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
             int gobelin = Gobelin.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
             int slime = Slime.ChanceOfSpawn + gobelin + (Game.RoomCount - 1) * 1;
             int x = RandomInt(101);
@@ -105,6 +110,11 @@ namespace JeuWithGuigui3
             else if (x < ghost)
             {
                 m1 = new Ghost();
+                return m1;
+            }
+            else if (x < zombie)
+            {
+                m1 = new Zombie();
                 return m1;
             }
             else if (x < gobelin)
@@ -137,7 +147,7 @@ namespace JeuWithGuigui3
 
     class Slime : Monster
     {
-        public static int ChanceOfSpawn = 34;
+        public static int ChanceOfSpawn = 29;
         public Slime()
         {
             Name = "Slime";
@@ -153,7 +163,7 @@ namespace JeuWithGuigui3
     }
     class Gobelin : Monster
     {
-        public static int ChanceOfSpawn = 34;
+        public static int ChanceOfSpawn = 29;
         public Gobelin()
         {
             Name = "Gobelin";
@@ -170,7 +180,7 @@ namespace JeuWithGuigui3
     }
     class Ghost : Monster
     {
-        public static int ChanceOfSpawn = 30;
+        public static int ChanceOfSpawn = 20;
         public Ghost()
         {
             Name = "Ghost";
@@ -182,6 +192,30 @@ namespace JeuWithGuigui3
             ChanceOfLoot = 4;
             Numpotion = 3;
             MagicResistance = false;
+        }
+    }
+    class Zombie : Monster
+    {
+        public static int ChanceOfSpawn = 20;
+        public Zombie()
+        {
+            Name = "Zombie";
+            MaxLife = 30;
+            Vie = MaxLife;
+            Dmg = 10;
+            FireDmg = false;
+            PoisonDmg = true;
+            ChanceOfLoot = 4;
+            Numpotion = 3;
+            MagicResistance = false;
+        }
+        public static void ReviveZ(Monster m1)
+        {
+            int x = RandomInt(2);
+            if (x == 2)
+            {
+                m1.Vie = m1.MaxLife;
+            }
         }
     }
     class Dragon : Monster
@@ -218,7 +252,7 @@ namespace JeuWithGuigui3
     }
     class GolemOfArmagedon : Monster
     {
-        public static int ChanceOfSpawn = 1;
+        public static int ChanceOfSpawn = 0;
 
         public GolemOfArmagedon()
         {

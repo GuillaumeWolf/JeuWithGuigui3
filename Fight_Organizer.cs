@@ -25,7 +25,7 @@ namespace JeuWithGuigui3
                     return false;
                 }
                 //Check si le monstre est mort
-                bool MonsterisDead = m1.CheckDie();
+                bool MonsterisDead = m1.CheckDie(m1);
 
                 if (MonsterisDead == true)
                 {
