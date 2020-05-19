@@ -11,7 +11,7 @@ namespace JeuWithGuigui3
         {
             while (true)
             {
-                Console.Write("\nWhat do you want to do ?");
+                Console.Write("\nWhat do you want to do ? ");
                 WritePoss(p1);
                 Console.Write("--> ");
                 string PlayerCommande = Console.ReadLine();
@@ -67,9 +67,8 @@ namespace JeuWithGuigui3
                 else if (PlayerCommande == "up")
                 {
                     bool usedPotions = Potion.UsePotions(p1);
-                    if (!usedPotions)
+                    if (usedPotions && p1.InFight)
                     {
-                        Commande(p1, null);
                         return "";
                     }
 
@@ -100,12 +99,19 @@ namespace JeuWithGuigui3
                     return "";
                 }
 
+                //Cheat Commande
+                else if (PlayerCommande == "lee")
+                {
+                    LeechSword lee1 = new LeechSword();
+                    Weapon.AddWeapon(p1, lee1, null);
+                }
+
+                //Autre
                 else
                 {
                     Console.WriteLine("Choose a correct commande.");
                 }
             }
-
         }
 
 
@@ -138,9 +144,11 @@ namespace JeuWithGuigui3
                 {
                     Console.WriteLine("Choose a correct commande.");
                 }
+                */
+                break;
             }
-            */
-                int x = 2;
+            
+            int x = 2;
         }
 
 

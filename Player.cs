@@ -167,11 +167,12 @@ namespace JeuWithGuigui3
         public void Attak(Monster m1, Player p1)
         {
             double Finaldmg;
+            string chooseattak;
             Console.WriteLine("You can choose between a magic attack (ma) or a classic attack (ca)");
             while (true)
             {
                 Console.Write("--> ");
-                string chooseattak = Console.ReadLine();
+                chooseattak = Console.ReadLine();
                 if (chooseattak == "ma")
                 {
                     Finaldmg = MagicDmg;
@@ -193,9 +194,31 @@ namespace JeuWithGuigui3
             }
 
             int Healling = Convert.ToInt32(Finaldmg);
+
             if (VoldeVie)
             {
-                Potion.Heal(Healling, p1);
+                if (weapon1 != null && weapon1.VoldeVie)
+                {
+                    if (chooseattak == "ca")
+                    {
+                        Potion.Heal(weapon1.Dmg, p1);
+                    }
+                    else
+                    {
+                        Potion.Heal(weapon1.MagicDamage, p1);
+                    }
+                }
+                if (weapon2 != null && weapon2.VoldeVie)
+                {
+                    if (chooseattak == "ca")
+                    {
+                        Potion.Heal(weapon2.Dmg, p1);
+                    }
+                    else
+                    {
+                        Potion.Heal(weapon2.MagicDamage, p1);
+                    }
+                }
             }
 
 

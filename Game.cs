@@ -12,9 +12,12 @@ namespace JeuWithGuigui3
         - deplacer les commande dans une nouvelle classe
 
     Nouveau (idée):
-        - créer un systeme d'argent(Guillaume -> confirmation de lidée par leander ??)  (enleve juste les poitn d'interogation si tu es daccord)
         - room pour acheter des armes(Guillaume -> confirmation de lidée par leander ??)  (enleve juste les poitn d'interogation si tu es daccord)
         - possibilité de fuir le combat contre de largent ? (Guillaume)
+        - coup critique (Guillaume)
+        - une fonction playagain() pour rejoue un fois mort ou que le boss est mort
+
+
 
 
 */
@@ -23,14 +26,34 @@ namespace JeuWithGuigui3
     {
         //Attribut du jeu
         static public int RoomCount = 0;
-        static public Monster m1 = null;
 
         static void Main()
         {
             Console.WriteLine("(room 0)\n");
             Player p1 = Player.CreatePlayer();
             Commandes.Commande(p1, null);
-            //PlayAgain();
+            PlayAgain();
+        }
+
+
+        public static void PlayAgain()
+        {
+            while (true)
+            {
+                Console.WriteLine("\n\n\nDo you want to play again ? (yes or no)");
+                Console.Write("--> ");
+                string rep = Console.ReadLine();
+                if (rep == "yes")
+                {
+                    Game.RoomCount = 0; 
+                    Main();
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
     }
 }

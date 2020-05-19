@@ -20,6 +20,8 @@ namespace JeuWithGuigui3
         // Pour les loots
         public int ChanceOfLoot;
         public int Numpotion;
+        public int PODrop;
+        public int POCost;
         //Capacité utilisé du monstre
         public bool Usepower;
         public string Name { get; set; }
@@ -104,7 +106,7 @@ namespace JeuWithGuigui3
             int slime = Slime.ChanceOfSpawn + gobelin + (Game.RoomCount - 1) * 1;
             int x = RandomInt(101);
             
-            if (Game.RoomCount == 50)
+            if (Game.RoomCount == GolemOfArmagedon.RoomOfSpawning)
             {
                 golem = 10000;
             }
@@ -176,9 +178,13 @@ namespace JeuWithGuigui3
             Dmg = 5;
             FireDmg = false;
             PoisonDmg = false;
+            MagicResistance = true;
+            // Loot
             ChanceOfLoot = 0;
             Numpotion = 1;
-            MagicResistance = true;
+            PODrop = 10;
+            POCost = 20;
+
         }
     }
     class Gobelin : Monster
@@ -192,10 +198,14 @@ namespace JeuWithGuigui3
             Dmg = 30;
             FireDmg = false;
             PoisonDmg = false;
+            MagicResistance = false;
+            //Has a power
+            Usepower = false;
+            // Loot
             ChanceOfLoot = 0;
             Numpotion = 2;
-            MagicResistance = false;
-            Usepower = false;
+            PODrop = 15;
+            POCost = 30;
         }
     }
     class Zombie : Monster
@@ -209,10 +219,14 @@ namespace JeuWithGuigui3
             Dmg = 20;
             FireDmg = false;
             PoisonDmg = true;
+            MagicResistance = false;
+            //Has a power
+            Usepower = false;
+            // Loot
             ChanceOfLoot = 4;
             Numpotion = 3;
-            MagicResistance = false;
-            Usepower = false;
+            PODrop = 40;
+            POCost = 60;
         }
         
     }
@@ -268,6 +282,7 @@ namespace JeuWithGuigui3
     class GolemOfArmagedon : Monster
     {
         public static int ChanceOfSpawn = 1;
+        public static int RoomOfSpawning = 25;
 
         public GolemOfArmagedon()
         {

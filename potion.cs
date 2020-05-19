@@ -14,10 +14,10 @@ namespace JeuWithGuigui3
             string[] poss = writePossibilities(p1);
             if (poss == null)
             {
-                Console.WriteLine("You cannot use potion now potion.");
+                Console.WriteLine("You cannot use potion now.");
                 while (true)
                 {
-                    Console.Write("--> ");
+                    Console.Write("Write \"gb\".\n--> ");
                     string rep1 = Console.ReadLine();
                     if (rep1 == "gb")
                     {
@@ -41,8 +41,8 @@ namespace JeuWithGuigui3
             }
 
             //Quatrieme fonction
-            ConsomePotions(typePotion, numPotion,p1);
-            return true;
+            bool used = ConsomePotions(typePotion, numPotion,p1);
+            return used;
         }
 
         //Premiere fonction
@@ -178,37 +178,47 @@ namespace JeuWithGuigui3
 
 
         //Quatrieme fonction
-        private static void ConsomePotions(string ChoosePotions, int usedPotion, Player p1)
+        private static bool ConsomePotions(string ChoosePotions, int usedPotion, Player p1)
         {
             string type = "";
             if (ChoosePotions == "pp")
             {
                 while (true)
                 {
-                    Console.WriteLine("Which type do you want to up ? (ma or ca)");
+                    Console.WriteLine("Which type do you want to up ? (ma or ca or gb)");
                     Console.Write("--> ");
                     string rep = Console.ReadLine();
+                    if (rep == "gb")
+                    {
+                        UsePotions(p1);
+                        return false;
+                    }
                     if (rep == "ma" || rep == "ca")
                     { type = rep; break; }
                     else
                     { Console.WriteLine("Choose a correct value."); }
                 }
             }
-            for (int i = 0; i < usedPotion; i++)
-            {
-                if (ChoosePotions == "hp")
-                { p1.potions--; Heal(30, p1); }
-                else if (ChoosePotions == "mhp")
-                { p1.PotionMaxHP--; UpHP(30, p1); }
-                else if (ChoosePotions == "pp")
-                { p1.PuissancePotions--; UpDamage(20, type, p1); }
-            }
+
             if (ChoosePotions == "hp")
-            { Console.WriteLine("You used {0} heal postions.", usedPotion); }
+            {
+                p1.potions -= usedPotion;
+                Heal(30 * usedPotion, p1);
+                Console.WriteLine("You used {0} heal postions.", usedPotion); 
+            }
             else if (ChoosePotions == "mhp")
-            { Console.WriteLine("You used {0} MaxHP potions.", usedPotion); }
+            {
+                p1.PotionMaxHP -= usedPotion;
+                UpHP(30 * usedPotion, p1);
+                Console.WriteLine("You used {0} MaxHP potions.", usedPotion); 
+            }
             else if (ChoosePotions == "pp")
-            { Console.WriteLine("You used {0} Puissance Potions.", usedPotion); }
+            {
+                p1.PuissancePotions -= usedPotion;
+                UpDamage(5 * usedPotion,type, p1);
+                Console.WriteLine("You used {0} Puissance Potions.", usedPotion); 
+            }
+            return true;
         }
 
 

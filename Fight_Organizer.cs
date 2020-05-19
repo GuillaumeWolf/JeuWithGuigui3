@@ -35,6 +35,10 @@ namespace JeuWithGuigui3
                 {
                     Console.WriteLine("You win the fight. ");
                     EndOfFight(p1, m1);
+                    if (m1.Name == "Golem of Armagedon")
+                    {
+                        return "BoosDead";
+                    }
                     return "Alive";
                 }
 

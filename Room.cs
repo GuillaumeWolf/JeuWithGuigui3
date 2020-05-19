@@ -32,7 +32,7 @@ namespace JeuWithGuigui3
             int x = RandomInt(_ChanceMonster + 1);
 
             Console.WriteLine();
-            //Console.WriteLine("                                                    LegendaryRoom: {0}. ChanceNothing: {1}. ChanceTrap: {2}. ChanceMonster: {3}. x: {4}", _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster, x);
+            Console.WriteLine("                                                    LegendaryRoom: {0}. ChanceNothing: {1}. ChanceTrap: {2}. ChanceMonster: {3}. x: {4}", _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster, x);
             Console.WriteLine();
 
             string sortie = "";
@@ -41,9 +41,9 @@ namespace JeuWithGuigui3
                 .Where(y => y > x)
                 .Count();
 
-            Console.WriteLine("indexRoom = {0}.", indexRoom);
+            Console.WriteLine("IndexRoom = {0}.", indexRoom);
 
-            if (Game.RoomCount != 50)
+            if (Game.RoomCount != GolemOfArmagedon.RoomOfSpawning)
             {
                 switch (indexRoom)
                 {
@@ -70,7 +70,16 @@ namespace JeuWithGuigui3
             {
                 return;
             }
-            if (sortie == "ex")
+            if (sortie == "BoosDead")
+            {
+                Console.WriteLine("You finished the game. GG !!");
+                return;
+            }
+            else if (sortie == "ex")
+            {
+                return;
+            }
+            else if (sortie == "Alive" && Game.RoomCount == 50)
             {
                 return;
             }
@@ -126,7 +135,7 @@ namespace JeuWithGuigui3
             }
             else if (y < FireTrap)
             {
-                Console.WriteLine("You get burn by a fire. You lost 50 HP");
+                Console.WriteLine("You get burn in fire. You lost 50 HP");
                 p1.HP -= 50;
             }
             else if (y < PicTrap)
@@ -141,8 +150,6 @@ namespace JeuWithGuigui3
             }
             
             
-            
-
             bool isDead = p1.CheckDie();
             //Autre loot
             int z = RandomInt(100);
@@ -159,6 +166,7 @@ namespace JeuWithGuigui3
             Console.WriteLine();
             return isDead;
         }
+
 
 
         static private string EnterMonsterRoom(Player p1)
@@ -178,8 +186,11 @@ namespace JeuWithGuigui3
             }
 
             string sortie = Fight_Organizer.Fight(p1, m1);
-
-            if (sortie == "ex")
+            if (sortie == "BoosDead")
+            {
+                return sortie;
+            }
+            else if (sortie == "ex")
             {
                 p1.InFight = false;
                 return sortie;
