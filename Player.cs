@@ -30,8 +30,8 @@ namespace JeuWithGuigui3
         //Objets
         public int potions = 2;
         public int PotionMaxHP = 0;
-        public int PuissancePotions = 1;
-        public int money = 0;
+        public int PuissancePotions = 199;
+        public int money = 20;
 
         //Armes 
         public Weapon weapon1 = null;

@@ -15,7 +15,7 @@ namespace JeuWithGuigui3
 
 
         static public void GetRandomLoot(Player p1, Monster m1)
-        { 
+        {
             if (p1.RaceOfPlayer.Name == "Minautore")
             {
                 ChanceOfGettingArmor = -1;
@@ -24,8 +24,8 @@ namespace JeuWithGuigui3
             int ChanceArmor = ChanceOfGettingArmor + ChanceWeapon;
             int ChanceMaxhpPotion = ChanceOfGettingMaxHpPotion + ChanceArmor;
             int ChancePuissancePotions = ChanceOfGettingPuissancePotions + ChanceMaxhpPotion;
-            int Chance2Potion = ChanceOfGetting2Potion + ChancePuissancePotions;
-            int ChanceNothing = nothing + Chance2Potion;
+            int Chance3Potion = ChanceOfGetting2Potion + ChancePuissancePotions;
+            int ChanceNothing = nothing + Chance3Potion;
 
             int total = ChanceNothing;
             int x = RandomInt(total);
@@ -33,13 +33,13 @@ namespace JeuWithGuigui3
             if (m1 != null)
             {
                 if (p1.COfP.ClassName == "Thief")
-                { p1.COfP.ClassCapacity(p1, m1);}
+                { p1.COfP.ClassCapacity(p1, m1); }
 
-                ChanceWeapon += m1.ChanceOfLoot; 
+                ChanceWeapon += m1.ChanceOfLoot;
                 ChanceArmor += m1.ChanceOfLoot;
                 ChanceMaxhpPotion += m1.ChanceOfLoot;
                 ChancePuissancePotions += m1.ChanceOfLoot;
-                Chance2Potion += m1.ChanceOfLoot;
+                Chance3Potion += m1.ChanceOfLoot;
 
                 if (p1.RaceOfPlayer.Name == "Minautore")
                 {
@@ -47,7 +47,7 @@ namespace JeuWithGuigui3
                 }
             }
 
-            Console.WriteLine("                                                    ChanceWeapon: {0}. ChanceArmor: {1}. ChanceMaxhpPotion: {2}. ChancePuissancePotions: {3}. Chance2Potion: {4}. ChanceNothing; {5}.  x: {6}", ChanceWeapon, ChanceArmor, ChanceMaxhpPotion, ChancePuissancePotions, Chance2Potion, ChanceNothing, x);
+            //Console.WriteLine("                                                    ChanceWeapon: {0}. ChanceArmor: {1}. ChanceMaxhpPotion: {2}. ChancePuissancePotions: {3}. Chance2Potion: {4}. ChanceNothing; {5}.  x: {6}", ChanceWeapon, ChanceArmor, ChanceMaxhpPotion, ChancePuissancePotions, Chance3Potion, ChanceNothing, x);
 
             if (x < ChanceWeapon)
             {
@@ -66,12 +66,12 @@ namespace JeuWithGuigui3
             }
             else if (x < ChancePuissancePotions)
             {
-                Potion.GetPuissancePotions(1, p1);
+                Potion.GetPuissancePotions(2, p1);
                 return;
             }
-            else if (x < Chance2Potion)
+            else if (x < Chance3Potion)
             {
-                Potion.GetPotions(2, p1);
+                Potion.GetPotions(3, p1);
                 return;
             }
             else if (x < ChanceNothing)
@@ -99,6 +99,12 @@ namespace JeuWithGuigui3
             {
                 Potion.GetPuissancePotions(x, p1);
             }
+        }
+
+        public static void LootMoney(Player p1, int x)
+        {
+            p1.money += x;
+            Console.WriteLine("You got {0} gold, you have {1} gold.", x, p1.money);
         }
 
         static public int RandomInt(int Max)

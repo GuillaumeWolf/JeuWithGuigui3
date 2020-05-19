@@ -91,8 +91,8 @@ namespace JeuWithGuigui3
             Propreties = new string[] { proprties1, proprties2, proprtie3 };
 
             p1.BaseDamage += 30;
-            p1.BaseHP += 30;
-            p1.HP += 30;
+            p1.BaseHP += 10;
+            p1.HP += 10;
             Player.ChangeDamage(p1);
         }
 

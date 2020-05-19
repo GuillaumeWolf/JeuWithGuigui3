@@ -140,12 +140,12 @@ namespace JeuWithGuigui3
             }
             else if (y < PicTrap)
             {
-                Console.WriteLine("A trap open under your feet. You fall into it and loos 20 HP but you can reach the top and get out of here. You lost 20 HP.");
+                Console.WriteLine("A trap open under your feet. You fall into it and loos 20 HP but you can reach the top and get out of here.");
                 p1.HP -= 20;
             }
             else if (y < RockTrap)
             {
-                Console.WriteLine("A big rock fall on you. You loos 10 HP.");
+                Console.WriteLine("A big rock fall on you. You lost 10 HP.");
                 p1.HP -= 10;
             }
             
@@ -207,6 +207,7 @@ namespace JeuWithGuigui3
             }    
             Loot.GetRandomLoot(p1, m1);
             Loot.LootPotion(p1, m1.Numpotion);
+            Loot.LootMoney(p1, m1.PODrop);
             int z = RandomInt(100);
             if (z < 10)
             {

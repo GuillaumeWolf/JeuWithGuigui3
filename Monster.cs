@@ -10,7 +10,8 @@ namespace JeuWithGuigui3
 
         //Vie
         public int MaxLife; 
-        public int Vie; 
+        public int Vie;
+        public int baseDmg;
         public int Dmg; 
         //Capacité de feu, poison, etc...
         public bool FireDmg;
@@ -173,7 +174,7 @@ namespace JeuWithGuigui3
         public Slime()
         {
             Name = "Slime";
-            MaxLife = 40;
+            MaxLife = 80;
             Vie = MaxLife;
             Dmg = 5;
             FireDmg = false;
@@ -216,17 +217,17 @@ namespace JeuWithGuigui3
             Name = "Zombie";
             MaxLife = 60;
             Vie = MaxLife;
-            Dmg = 20;
+            Dmg = 30;
             FireDmg = false;
             PoisonDmg = true;
             MagicResistance = false;
             //Has a power
             Usepower = false;
             // Loot
-            ChanceOfLoot = 4;
+            ChanceOfLoot = 8;
             Numpotion = 3;
             PODrop = 40;
-            POCost = 60;
+            POCost = 100;
         }
         
     }
@@ -238,12 +239,15 @@ namespace JeuWithGuigui3
             Name = "Ghost";
             MaxLife = 100;
             Vie = MaxLife;
-            Dmg = 35;
+            Dmg = 40;
             FireDmg = false;
             PoisonDmg = false;
-            ChanceOfLoot = 4;
-            Numpotion = 3;
             MagicResistance = false;
+            // Loot
+            ChanceOfLoot = 8;
+            Numpotion = 3;
+            PODrop = 40;
+            POCost = 100;
         }
     }
     class Dragon : Monster
@@ -252,14 +256,17 @@ namespace JeuWithGuigui3
         public Dragon()
         {
             Name = "Dragon";
-            MaxLife = 300;
+            MaxLife = 500;
             Vie = MaxLife;
-            Dmg = 40;
+            Dmg = 60;
             FireDmg = true;
             PoisonDmg = false;
+            MagicResistance = true;
+            // Loot
             ChanceOfLoot = 30;
             Numpotion = 5;
-            MagicResistance = true;
+            PODrop = 100;
+            POCost =200;
         }
     }
     class Basilic : Monster
@@ -268,14 +275,17 @@ namespace JeuWithGuigui3
         public Basilic()
         {
             Name = "Basilic";
-            MaxLife = 250;
+            MaxLife = 350;
             Vie = MaxLife;
-            Dmg = 25;
+            Dmg = 35;
             FireDmg = false;
             PoisonDmg = true;
+            MagicResistance = false;
+            // Loot
             ChanceOfLoot = 30;
             Numpotion = 5;
-            MagicResistance = false;
+            PODrop = 100;
+            POCost = 200;
         }
     }
 
@@ -287,12 +297,14 @@ namespace JeuWithGuigui3
         public GolemOfArmagedon()
         {
             Name = "Golem of Armagedon";
-            MaxLife = 1000;
+            MaxLife = 2000;
             Vie = MaxLife;
+            baseDmg = 100;
             Dmg = 100;
             FireDmg = false;
             PoisonDmg = false;
-            ChanceOfLoot = 100;
+            Usepower = false;
+            ChanceOfLoot = 100000;
             MagicResistance = true;
             inRage = false;
             Console.WriteLine("It is the final Fight. You can not run away.");
@@ -300,11 +312,22 @@ namespace JeuWithGuigui3
         }
         public static void GolemRage(Monster m1)
         {
-            m1.inRage = true;
-            if (m1.inRage)
+            
+            if (m1.Name == "Golem of Armagedon" && m1.Vie < m1.MaxLife/2 && !m1.Usepower)
             {
+                Console.WriteLine("The Golem of Armagedon is angry ! He enter in rage mode !");
+                m1.Dmg = m1.baseDmg * 15 / 10;
                 m1.FireDmg = true;
                 m1.PoisonDmg = true;
+                m1.inRage = true;
+                m1.Usepower = true;
+            }
+            else
+            {
+                m1.Dmg = m1.baseDmg;
+                m1.FireDmg = false;
+                m1.PoisonDmg = false;
+                m1.inRage = false;
             }
         }
 

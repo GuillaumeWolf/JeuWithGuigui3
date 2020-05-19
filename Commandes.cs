@@ -19,7 +19,7 @@ namespace JeuWithGuigui3
                 //DIFFERENTE COMMANDE   
                 
                 //Exit
-                if (PlayerCommande == "ex")
+                if (PlayerCommande == "exit")
                 {
                     Console.WriteLine("Goodbye");
                     return "ex";
@@ -86,10 +86,30 @@ namespace JeuWithGuigui3
                 //Escape Room
                 else if(PlayerCommande == "es" && p1.InFight && !p1.FightBoos)
                 {
-                    Console.WriteLine("You escape the monster.");
-                    Game.RoomCount -= 1;
-                    Console.WriteLine("\n(room {0})", Game.RoomCount);
-                    return PlayerCommande;
+                    if (p1.money - m1.POCost < 0)
+                    {
+                        Console.WriteLine("You dont have enough gold.");
+                        continue;
+                    }
+                    while (true)
+                    {
+                        Console.WriteLine("If you want to escape, it will cost you {0} gold. if you want to pay wirte \"yes\". (Sold : {1})", m1.POCost, p1.money - m1.POCost);
+                        Console.Write("--> ");
+                        string rep = Console.ReadLine();
+                        if (rep == "yes")
+                        {
+                            p1.money -= m1.POCost;
+                            Console.WriteLine("You escape the monster.");
+                            Game.RoomCount -= 1;
+                            Console.WriteLine("\n(room {0})", Game.RoomCount);
+                            return PlayerCommande;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Choose again.");
+                            break;
+                        }
+                    }
                 }
 
                 //Attack
@@ -104,6 +124,10 @@ namespace JeuWithGuigui3
                 {
                     LeechSword lee1 = new LeechSword();
                     Weapon.AddWeapon(p1, lee1, null);
+                }
+                else if (PlayerCommande == "zgold")
+                {
+                    p1.money = 0;
                 }
 
                 //Autre
@@ -194,7 +218,7 @@ namespace JeuWithGuigui3
             }
             if (true)
             {
-                Console.Write(" - exit: ex");
+                Console.Write(" - exit");
             }
             Console.WriteLine(")");
         }

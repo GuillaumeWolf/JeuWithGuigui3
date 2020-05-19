@@ -209,7 +209,7 @@ namespace JeuWithGuigui3
             else if (ChoosePotions == "mhp")
             {
                 p1.PotionMaxHP -= usedPotion;
-                UpHP(30 * usedPotion, p1);
+                UpHP(20 * usedPotion, p1);
                 Console.WriteLine("You used {0} MaxHP potions.", usedPotion); 
             }
             else if (ChoosePotions == "pp")

@@ -9,13 +9,11 @@ namespace JeuWithGuigui3
 à faire: 
 
     Obligatoirement :
-        - deplacer les commande dans une nouvelle classe
+
 
     Nouveau (idée):
         - room pour acheter des armes(Guillaume -> confirmation de lidée par leander ??)  (enleve juste les poitn d'interogation si tu es daccord)
-        - possibilité de fuir le combat contre de largent ? (Guillaume)
         - coup critique (Guillaume)
-        - une fonction playagain() pour rejoue un fois mort ou que le boss est mort
 
 
 
