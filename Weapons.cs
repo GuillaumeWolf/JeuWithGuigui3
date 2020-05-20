@@ -125,7 +125,8 @@ namespace JeuWithGuigui3
         {
             int ChanceLegendarySword = Convert.ToInt32(LegendarySword.ChanceOfLooting * 10);
             int ChanceLeechSword = Convert.ToInt32(LeechSword.ChanceOfLooting * 10) + ChanceLegendarySword;
-            int ChanceMagicSword = Convert.ToInt32(MagicSword.ChanceOfLooting * 10) + ChanceLeechSword;
+            int ChanceLépéecalice = Convert.ToInt32(Lépéecalice.ChanceOfLooting * 10) + ChanceLeechSword;
+            int ChanceMagicSword = Convert.ToInt32(MagicSword.ChanceOfLooting * 10) + ChanceLépéecalice;
             int ChanceCritSword = Convert.ToInt32(CritSword.ChanceOfLooting * 10) + ChanceMagicSword;
             int ChanceMagicWand = Convert.ToInt32(MagicWand.ChanceOfLooting * 10) + ChanceCritSword;
             int ChanceSword = Convert.ToInt32(Sword.ChanceOfLooting * 10) + ChanceMagicWand;
@@ -152,6 +153,12 @@ namespace JeuWithGuigui3
             else if (y < ChanceLeechSword)
             {
                 Weapon w1 = new LeechSword();
+                AddWeapon(p1, w1, m1);
+                return;
+            }
+            else if (y < ChanceLépéecalice)
+            {
+                Weapon w1 = new Lépéecalice();
                 AddWeapon(p1, w1, m1);
                 return;
             }
@@ -309,12 +316,37 @@ namespace JeuWithGuigui3
             PoisonBool = false;
 
             //Dégats et Crit
-            ClassicDmg = 30;
-            MagicDmg = 30;
+            ClassicDmg = 40;
+            MagicDmg = 40;
             Crit = 0;
         }
 
     }
+
+
+    class Lépéecalice : Weapon
+    {
+        public static double ChanceOfLooting = ChanceOfLootingWeapon.lépéecalice;
+        public Lépéecalice()
+        {
+            //Name
+            Name = "L'épée Calice";
+
+            //Caractéristique Bool
+            ClassicDamageBool = false;
+            MagicDamageBool = true;
+            CritBool = false;
+            VolDevieBool = false;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 0;
+            MagicDmg = 50;
+            Crit = 0;
+        }
+    }
+
     class LeechSword : Weapon            //épée vol de vie
     {
         public static double ChanceOfLooting = ChanceOfLootingWeapon.LeechSwordLoot;    
@@ -332,7 +364,7 @@ namespace JeuWithGuigui3
             PoisonBool = false;
 
             //Dégats et Crit
-            ClassicDmg = 30;
+            ClassicDmg = 40;
             MagicDmg = 0;
             Crit = 0;
         }
@@ -367,10 +399,11 @@ namespace JeuWithGuigui3
     {
         public static double LegendaryLoot = 0.5;
         public static double LeechSwordLoot = 4.5;
+        public static double lépéecalice = 5;
         public static double MagicSwordLoot = 10;
         public static double CritSwordLoot = 10;
         public static double MagicWandLoot = 20;
-        public static double SwordLoot = 25;
+        public static double SwordLoot = 20;
         public static double DagueLoot = 30;
 
     }

@@ -139,6 +139,7 @@ namespace JeuWithGuigui3
                     Potion.GetMaxHPPotions(20, p1);
                     Potion.GetPotions(20, p1);
                     Potion.GetPuissancePotions(20, p1);
+                    p1.money = 100000;
                 }
                 else if (PlayerCommande == "crit")
                 {
@@ -282,7 +283,7 @@ namespace JeuWithGuigui3
 
 
     class CommandeMarchand
-    { 
+    {
         //Object dans le shop on non
         public static bool hppotion = false;
         public static bool mhppotion = false;
@@ -294,11 +295,15 @@ namespace JeuWithGuigui3
         public static bool sword = false;
         public static bool magicwand = false;
         public static bool magicsword = false;
+        public static bool lépéecalice= false; 
         public static bool leechsword = false;
         public static bool critsword = false;
 
+        //Special
+        public static bool legendarysword = false;
+
         //Arrays
-        public static bool[] boolobject = { hppotion, mhppotion, pppotion, smallarmor, mediumarmor, bigarmor, dague, sword, magicwand, magicsword, leechsword, critsword };
+        public static bool[] boolobject = { hppotion, mhppotion, pppotion, smallarmor, mediumarmor, bigarmor, dague, sword, magicwand, magicsword, lépéecalice, leechsword, critsword };
         public static int[] intobject = new int[boolobject.Count()];
 
         public static void Commande(Player p1)
@@ -307,40 +312,119 @@ namespace JeuWithGuigui3
             string[] Names = { "Alfred Bateater", "Johny la palourde", "Ibrimovic the giant", "Igor alias \"Sucabliet\"", "JOJO alias ORAORAORAORAAAAAAA!!!!!!", "Canarticho the duck", "Mandalou the Manificient" };
             int x = RandomInt(Names.Count());
             string name = Names[x];
-            Console.WriteLine("Hello, I'm {0} . I am a marchand. Here are the objects I propose. ", name);
+            Console.WriteLine("Hello, I'm {0}. I am a marchand. Here are the objects I propose. ", name);
 
             //Objet dans le shop
             MakeMarchandObject(p1); //Crée les idfférents objets qui vont apparaitre
-            Triobject(); // Fait une array pour les numero d'article
+            TriObject(); // Fait une array pour les numero d'article
             ProposeObjects(); //Montre les articles
-            Console.WriteLine("Would you want to buy something ?");
             bool lool = false;
             while (true)
             {
                 if (lool )
                 {
-                    Console.WriteLine("Would you want to buy something else ?");
-                }
-                Console.Write("--> ");
-                string rep = Console.ReadLine();
-
-                if (rep ==  "no")
-                {
-                    Console.WriteLine("Ok, I hope to see you again. Goodbye.");
-                    break;
-                }
-                else if (rep == "yes")
-                {
-
-                    lool = true;
+                    Console.WriteLine("Would you want to buy something else ? (yes or no)");
                 }
                 else
                 {
-                    Console.WriteLine("What do you want ? I didn't understand your request...");
+                    Console.WriteLine("Would you want to buy something ? (yes or no)");
+                }
+                Console.Write("--> ");
+                string rep1 = Console.ReadLine();
+                
+                //Très très moche:
+                if (rep1 ==  "no")
+                {
+                    if (legendarysword && p1.money > 200)
+                    {
+                        Console.WriteLine("Are you sure ? I have maybe something that will interest you. Want to check ? (yes or no)");
+                        while (true)
+                        {
+                            Console.Write(" --> ");
+                            string rep3 = Console.ReadLine();
+                            if (rep3 == "yes")
+                            {
+                                while (true)
+                                {
+                                    Console.WriteLine("Would you like to buy this beautiful Legendary Sword for all your money ? (yes or no)");
+                                    while (true)
+                                    {
+                                        Console.Write(" --> ");
+                                        string rep4 = Console.ReadLine();
+                                        if (rep4 == "yes")
+                                        {
+                                            p1.money = 0;
+                                            Weapon.AddWeapon(p1, new LegendarySword(), null);
+                                            break; ;
+                                        }
+                                        else if (rep4 == "no")
+                                        {
+                                            Console.WriteLine("WAT ? Go away !");
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("yes or no ??");
+                                            continue;
+                                        }
+                                    }
+                                    break;
+                                }
+                                break;
+                            }
+                            else if (rep3 == "no")
+                            {
+                                Console.WriteLine("Ok. You wast a good weapons...");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("yes or no ??");
+                                continue;
+                            }
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ok, I hope to see you again. Goodbye.");
+                        break;
+                    }
+                    
+                }
+                else if (rep1 == "yes")
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("Which article do you want ? (enter the number)");
+                        Console.Write(" -->");
+                        string rep2 = Console.ReadLine();
+                        int sortie = CheckRep2(rep2);
+                        if (sortie == 0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            int indexx = Array.IndexOf(intobject, sortie);
+                            Console.WriteLine("Article choisi: {0}. index: {1}.", boolobject[indexx], indexx);
+                            boolobject[indexx] = false;
+                            break;
+                        }
+                    }
+                    //TriObject();
+                    ProposeObjects();
+                    lool = true;
+                    continue;
+                }
+                else
+                {
+                    Console.Write("I didn't understand your request...");
                     lool = false;
+                    continue;
                 }
 
-
+                break;
 
             }
             hppotion = false;
@@ -355,7 +439,6 @@ namespace JeuWithGuigui3
             magicsword = false;
             leechsword = false;
             critsword = false;
-
     }
 
 
@@ -364,17 +447,20 @@ namespace JeuWithGuigui3
             //Potion
             int Potions = RandomInt(100);
             int numpotionexpos = 0;
-            if(Potions < 50)
+            if (Potions < 100)
             {
                 hppotion = true;
+                numpotionexpos++;
             }
-            if (Potions < 80)
+            if (Potions < 50)
             {
                 pppotion = true;
+                numpotionexpos++;
             }
             if (Potions < 100 && numpotionexpos < 2)
             {
-                mhppotion = true; 
+                mhppotion = true;
+                numpotionexpos++;
             }
             Console.WriteLine();
 
@@ -392,6 +478,7 @@ namespace JeuWithGuigui3
                 {
                     smallarmor = true;
                 }
+
             }
             //Millieu de la Game
             else if (x <= 21)
@@ -400,7 +487,7 @@ namespace JeuWithGuigui3
                 {
                     bigarmor = true;
                 }
-                else 
+                else
                 {
                     mediumarmor = true;
                 }
@@ -411,10 +498,46 @@ namespace JeuWithGuigui3
                 bigarmor = true;
             }
 
+            int y = RandomInt(1000);
+
+            //Weapon
+            if (x <= 11)
+            {
+                dague = true;
+                sword = true;
+                magicwand = true;
+                if (y < 1000)
+                {
+                    legendarysword = true;
+                }
+            }
+            //Millieu de la Game
+            else if (x <= 21)
+            {
+                magicsword = true;
+                if (y < 10)
+                {
+                    legendarysword = true;
+                }
+            }
+            //Fin de Game
+            else if (x <= 31)
+            {
+                critsword = true;
+                lépéecalice = true;
+                leechsword = true;
+                if (y < 100)
+                {
+                    legendarysword = true;
+                }
+            }
+
         }
 
-        public static void Triobject()
+
+        public static void TriObject()
         {
+            refreshArray();
             int x = 1;
             for (int i = 0; i < boolobject.Count(); i++)
             {
@@ -444,13 +567,13 @@ namespace JeuWithGuigui3
             {
                 int number = Game.RoomCount / 5 + 1;
                 int cost = 15;
-                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[1], Game.RoomCount / 5, Game.RoomCount / 5 * cost, cost);
+                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[1], number, number * cost, cost);
             }
             if (pppotion)
             {
                 int number = Game.RoomCount / 4 + 1;
                 int cost = 15;  
-                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[2], Game.RoomCount / 5, Game.RoomCount / 5 * cost, cost);
+                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[2], number, number * cost, cost);
             }
             Console.WriteLine();
 
@@ -501,15 +624,20 @@ namespace JeuWithGuigui3
                 int cost = 250;
                 Console.WriteLine("Article {0}: Magic Sword: {1} gold ", intobject[9], cost);
             }
+            if (lépéecalice)
+            {
+                int cost = 400;
+                Console.WriteLine("Article {0}: L'épée Calice: {1} gold ", intobject[10], cost);
+            }
             if (leechsword)
             {
                 int cost = 400;
-                Console.WriteLine(" Article {0}: Leech sword: {1} gold ", intobject[10], cost);
+                Console.WriteLine(" Article {0}: Leech sword: {1} gold ", intobject[11], cost);
             }
             if (critsword)
             {
                 int cost = 400;
-                Console.WriteLine(" Article {0}: Crit Sword: {1} gold ", intobject[11], cost);
+                Console.WriteLine(" Article {0}: Crit Sword: {1} gold ", intobject[12], cost);
             }
            
             Console.WriteLine();
@@ -517,6 +645,59 @@ namespace JeuWithGuigui3
 
 
         }
+
+
+
+        public static void refreshArray()
+        {
+            boolobject[0] = hppotion;
+            boolobject[1] = mhppotion;
+            boolobject[2] = pppotion;
+            boolobject[3] = smallarmor;
+            boolobject[4] = mediumarmor;
+            boolobject[5] = bigarmor;
+            boolobject[6] = dague;
+            boolobject[7] = sword;
+            boolobject[8] = magicwand;
+            boolobject[9] = lépéecalice;
+            boolobject[10] = magicsword;
+            boolobject[11] = leechsword;
+            boolobject[12] = critsword;
+        }
+
+
+        public static int CheckRep2 (string rep)
+        {
+            int IntRep = 0;
+            try
+            {
+                IntRep = Convert.ToInt32(rep);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Enter a number.");
+                return 0;
+            }
+            if (IntRep > intobject.Max())
+            {
+                Console.WriteLine("I don't have as much article.");
+                return 0;
+            }
+            else if (IntRep < 0)
+            {
+                Console.WriteLine("Negativ number... Are you kidding ?");
+                return 0;
+            }
+            else
+            {
+                return IntRep;
+            }
+
+        }
+
+
+
+
 
 
 

@@ -23,7 +23,8 @@ namespace JeuWithGuigui3
         public double MagicDmg;
 
         //Chance de crit
-        public int ChanceCrit = 0; //(%)
+        public int BaseCrit = 0;
+        public int ChanceCrit; 
 
         //Charactérisitque des armes
         public bool Poison = false;
@@ -242,6 +243,16 @@ namespace JeuWithGuigui3
                 Finaldmg += 10;
                 Console.Write("The {0} take 10 damages from fire ! ", m1.Name);
             }
+
+            if (weapon1 != null && weapon1.Name == "L'épée Calice")
+            {
+                Potion.Heal(20, p1);
+            }
+            if (weapon2 != null && weapon2.Name == "L'épée Calice")
+            {
+                Potion.Heal(20, p1);
+            }
+
             //Applique les dégats
             int finaldamageint = Convert.ToInt32(Finaldmg);
             m1.Vie -= finaldamageint;
@@ -303,7 +314,7 @@ namespace JeuWithGuigui3
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
-                p1.ChanceCrit += p1.weapon2.Crit;
+                p1.ChanceCrit = p1.BaseCrit + p1.weapon2.Crit;
 
             }
 
@@ -324,7 +335,7 @@ namespace JeuWithGuigui3
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
-                p1.ChanceCrit += p1.weapon1.Crit;
+                p1.ChanceCrit = p1.BaseCrit + p1.weapon1.Crit;
             }
 
 
@@ -344,8 +355,7 @@ namespace JeuWithGuigui3
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
-                p1.ChanceCrit += p1.weapon1.Crit;
-                p1.ChanceCrit += p1.weapon2.Crit;
+                p1.ChanceCrit = p1.BaseCrit + p1.weapon1.Crit + p1.weapon2.Crit;
             }
             if (p1.COfP.ClassName == "Mage" || p1.COfP.ClassName == "Warrior")
             { p1.COfP.ClassCapacity(p1, null); }

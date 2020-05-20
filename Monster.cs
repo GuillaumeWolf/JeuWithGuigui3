@@ -147,6 +147,10 @@ namespace JeuWithGuigui3
             int golem = 0;
             int basilic = 0; 
             int dragon = 0;
+            int godghost = 0;
+            int ancientzombie = 0;
+            int greatgobelin = 0;
+            int magmaslime = 0;
             int evolveghost = 0;
             int evolvezombie = 0;
             int evolvegobelin = 0;
@@ -155,7 +159,7 @@ namespace JeuWithGuigui3
             int zombie = 0;
             int gobelin = 0;
             int slime = 0;
-
+            int x = 1;
             if (Game.RoomCount <= 10)
             {
                 basilic = Basilic.ChanceOfSpawn;
@@ -164,6 +168,7 @@ namespace JeuWithGuigui3
                 zombie = Zombie.ChanceOfSpawn + ghost;
                 gobelin = Gobelin.ChanceOfSpawn + zombie;
                 slime = Slime.ChanceOfSpawn + gobelin;
+                x = RandomInt(slime);
             }
             else if (Game.RoomCount <= 20)
             {
@@ -173,21 +178,23 @@ namespace JeuWithGuigui3
                 evolvezombie = Zombie.ChanceOfSpawn + evolveghost;
                 evolvegobelin = Gobelin.ChanceOfSpawn + evolvezombie;
                 evolveslime = Slime.ChanceOfSpawn + evolvegobelin;
+                x = RandomInt(evolveslime);
+
             }
             else if (Game.RoomCount <= 30)
             {
-                basilic = Basilic.ChanceOfSpawn;
-                dragon = Dragon.ChanceOfSpawn + basilic;
-                evolveghost = Ghost.ChanceOfSpawn + dragon;
-                evolvezombie = Zombie.ChanceOfSpawn + evolveghost;
-                evolvegobelin = Gobelin.ChanceOfSpawn + evolvezombie;
-                evolveslime = Slime.ChanceOfSpawn + evolvegobelin;
+                basilic = Basilic.ChanceOfSpawn3;
+                dragon = Dragon.ChanceOfSpawn3 + basilic;
+                godghost = Ghost.ChanceOfSpawn + dragon;
+                ancientzombie = Zombie.ChanceOfSpawn + godghost;
+                greatgobelin = Gobelin.ChanceOfSpawn + ancientzombie;
+                magmaslime = Slime.ChanceOfSpawn + greatgobelin;
+                x = RandomInt(magmaslime);
             }
-
-            int x = RandomInt(slime);
-
+            
 
 
+            //Instancie les monstres
             Monster m1 = null;
             if (x < golem || Game.RoomCount == GolemOfArmagedon.RoomOfSpawning)
             {
@@ -641,7 +648,8 @@ namespace JeuWithGuigui3
     class Dragon : Monster
     {
         public static int ChanceOfSpawn = 2;
-        public static int ChanceOfSpawn2 = 5;
+        public static int ChanceOfSpawn2 = 7;
+        public static int ChanceOfSpawn3 = 15;
         public Dragon()
         {
             //Name
@@ -672,6 +680,7 @@ namespace JeuWithGuigui3
     {
         public static int ChanceOfSpawn = 2;
         public static int ChanceOfSpawn2 = 5;
+        public static int ChanceOfSpawn3 = 15;
         public Basilic()
         {
             //Name
@@ -712,7 +721,7 @@ namespace JeuWithGuigui3
     class GolemOfArmagedon : Monster
     {
         public static int ChanceOfSpawn = 0;
-        public static int RoomOfSpawning = 25;
+        public static int RoomOfSpawning = 40;
 
         public GolemOfArmagedon()
         {
