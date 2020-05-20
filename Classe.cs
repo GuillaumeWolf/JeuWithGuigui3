@@ -47,7 +47,7 @@ namespace JeuWithGuigui3
         }
         public override void ClassCapacity(Player p1, Monster m1)
         {
-            m1.ChanceOfLoot *= 2;
+            m1.ChanceOfLoot += 30;
         }
     }
     class Druide : ClassPlayer

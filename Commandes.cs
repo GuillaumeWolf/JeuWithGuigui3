@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -7,6 +8,12 @@ namespace JeuWithGuigui3
 {
     class Commandes
     {
+        /// <summary>
+        /// Commande normal fight/autre
+        /// 
+        /// --> commande du marchand lignes 280*
+        /// </summary>
+
         public static string Commande(Player p1, Monster m1)
         {
             while (true)
@@ -28,7 +35,7 @@ namespace JeuWithGuigui3
                 //Player stats
                 else if (PlayerCommande == "ps")
                 {
-                    Console.WriteLine("Name: {0}. Race: {1}. Classe : {6}. HP: {2}/{3}.\nClassic Damage: {4}. Magic Damage : {5}. Crit: {6}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg, p1.COfP.ClassName, p1.ChanceCrit);
+                    Console.WriteLine("Name: {0}. Race: {1}. Classe : {2}. HP: {3}/{4}.\nClassic Damage: {5}. Magic Damage : {6}. Crit: {7}. ", p1.name, p1.RaceOfPlayer.Name, p1.COfP.ClassName, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg, p1.ChanceCrit);
                 }
 
                 //Monster stats
@@ -153,42 +160,7 @@ namespace JeuWithGuigui3
             }
         }
 
-
-        //Possibilité 1: On laisse le joueur utiliser les potions qu'il veut
-        //Possibilité 2: On le remet full hp
-        public static void SpecialBossCommande(Player p1)
-        {
-            while (true)
-            {
-                /*
-                Console.WriteLine("\nYou can use consomables before fighting the boss. What do you want to do ? (use potion: up - continue: c)");
-                Console.Write("--> ");
-                string PlayerCommande = Console.ReadLine();
-                if (PlayerCommande == "c")
-                {
-                    Console.WriteLine("Are you sure to continue ?");
-                    Console.Write("--> ");
-                    string rep = Console.ReadLine();
-                    if (rep == "yes")
-                    {
-                        return;
-                    }
-
-                }
-                else if (PlayerCommande == "up")
-                {
-                    Potion.UsePotions(p1);
-                }
-                else
-                {
-                    Console.WriteLine("Choose a correct commande.");
-                }
-                */
-                break;
-            }
-            
-            int x = 2;
-        }
+        
 
 
 
@@ -300,6 +272,103 @@ namespace JeuWithGuigui3
                 Console.Write("Poison damage. ");
             }
             Console.WriteLine();
+        }
+
+
+
+
+        /// <summary>
+        /// Commande sécial pour le marchand
+        /// </summary>
+
+
+        public static void CommandeMarchand(Player p1)
+        {
+            string[] Names = { "Alfred de Batman", "Johny la palourde", "Ibrimovic the giant", "Igor alias \"Sucabliet\"", "JOJO from the waves power", "Canarticho the duck", "Mandalou the manificient" };
+            int x = RandomInt(Names.Count());
+            string name = Names[x];
+            Console.WriteLine("Hello, I'm {0} . I am a marchand. Here are the objects I propose. ", name);
+
+            while (true)
+            {
+                WritePossMarchand(p1);
+                Console.WriteLine("Would You want to buy something ?");
+                Console.Write("--> ");
+                string rep = Console.ReadLine();
+
+                if (rep ==  "no")
+                {
+                    Console.WriteLine("Ok, I hope to see you again. Goodbye.");
+                    break;
+                }
+
+
+
+            }
+        }
+
+
+        public static void WritePossMarchand(Player p1)
+        {
+            //Potions 100 % mais laquelle ? 
+            int Potions = RandomInt(100);
+            if(Potions < 50)
+            {
+                int HPCost = 10;
+                Console.Write("{0} Heal Potions: {1} gold ({2} gold/unit) - ", Game.RoomCount / 2, Game.RoomCount/2 * HPCost, HPCost);
+            }
+            else if (Potions < 30)
+            {
+                int PPcost = 15;
+                Console.Write("{0} Puissance Potions: {1} gold ({3} gold/unit) - ", Game.RoomCount / 4, Game.RoomCount / 4 * PPcost, PPcost);
+            }
+            else if (Potions < 20)
+            {
+                int MHPCost = 20;
+                Console.Write("{0} MaxHP Potions: {1} gold ({3} gold/unit) - ", Game.RoomCount / 5, Game.RoomCount / 5 * MHPCost, MHPCost);
+            }
+            Console.WriteLine();
+
+
+            //armor
+            int ArmorWeapon = RandomInt(100);
+            if (ArmorWeapon < 60)
+            {
+                //Fin de game propose Leechswors, Magic Sword, Crit Sword
+                if (Game.RoomCount > 20)
+                {
+                    int LeeMagCrit = RandomInt(3);
+                    switch(LeeMagCrit)
+                    {
+                        case 0:
+                            Console.Write("Leech Sword: {0} gold.", 400);
+                            break;
+                    }
+                }
+            }
+            else if (ArmorWeapon < 100)
+            {
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        static public int RandomInt(int Max)
+        {
+            int randomNum;
+            var rand = new Random();
+            randomNum = rand.Next(Max);
+            return randomNum;
         }
 
     }

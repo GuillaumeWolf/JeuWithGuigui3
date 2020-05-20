@@ -97,7 +97,7 @@ namespace JeuWithGuigui3
             }
             else if (y < 20)
             {
-                Potion.GetMaxHPPotions(x, p1);
+                Potion.GetMaxHPPotions(x-1, p1);
             }
             else if (y < 30)
             {

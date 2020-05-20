@@ -104,7 +104,8 @@ namespace JeuWithGuigui3
 
         static private void EnterMarchandRoom(Player p1)
         {
-            Console.WriteLine("You enter a Marchand Room.");
+            Console.WriteLine("You enter a Marchand Room.\n");
+            Commandes.CommandeMarchand(p1);
         }
 
 
@@ -192,7 +193,8 @@ namespace JeuWithGuigui3
             { p1.COfP.ClassCapacity(p1, m1); }
             if (m1.Name == "Golem of Armagedon")
             {
-                Commandes.SpecialBossCommande(p1);
+                Console.WriteLine("You start the fight full HP.");
+                Potion.Heal(p1.BaseHP - p1.HP, p1);
                 p1.FightBoos = true;
             }
 

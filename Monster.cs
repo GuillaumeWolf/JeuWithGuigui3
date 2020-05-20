@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 
 namespace JeuWithGuigui3
@@ -8,24 +9,32 @@ namespace JeuWithGuigui3
     {
         // - crée des dégats magique pour les monstres
 
+        #region public propreties
+        //Name
+        public string Name;
+
         //Vie
         public int MaxLife; 
         public int Vie;
         public int baseDmg;
         public int Dmg; 
+
         //Capacité de feu, poison, etc...
         public bool FireDmg;
         public bool PoisonDmg;
         public bool MagicResistance;
         public bool inRage;
+
         // Pour les loots
         public int ChanceOfLoot;
         public int Numpotion;
         public int PODrop;
         public int POCost;
+
         //Capacité utilisé du monstre
         public bool Usepower;
-        public string Name { get; set; }
+
+        #endregion
 
         public void MonsterCapacity(Monster m1)
         {
@@ -182,19 +191,28 @@ namespace JeuWithGuigui3
         public static int ChanceOfSpawn = 25;
         public Slime()
         {
+            //Name
             Name = "Slime";
+
+            //Vie
             MaxLife = 80;
             Vie = MaxLife;
-            Dmg = 5;
+            baseDmg = 20;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = false;
             PoisonDmg = false;
             MagicResistance = true;
-            // Loot
+
+            // Pour les loots
             ChanceOfLoot = 0;
             Numpotion = 1;
             PODrop = 10;
             POCost = 20;
 
+            //Capacité utilisé du monstre
+            Usepower = false;
         }
     }
     class Gobelin : Monster
@@ -202,20 +220,28 @@ namespace JeuWithGuigui3
         public static int ChanceOfSpawn = 25;
         public Gobelin()
         {
+            //Name
             Name = "Gobelin";
+
+            //Vie
             MaxLife = 15;
             Vie = MaxLife;
-            Dmg = 30;
+            baseDmg = 40;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = false;
             PoisonDmg = false;
             MagicResistance = false;
-            //Has a power
-            Usepower = false;
-            // Loot
+
+            // Pour les loots
             ChanceOfLoot = 0;
             Numpotion = 2;
             PODrop = 15;
             POCost = 30;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
         }
     }
     class Zombie : Monster
@@ -223,20 +249,28 @@ namespace JeuWithGuigui3
         public static int ChanceOfSpawn = 25;
         public Zombie()
         {
+            //Name
             Name = "Zombie";
+
+            //Vie
             MaxLife = 60;
             Vie = MaxLife;
-            Dmg = 30;
+            baseDmg = 30;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = false;
             PoisonDmg = true;
-            MagicResistance = false;
-            //Has a power
-            Usepower = false;
-            // Loot
+            MagicResistance = true;
+
+            // Pour les loots
             ChanceOfLoot = 8;
             Numpotion = 3;
             PODrop = 40;
             POCost = 100;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
         }
         
     }
@@ -245,18 +279,28 @@ namespace JeuWithGuigui3
         public static int ChanceOfSpawn = 20;
         public Ghost()
         {
+            //Name
             Name = "Ghost";
+
+            //Vie
             MaxLife = 100;
             Vie = MaxLife;
-            Dmg = 40;
+            baseDmg = 40;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = false;
             PoisonDmg = false;
             MagicResistance = false;
-            // Loot
+
+            // Pour les loots
             ChanceOfLoot = 8;
             Numpotion = 3;
             PODrop = 40;
             POCost = 100;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
         }
     }
     class Dragon : Monster
@@ -264,18 +308,28 @@ namespace JeuWithGuigui3
         public static int ChanceOfSpawn = 2;
         public Dragon()
         {
+            //Name
             Name = "Dragon";
+
+            //Vie
             MaxLife = 500;
             Vie = MaxLife;
-            Dmg = 60;
+            baseDmg = 60;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = true;
             PoisonDmg = false;
             MagicResistance = true;
-            // Loot
+
+            // Pour les loots
             ChanceOfLoot = 30;
             Numpotion = 5;
             PODrop = 100;
-            POCost =200;
+            POCost = 200;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
         }
     }
     class Basilic : Monster
@@ -283,39 +337,62 @@ namespace JeuWithGuigui3
         public static int ChanceOfSpawn = 2;
         public Basilic()
         {
+            //Name
             Name = "Basilic";
+
+            //Vie
             MaxLife = 350;
             Vie = MaxLife;
-            Dmg = 35;
+            baseDmg = 40;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = false;
             PoisonDmg = true;
             MagicResistance = false;
-            // Loot
+
+            // Pour les loots
             ChanceOfLoot = 30;
             Numpotion = 5;
             PODrop = 100;
             POCost = 200;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
         }
     }
 
     class GolemOfArmagedon : Monster
     {
-        public static int ChanceOfSpawn = 1;
+        public static int ChanceOfSpawn = 0;
         public static int RoomOfSpawning = 25;
 
         public GolemOfArmagedon()
         {
+            //Name
             Name = "Golem of Armagedon";
+
+            //Vie
             MaxLife = 2000;
             Vie = MaxLife;
             baseDmg = 100;
-            Dmg = 100;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
             FireDmg = false;
             PoisonDmg = false;
+            MagicResistance = false;
+
+            // Pour les loots
+            ChanceOfLoot = 1000000;
+            Numpotion = 50000;
+            PODrop = 1000000;
+            POCost = 2000000;
+
+            //Capacité utilisé du monstre
             Usepower = false;
-            ChanceOfLoot = 100000;
-            MagicResistance = true;
-            inRage = false;
+
+            //Special
             Console.WriteLine("It is the final Fight. You can not run away.");
 
         }
