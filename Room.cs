@@ -24,7 +24,8 @@ namespace JeuWithGuigui3
         {
 
             int _LegendaryRoom = LegendaryRoom;
-            int _MarchandRoom = MarchandRoom + (Game.RoomCount % 10 == 1 ? 100:0);
+            int _MarchandRoom = MarchandRoom ;
+            _MarchandRoom = 1000000000;
             int _ChanceNothing = ChanceNothing - (Game.RoomCount - 1) * 1;
             int _ChanceTrap = ChanceTrap - (Game.RoomCount - 1) * 1;
             int _ChanceMonster = ChanceMonster + (Game.RoomCount - 1) * 2;
@@ -105,7 +106,7 @@ namespace JeuWithGuigui3
         static private void EnterMarchandRoom(Player p1)
         {
             Console.WriteLine("You enter a Marchand Room.\n");
-            Commandes.CommandeMarchand(p1);
+            CommandeMarchand.Commande(p1);
         }
 
 

@@ -188,7 +188,7 @@ namespace JeuWithGuigui3
 
     class Slime : Monster
     {
-        public static int ChanceOfSpawn = 25;
+        public static int ChanceOfSpawn = 35;
         public Slime()
         {
             //Name
@@ -217,7 +217,7 @@ namespace JeuWithGuigui3
     }
     class Gobelin : Monster
     {
-        public static int ChanceOfSpawn = 25;
+        public static int ChanceOfSpawn = 35;
         public Gobelin()
         {
             //Name
@@ -226,7 +226,7 @@ namespace JeuWithGuigui3
             //Vie
             MaxLife = 15;
             Vie = MaxLife;
-            baseDmg = 40;
+            baseDmg = 30;
             Dmg = baseDmg;
 
             //Capacité de feu, poison, etc...
@@ -246,7 +246,7 @@ namespace JeuWithGuigui3
     }
     class Zombie : Monster
     {
-        public static int ChanceOfSpawn = 25;
+        public static int ChanceOfSpawn = 15;
         public Zombie()
         {
             //Name
@@ -276,7 +276,7 @@ namespace JeuWithGuigui3
     }
     class Ghost : Monster
     {
-        public static int ChanceOfSpawn = 20;
+        public static int ChanceOfSpawn = 10;
         public Ghost()
         {
             //Name

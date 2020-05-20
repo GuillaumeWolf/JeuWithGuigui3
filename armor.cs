@@ -10,7 +10,7 @@ namespace JeuWithGuigui3
         public string Name { get; set; }
         public int ClassicResistance;
         public int MagicResistance;
-        
+
 
         public static void DeleteArmor(Player p1)
         {
