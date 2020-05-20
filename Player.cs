@@ -22,6 +22,9 @@ namespace JeuWithGuigui3
         public int BaseMagicDmg = 20;
         public double MagicDmg;
 
+        //Chance de crit
+        public int ChanceCrit = 0; //(%)
+
         //Charactérisitque des armes
         public bool Poison = false;
         public bool Fire = false;
@@ -193,7 +196,12 @@ namespace JeuWithGuigui3
                 }
             }
 
-            int Healling = Convert.ToInt32(Finaldmg);
+            int Xcrit = RandomInt(100);
+            if (Xcrit < p1.ChanceCrit)
+            {
+                Finaldmg *= 2;
+                Console.WriteLine("You do a crit attack.");
+            }
 
             if (VoldeVie)
             {
@@ -293,6 +301,7 @@ namespace JeuWithGuigui3
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
+                p1.ChanceCrit += p1.weapon2.Crit;
 
             }
 
@@ -313,7 +322,7 @@ namespace JeuWithGuigui3
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
-
+                p1.ChanceCrit += p1.weapon1.Crit;
             }
 
 
@@ -333,9 +342,19 @@ namespace JeuWithGuigui3
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
+                p1.ChanceCrit += p1.weapon1.Crit;
+                p1.ChanceCrit += p1.weapon2.Crit;
             }
             if (p1.COfP.ClassName == "Mage" || p1.COfP.ClassName == "Warrior")
             { p1.COfP.ClassCapacity(p1, null); }
         }
+        static public int RandomInt(int Max)
+        {
+            int randomNum;
+            var rand = new Random();
+            randomNum = rand.Next(Max);
+            return randomNum;
+        }
+
     }
 }

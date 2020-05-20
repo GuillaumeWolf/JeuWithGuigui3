@@ -12,8 +12,7 @@ namespace JeuWithGuigui3
 
 
     Nouveau (idée):
-        - room pour acheter des armes(Guillaume -> confirmation de lidée par leander ??)  (enleve juste les poitn d'interogation si tu es daccord)
-        - coup critique (Guillaume)
+        - room pour acheter des armes(Guillaume -> confirmation de lidée par leander ??) 
 
 
 

@@ -129,6 +129,11 @@ namespace JeuWithGuigui3
                 {
                     p1.money = 0;
                 }
+                else if (PlayerCommande == "crsw")
+                {
+                    CritSword crit1 = new CritSword();
+                    Weapon.AddWeapon(p1, crit1, null);
+                }
 
                 //Autre
                 else

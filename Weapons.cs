@@ -7,6 +7,7 @@ namespace JeuWithGuigui3
     class Weapon
     {
         public int Dmg;
+        public int Crit;
         public int MagicDamage;
         public bool Magic;
         public bool VoldeVie;
@@ -115,11 +116,13 @@ namespace JeuWithGuigui3
         {
             int ChanceLegendarySword = Convert.ToInt32(LegendarySword.ChanceOfLooting * 10);
             int ChanceLeechSword = Convert.ToInt32(LeechSword.ChanceOfLooting * 10) + ChanceLegendarySword;
-            int ChanceMagicSword = MagicSword.ChanceOfLooting * 10 + ChanceLeechSword;
-            int ChanceMagicWand = MagicWand.ChanceOfLooting * 10 + ChanceMagicSword;
-            int ChanceSword = Sword.ChanceOfLooting * 10 + ChanceMagicWand;
-            int ChanceDague = Dague.ChanceOfLooting * 10 + ChanceSword;
+            int ChanceMagicSword = Convert.ToInt32(MagicSword.ChanceOfLooting * 10) + ChanceLeechSword;
+            int ChanceCritSword = Convert.ToInt32(CritSword.ChanceOfLooting * 10) + ChanceMagicSword;
+            int ChanceMagicWand = Convert.ToInt32(MagicWand.ChanceOfLooting * 10) + ChanceCritSword;
+            int ChanceSword = Convert.ToInt32(Sword.ChanceOfLooting * 10) + ChanceMagicWand;
+            int ChanceDague = Convert.ToInt32(Dague.ChanceOfLooting * 10) + ChanceSword;
             int y = RandomInt(ChanceDague);
+
             //Console.WriteLine("ChanceDague : {0}", ChanceDague);
             if (m1 != null)
             {
@@ -188,7 +191,7 @@ namespace JeuWithGuigui3
 
     class MagicWand : Weapon
     {
-        static public int ChanceOfLooting = 20;
+        static public double ChanceOfLooting = ChanceOfLootingWeapon.MagicSwordLoot;
         public MagicWand()
         {
             MagicDamage = 30;
@@ -200,30 +203,47 @@ namespace JeuWithGuigui3
     }
     class Sword : Weapon
     {
-        static public int ChanceOfLooting = 25;
+        static public double ChanceOfLooting = ChanceOfLootingWeapon.SwordLoot;
 
         public Sword()
         {
-            Dmg = 25;
+            Dmg = 15;
             Name = "Sword";
+            Crit = 5;
             Magic = false;
             ChanceOfLooting /= 2;
         }
     }
     class Dague : Weapon
     {
-        static public int ChanceOfLooting = 30;
+        static public double ChanceOfLooting = ChanceOfLootingWeapon.DagueLoot;
         public Dague()
         {
-            Dmg = 15;
+            Dmg = 10;
             Name = "Dague";
+            Crit = 1;
             Magic = false;
             ChanceOfLooting /= 2;
         }
     }
+    class CritSword : Weapon    //épée Critique
+    {
+        static public double ChanceOfLooting = ChanceOfLootingWeapon.CritSwordLoot;     
+
+        public CritSword()
+        {
+            Dmg = 30;
+            Crit = 20;
+            MagicDamage = 0;
+            Name = "Crit Sword";
+            Magic = false;
+            ChanceOfLooting /= 2;
+        }
+
+    }
     class MagicSword : Weapon    //épée magique
     {
-        static public int ChanceOfLooting = 15;     // a modifier
+        static public double ChanceOfLooting = ChanceOfLootingWeapon.MagicSwordLoot;     
 
         public MagicSword()
         {
@@ -237,7 +257,7 @@ namespace JeuWithGuigui3
     }
     class LeechSword : Weapon            //épée vol de vie
     {
-        public static double ChanceOfLooting = 9.5;     // a modifier
+        public static double ChanceOfLooting = ChanceOfLootingWeapon.LeechSwordLoot;    
         public LeechSword()
         {
             Dmg = 30;
@@ -249,11 +269,12 @@ namespace JeuWithGuigui3
     }
     class LegendarySword : Weapon
     {
-        public static double ChanceOfLooting = 0.5;
+        public static double ChanceOfLooting = ChanceOfLootingWeapon.LegendaryLoot;
         public LegendarySword()
         {
-            Dmg = 60;
+            Dmg = 70;
             Name = "LegendarySword";
+            Crit = 10;
             Magic = false;
             FireDamage = true;
             PoisonDamage = true;
@@ -261,4 +282,19 @@ namespace JeuWithGuigui3
             LegendarySword.ChanceOfLooting = 0;
         }
     }
+
+
+
+    class ChanceOfLootingWeapon
+    {
+        public static double LegendaryLoot = 0.5;
+        public static double LeechSwordLoot = 4.5;
+        public static double MagicSwordLoot = 10;
+        public static double CritSwordLoot = 10;
+        public static double MagicWandLoot = 20;
+        public static double SwordLoot = 25;
+        public static double DagueLoot = 30;
+
+    }
+
 }
