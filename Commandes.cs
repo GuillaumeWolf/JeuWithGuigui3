@@ -304,7 +304,7 @@ namespace JeuWithGuigui3
         public static void Commande(Player p1)
         {
             //Nom
-            string[] Names = { "Alfred de Batman", "Johny la palourde", "Ibrimovic the giant", "Igor alias \"Sucabliet\"", "JOJO from the waves power", "Canarticho the duck", "Mandalou the manificient" };
+            string[] Names = { "Alfred Bateater", "Johny la palourde", "Ibrimovic the giant", "Igor alias \"Sucabliet\"", "JOJO alias ORAORAORAORAAAAAAA!!!!!!", "Canarticho the duck", "Mandalou the Manificient" };
             int x = RandomInt(Names.Count());
             string name = Names[x];
             Console.WriteLine("Hello, I'm {0} . I am a marchand. Here are the objects I propose. ", name);
@@ -436,21 +436,21 @@ namespace JeuWithGuigui3
             }
             if (hppotion)
             {
-                int number = Game.RoomCount / 2+1;
+                int number = Game.RoomCount / 2 + 1;
                 int cost = 10;
-                Console.WriteLine(" Article {0}: {1} Heal Potions: {2} gold ({3} gold/unit) ", intobject[0], number, number * cost, cost);
+                Console.WriteLine("Article {0}: {1} Heal Potions: {2} gold ({3} gold/unit) ", intobject[0], number, number * cost, cost);
             }
             if (mhppotion)
             {
                 int number = Game.RoomCount / 5 + 1;
                 int cost = 15;
-                Console.WriteLine(" Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[1], Game.RoomCount / 5, Game.RoomCount / 5 * cost, cost);
+                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[1], Game.RoomCount / 5, Game.RoomCount / 5 * cost, cost);
             }
             if (pppotion)
             {
                 int number = Game.RoomCount / 4 + 1;
                 int cost = 15;  
-                Console.WriteLine(" Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[2], Game.RoomCount / 5, Game.RoomCount / 5 * cost, cost);
+                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[2], Game.RoomCount / 5, Game.RoomCount / 5 * cost, cost);
             }
             Console.WriteLine();
 
@@ -462,17 +462,17 @@ namespace JeuWithGuigui3
             if (smallarmor)
             {
                 int cost = 30;
-                Console.WriteLine(" Article {0}: Small Armor: {1} gold ", intobject[3], cost);
+                Console.WriteLine("Article {0}: Small Armor: {1} gold ", intobject[3], cost);
             }
             if (mediumarmor)
             {
                 int cost = 100;
-                Console.WriteLine(" Article {0}: Medium Armor: {1} gold ", intobject[4], cost);
+                Console.WriteLine("Article {0}: Medium Armor: {1} gold ", intobject[4], cost);
             }
             if (bigarmor)
             {
                 int cost = 300;
-                Console.WriteLine(" Article {0}: Big Armor: {1} gold ", intobject[5], cost);
+                Console.WriteLine("Article {0}: Big Armor: {1} gold ", intobject[5], cost);
             }
             Console.WriteLine();
 
@@ -484,22 +484,22 @@ namespace JeuWithGuigui3
             if (dague)
             {
                 int cost = 30;
-                Console.WriteLine(" Article {0}: Dague: {1} gold ", intobject[6], cost);
+                Console.WriteLine("Article {0}: Dague: {1} gold ", intobject[6], cost);
             }
             if (sword)
             {
                 int cost = 100;
-                Console.WriteLine(" Article {0}: Sword: {1} gold ", intobject[7], cost);
+                Console.WriteLine("Article {0}: Sword: {1} gold ", intobject[7], cost);
             }
             if (magicwand)
             {
                 int cost = 120;
-                Console.WriteLine(" Article {0}: Magic Wand: {1} gold ", intobject[8], cost);
+                Console.WriteLine("Article {0}: Magic Wand: {1} gold ", intobject[8], cost);
             }
             if (magicsword)
             {
                 int cost = 250;
-                Console.WriteLine(" Article {0}: Magic Sword: {1} gold ", intobject[9], cost);
+                Console.WriteLine("Article {0}: Magic Sword: {1} gold ", intobject[9], cost);
             }
             if (leechsword)
             {

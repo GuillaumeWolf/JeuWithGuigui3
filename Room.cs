@@ -25,7 +25,6 @@ namespace JeuWithGuigui3
 
             int _LegendaryRoom = LegendaryRoom;
             int _MarchandRoom = MarchandRoom ;
-            _MarchandRoom = 1000000000;
             int _ChanceNothing = ChanceNothing - (Game.RoomCount - 1) * 1;
             int _ChanceTrap = ChanceTrap - (Game.RoomCount - 1) * 1;
             int _ChanceMonster = ChanceMonster + (Game.RoomCount - 1) * 2;
@@ -41,7 +40,10 @@ namespace JeuWithGuigui3
             var indexRoom = RoomsChances.Count()- RoomsChances
                 .Where(y => y > x)
                 .Count();
-
+            if (Game.RoomCount % 10 == 1 && Game.RoomCount != 1)
+            {
+                indexRoom = 1;
+            }
             if (Game.RoomCount != GolemOfArmagedon.RoomOfSpawning)
             {
                 switch (indexRoom)

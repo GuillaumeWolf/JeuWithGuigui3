@@ -136,6 +136,7 @@ namespace JeuWithGuigui3
             if (m1 != null)
             {
                 ChanceMagicWand += m1.ChanceOfLoot * 10;
+                ChanceCritSword += m1.ChanceOfLoot * 10;
                 ChanceSword += m1.ChanceOfLoot * 10;
                 ChanceDague += m1.ChanceOfLoot * 10;
                 ChanceLeechSword += m1.ChanceOfLoot * 10;

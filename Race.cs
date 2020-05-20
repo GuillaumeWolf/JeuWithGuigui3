@@ -73,7 +73,7 @@ namespace JeuWithGuigui3
             Name = "Cracheur de feu";
             Propreties = new string[] { proprties1, proprties2, proprties3 };
 
-            p1.BaseMagicDmg += 30;
+            p1.BaseMagicDmg += 40;
             p1.Fire = true;
             Player.ChangeDamage(p1);
         }
@@ -91,7 +91,7 @@ namespace JeuWithGuigui3
             Name = "Minautore";
             Propreties = new string[] { proprties1, proprties2, proprtie3 };
 
-            p1.BaseDamage += 20;
+            p1.BaseDamage += 30;
             p1.BaseHP += 10;
             p1.HP += 10;
             Player.ChangeDamage(p1);

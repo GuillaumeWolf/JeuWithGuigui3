@@ -14,10 +14,10 @@ namespace JeuWithGuigui3
         public string Name;
 
         //Vie
-        public int MaxLife; 
+        public int MaxLife;
         public int Vie;
         public int baseDmg;
-        public int Dmg; 
+        public int Dmg;
 
         //Capacité de feu, poison, etc...
         public bool FireDmg;
@@ -38,22 +38,49 @@ namespace JeuWithGuigui3
 
         public void MonsterCapacity(Monster m1)
         {
+            int x = RandomInt(2);
             if (m1.Name == "Gobelin" && Vie <= 0 && !m1.Usepower)
             {
                 m1.Vie = 1;
                 m1.Usepower = true;
-                Console.Write("The gobelin should has been killed but he survived with 1 HP: ");
+                Console.Write("The gobelin survived with 1 HP.");
             }
-            if (m1.Name == "Zombie" && Vie <= 0 && !m1.Usepower)
+            if (m1.Name == "Great Gobelin" && Vie <= 0 && !m1.Usepower)
+            {
+                m1.Vie = m1.MaxLife / 2 ;
+                m1.Usepower = true;
+                Console.Write("The Great Gobelin restore half of his life.");
+            }
+            if (m1.Name == "Gobelin" && Vie <= 0 && !m1.Usepower)
+            {
+                m1.Vie = 1;
+                m1.Usepower = true;
+                Console.Write("The gobelin survived with 1 HP.");
+            }
+            if (m1.Name == "Zombie" && Vie <= 0 && x == 0)
             {
                 m1.Vie = m1.MaxLife;
-                m1.Dmg -= 10; 
-                m1.Usepower = true;
-                Console.WriteLine("The Zombie is dead one time but you have to kill him twice. But now he is a little bit weaker. ");
+                m1.Dmg -= 5;
+                Console.WriteLine("The Zombie isn't dead!");
+            }
+            if (m1.Name == "Evolved Zombie" && Vie <= 0 && x == 0)
+            {
+                m1.Vie = m1.MaxLife;
+                m1.Dmg -= 5;
+                Console.WriteLine("The Zombie isn't dead!");
+            }
+            if (m1.Name == "Ancient Zombie" && Vie <= 0 )
+            {
+                int y = RandomInt(3);
+                if( y == 0 || y == 1)
+                {
+                    m1.Vie = m1.MaxLife;
+                    Console.WriteLine("The Zombie isn't dead!");
+                }
             }
             if (m1.Name == "Golem of Armagedon" && m1.Vie < m1.MaxLife / 2 && !m1.Usepower)
             {
-                Console.WriteLine("The Golem of Armagedon is angry ! He enter the \"RAAAAGE MOD\"!");
+                Console.WriteLine("The Golem of Armagedon is angry !He enter the \"RAAAAGE MOD\"!");
                 m1.Dmg = m1.baseDmg * 15 / 10;
                 m1.FireDmg = true;
                 m1.PoisonDmg = true;
@@ -66,13 +93,13 @@ namespace JeuWithGuigui3
         {
             int finalDmg = Dmg;
             if (inRage)
-            { 
+            {
                 finalDmg *= 2;
             }
             if (p1.armor != null)
             {
                 finalDmg -= p1.armor.ClassicResistance;
-                if(finalDmg < 0)
+                if  (finalDmg < 0)
                 {
                     finalDmg = 0;
                 }
@@ -97,7 +124,7 @@ namespace JeuWithGuigui3
             }
             Console.WriteLine("You lost {0} HP. You are {1} HP left.", finalDmg, p1.HP);
         }
-        
+
         public bool CheckDie()
         {
             bool isDead = false;
@@ -116,24 +143,53 @@ namespace JeuWithGuigui3
         //Appelée avant dans Room
         static public Monster CreatRandomMonster(Player p1)
         {
-            int golem = GolemOfArmagedon.ChanceOfSpawn ;
-            int basilic = Basilic.ChanceOfSpawn + golem + (Game.RoomCount - 1) * 1;
-            int dragon = Dragon.ChanceOfSpawn + basilic + (Game.RoomCount - 1) * 1;
-            int ghost = Ghost.ChanceOfSpawn + dragon + (Game.RoomCount - 1) * 2;
-            int zombie = Zombie.ChanceOfSpawn + ghost + (Game.RoomCount - 1) * 1;
-            int gobelin = Gobelin.ChanceOfSpawn + zombie + (Game.RoomCount - 1) * 1;
-            int slime = Slime.ChanceOfSpawn + gobelin + (Game.RoomCount - 1) * 1;
-            int x = RandomInt(101);
-            
-            if (Game.RoomCount == GolemOfArmagedon.RoomOfSpawning)
+
+            int golem = 0;
+            int basilic = 0; 
+            int dragon = 0;
+            int evolveghost = 0;
+            int evolvezombie = 0;
+            int evolvegobelin = 0;
+            int evolveslime = 0;
+            int ghost = 0;
+            int zombie = 0;
+            int gobelin = 0;
+            int slime = 0;
+
+            if (Game.RoomCount <= 10)
             {
-                golem = 10000;
+                basilic = Basilic.ChanceOfSpawn;
+                dragon = Dragon.ChanceOfSpawn + basilic;
+                ghost = Ghost.ChanceOfSpawn + dragon;
+                zombie = Zombie.ChanceOfSpawn + ghost;
+                gobelin = Gobelin.ChanceOfSpawn + zombie;
+                slime = Slime.ChanceOfSpawn + gobelin;
+            }
+            else if (Game.RoomCount <= 20)
+            {
+                basilic = Basilic.ChanceOfSpawn2;
+                dragon = Dragon.ChanceOfSpawn2 + basilic;
+                evolveghost = Ghost.ChanceOfSpawn + dragon;
+                evolvezombie = Zombie.ChanceOfSpawn + evolveghost;
+                evolvegobelin = Gobelin.ChanceOfSpawn + evolvezombie;
+                evolveslime = Slime.ChanceOfSpawn + evolvegobelin;
+            }
+            else if (Game.RoomCount <= 30)
+            {
+                basilic = Basilic.ChanceOfSpawn;
+                dragon = Dragon.ChanceOfSpawn + basilic;
+                evolveghost = Ghost.ChanceOfSpawn + dragon;
+                evolvezombie = Zombie.ChanceOfSpawn + evolveghost;
+                evolvegobelin = Gobelin.ChanceOfSpawn + evolvezombie;
+                evolveslime = Slime.ChanceOfSpawn + evolvegobelin;
             }
 
-            //Console.WriteLine("                                                    Basilic: {0}. Dragon: {1}. Ghost: {2}. Gobelin: {3}. Slime: {4}. x: {5}", basilic, dragon, ghost, gobelin, slime, x);
+            int x = RandomInt(slime);
+
+
 
             Monster m1 = null;
-            if (x < golem)
+            if (x < golem || Game.RoomCount == GolemOfArmagedon.RoomOfSpawning)
             {
                 m1 = new GolemOfArmagedon();
                 return m1;
@@ -146,6 +202,26 @@ namespace JeuWithGuigui3
             else if (x < dragon)
             {
                 m1 = new Dragon();
+                return m1;
+            }
+            else if (x < evolveghost)
+            {
+                m1 = new EvolvedGhost();
+                return m1;
+            }
+            else if (x < evolvezombie)
+            {
+                m1 = new EvolvedZombie();
+                return m1;
+            }
+            else if (x < evolvegobelin)
+            {
+                m1 = new EvolvedGobelin();
+                return m1;
+            }
+            else if (x < evolveslime)
+            {
+                m1 = new EvolvedSlime();
                 return m1;
             }
             else if (x < ghost)
@@ -168,9 +244,12 @@ namespace JeuWithGuigui3
                 m1 = new Slime();
                 return m1;
             }
+
+
+
             if (m1 == null)
             {
-                Console.WriteLine("Probleme de proba dans Monster().CreatrandomMonster()");
+                Console.WriteLine("Basilic: {0}. Dragon: {1}. evolveghost: {6}. evolvezombie: {7}. evolvegobelin: {8}. evolveslime: {9}. Ghost: {2}. Gobelin: {3}. Slime: {4}. x: {5}", basilic, dragon, ghost, gobelin, slime, x, evolveghost, evolvezombie, evolvegobelin, evolveslime);
                 m1 = new Slime();
             }
             return m1;
@@ -185,7 +264,8 @@ namespace JeuWithGuigui3
     }
 
 
-
+    //Slime:
+    //Slime 1-10
     class Slime : Monster
     {
         public static int ChanceOfSpawn = 35;
@@ -195,9 +275,9 @@ namespace JeuWithGuigui3
             Name = "Slime";
 
             //Vie
-            MaxLife = 80;
+            MaxLife = 40;
             Vie = MaxLife;
-            baseDmg = 20;
+            baseDmg = 10;
             Dmg = baseDmg;
 
             //Capacité de feu, poison, etc...
@@ -215,6 +295,70 @@ namespace JeuWithGuigui3
             Usepower = false;
         }
     }
+    //Slime 11-20
+    class EvolvedSlime : Monster
+    {
+        public static int ChanceOfSpawn = 35;
+        public EvolvedSlime()
+        {
+            //Name
+            Name = "Evolved Slime";
+
+            //Vie
+            MaxLife = 80;
+            Vie = MaxLife;
+            baseDmg = 20;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = false;
+            MagicResistance = true;
+
+            // Pour les loots
+            ChanceOfLoot = 5;
+            Numpotion = 2;
+            PODrop = 20;
+            POCost = 40;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+    //Slime 21-30
+    class MagmaSlime : Monster
+    {
+        public static int ChanceOfSpawn = 35;
+        public MagmaSlime()
+        {
+            //Name
+            Name = "Magma Slime";
+
+            //Vie
+            MaxLife = 120;
+            Vie = MaxLife;
+            baseDmg = 30;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = true;
+            PoisonDmg = false;
+            MagicResistance = false;
+
+            // Pour les loots
+            ChanceOfLoot = 10;
+            Numpotion = 4;
+            PODrop = 40;
+            POCost = 80;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+
+
+    //Gobelin
+    //Gobelin 1-10
     class Gobelin : Monster
     {
         public static int ChanceOfSpawn = 35;
@@ -226,7 +370,7 @@ namespace JeuWithGuigui3
             //Vie
             MaxLife = 15;
             Vie = MaxLife;
-            baseDmg = 30;
+            baseDmg = 20;
             Dmg = baseDmg;
 
             //Capacité de feu, poison, etc...
@@ -244,6 +388,70 @@ namespace JeuWithGuigui3
             Usepower = false;
         }
     }
+    //Gobelin 11-20
+    class EvolvedGobelin : Monster
+    {
+        public static int ChanceOfSpawn = 35;
+        public EvolvedGobelin()
+        {
+            //Name
+            Name = "Evolved Gobelin";
+
+            //Vie
+            MaxLife = 30;
+            Vie = MaxLife;
+            baseDmg = 40;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = false;
+            MagicResistance = false;
+
+            // Pour les loots
+            ChanceOfLoot = 5;
+            Numpotion = 4;
+            PODrop = 30;
+            POCost = 60;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+    //Gobelin 21-30
+    class GreatGobelin : Monster
+    {
+        public static int ChanceOfSpawn = 35;
+        public GreatGobelin()
+        {
+            //Name
+            Name = "Great Gobelin";
+
+            //Vie
+            MaxLife = 90;
+            Vie = MaxLife;
+            baseDmg = 60;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = false;
+            MagicResistance = false;
+
+            // Pour les loots
+            ChanceOfLoot = 10;
+            Numpotion = 8;
+            PODrop = 60;
+            POCost = 120;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+
+
+    //Zombie
+    //Zombie 1-10
     class Zombie : Monster
     {
         public static int ChanceOfSpawn = 15;
@@ -253,7 +461,7 @@ namespace JeuWithGuigui3
             Name = "Zombie";
 
             //Vie
-            MaxLife = 60;
+            MaxLife = 40;
             Vie = MaxLife;
             baseDmg = 30;
             Dmg = baseDmg;
@@ -272,8 +480,72 @@ namespace JeuWithGuigui3
             //Capacité utilisé du monstre
             Usepower = false;
         }
-        
+
     }
+    //Zombie 11-20
+    class EvolvedZombie : Monster
+    {
+        public static int ChanceOfSpawn = 15;
+        public EvolvedZombie()
+        {
+            //Name
+            Name = "Evolved Zombie";
+
+            //Vie
+            MaxLife = 80;
+            Vie = MaxLife;
+            baseDmg = 60;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = true;
+            MagicResistance = true;
+
+            // Pour les loots
+            ChanceOfLoot = 16;
+            Numpotion = 6;
+            PODrop = 80;
+            POCost = 200;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+    //Zombie 21-30
+    class AncientZombie : Monster
+    {
+        public static int ChanceOfSpawn = 15;
+        public AncientZombie()
+        {
+            //Name
+            Name = "Ancient Zombie";
+
+            //Vie
+            MaxLife = 160;
+            Vie = MaxLife;
+            baseDmg = 60;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = true;
+            MagicResistance = true;
+
+            // Pour les loots
+            ChanceOfLoot = 32;
+            Numpotion = 12;
+            PODrop = 160;
+            POCost = 400;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+
+
+    //Ghost
+    //Ghost 1-10
     class Ghost : Monster
     {
         public static int ChanceOfSpawn = 10;
@@ -283,9 +555,9 @@ namespace JeuWithGuigui3
             Name = "Ghost";
 
             //Vie
-            MaxLife = 100;
+            MaxLife = 90;
             Vie = MaxLife;
-            baseDmg = 40;
+            baseDmg = 25;
             Dmg = baseDmg;
 
             //Capacité de feu, poison, etc...
@@ -303,9 +575,73 @@ namespace JeuWithGuigui3
             Usepower = false;
         }
     }
+    //Ghost 11-20
+    class EvolvedGhost : Monster
+    {
+        public static int ChanceOfSpawn = 10;
+        public EvolvedGhost()
+        {
+            //Name
+            Name = "Evolved Ghost";
+
+            //Vie
+            MaxLife = 180;
+            Vie = MaxLife;
+            baseDmg = 50;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = false;
+            MagicResistance = false;
+
+            // Pour les loots
+            ChanceOfLoot = 16;
+            Numpotion = 6;
+            PODrop = 80;
+            POCost = 200;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+    //Ghost 21-30
+    class GodGhost : Monster
+    {
+        public static int ChanceOfSpawn = 10;
+        public GodGhost()
+        {
+            //Name
+            Name = "God Ghost";
+
+            //Vie
+            MaxLife = 240;
+            Vie = MaxLife;
+            baseDmg = 75;
+            Dmg = baseDmg;
+
+            //Capacité de feu, poison, etc...
+            FireDmg = false;
+            PoisonDmg = true;
+            MagicResistance = false;
+
+            // Pour les loots
+            ChanceOfLoot = 32;
+            Numpotion = 12;
+            PODrop = 160;
+            POCost = 400;
+
+            //Capacité utilisé du monstre
+            Usepower = false;
+        }
+    }
+
+
+
     class Dragon : Monster
     {
         public static int ChanceOfSpawn = 2;
+        public static int ChanceOfSpawn2 = 5;
         public Dragon()
         {
             //Name
@@ -335,6 +671,7 @@ namespace JeuWithGuigui3
     class Basilic : Monster
     {
         public static int ChanceOfSpawn = 2;
+        public static int ChanceOfSpawn2 = 5;
         public Basilic()
         {
             //Name
@@ -362,6 +699,16 @@ namespace JeuWithGuigui3
         }
     }
 
+
+
+
+
+
+
+
+    /// <summary>
+    /// BOSS
+    /// </summary>
     class GolemOfArmagedon : Monster
     {
         public static int ChanceOfSpawn = 0;

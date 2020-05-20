@@ -245,9 +245,10 @@ namespace JeuWithGuigui3
             //Applique les dégats
             int finaldamageint = Convert.ToInt32(Finaldmg);
             m1.Vie -= finaldamageint;
-            if (m1.Name == "Zombie" || m1.Name == "Gobelin")
-            m1.MonsterCapacity(m1); //Pour le Gobelin et le Zombie
-            
+            if (m1.Name != "Golem of Armagedon")
+            {
+                m1.MonsterCapacity(m1); //Pour le Gobelin et le Zombie
+            }
             if (m1.Vie < 0)
             {
                 m1.Vie = 0;

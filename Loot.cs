@@ -89,17 +89,17 @@ namespace JeuWithGuigui3
 
         public static void LootPotion(Player p1, int x)
         {
-            int y = RandomInt(30);
+            int y = RandomInt(100);
             //Console.WriteLine("y: {0}",y);
-            if (y < 15)
+            if (y < 50)
             {
                 Potion.GetPotions(x, p1);
             }
-            else if (y < 20)
+            else if (y < 70)
             {
                 Potion.GetMaxHPPotions(x-1, p1);
             }
-            else if (y < 30)
+            else if (y < 100)
             {
                 Potion.GetPuissancePotions(x, p1);
             }
