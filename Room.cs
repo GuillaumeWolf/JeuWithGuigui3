@@ -10,12 +10,12 @@ namespace JeuWithGuigui3
     {
         //Sall
         static public int LegendaryRoom = 1;
-        static public int MarchandRoom = 5 + LegendaryRoom;
+        static public int MarchandRoom = 1 + LegendaryRoom;
         static public int ChanceNothing = 15 + MarchandRoom;
         static public int ChanceTrap = 15 + ChanceNothing;
         static public int ChanceMonster = 60 + ChanceTrap;
 
-        static readonly int[] RoomsChances = {LegendaryRoom, ChanceNothing, ChanceTrap, ChanceMonster};
+        static readonly int[] RoomsChances = {LegendaryRoom, MarchandRoom, ChanceNothing, ChanceTrap, ChanceMonster};
                 // - Sall temporelle          
                 //static private int Chance2Monster = 10;
 
@@ -24,15 +24,15 @@ namespace JeuWithGuigui3
         {
 
             int _LegendaryRoom = LegendaryRoom;
+            int _MarchandRoom = MarchandRoom + (Game.RoomCount % 10 == 1 ? 100:0);
             int _ChanceNothing = ChanceNothing - (Game.RoomCount - 1) * 1;
             int _ChanceTrap = ChanceTrap - (Game.RoomCount - 1) * 1;
             int _ChanceMonster = ChanceMonster + (Game.RoomCount - 1) * 2;
 
-            int[] RoomsChances = { _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster };
+            int[] RoomsChances = { _LegendaryRoom, _MarchandRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster };
             int x = RandomInt(_ChanceMonster + 1);
 
             Console.WriteLine();
-            Console.WriteLine("                                                    LegendaryRoom: {0}. ChanceNothing: {1}. ChanceTrap: {2}. ChanceMonster: {3}. x: {4}", _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster, x);
             Console.WriteLine();
 
             string sortie = "";
@@ -40,8 +40,6 @@ namespace JeuWithGuigui3
             var indexRoom = RoomsChances.Count()- RoomsChances
                 .Where(y => y > x)
                 .Count();
-
-            Console.WriteLine("IndexRoom = {0}.", indexRoom);
 
             if (Game.RoomCount != GolemOfArmagedon.RoomOfSpawning)
             {
@@ -51,13 +49,20 @@ namespace JeuWithGuigui3
                         EnterLegendaryRoom(p1);
                         break;
                     case 1:
-                        EnterEmptyRoom(p1);
+                        EnterMarchandRoom(p1);
                         break;
                     case 2:
-                        isDead = EnterTrapRoom(p1);
+                        EnterEmptyRoom(p1);
                         break;
                     case 3:
+                        isDead = EnterTrapRoom(p1);
+                        break;
+                    case 4:
                         sortie = EnterMonsterRoom(p1);
+                        break;
+                    case 5:
+                        Console.WriteLine("                                                    LegendaryRoom: {0}. ChanceNothing: {1}. ChanceTrap: {2}. ChanceMonster: {3}. x: {4}", _LegendaryRoom, _ChanceNothing, _ChanceTrap, _ChanceMonster, x);
+                        
                         break;
                 }
             }
@@ -94,6 +99,12 @@ namespace JeuWithGuigui3
             Weapon w1 = new LegendarySword();
             Weapon.AddWeapon(p1, w1, null);
             LegendaryRoom = -1;
+        }
+
+
+        static private void EnterMarchandRoom(Player p1)
+        {
+            Console.WriteLine("You enter a Marchand Room.");
         }
 
 

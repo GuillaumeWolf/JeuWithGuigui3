@@ -33,7 +33,7 @@ namespace JeuWithGuigui3
         //Objets
         public int potions = 2;
         public int PotionMaxHP = 0;
-        public int PuissancePotions = 199;
+        public int PuissancePotions = 1;
         public int money = 20;
 
         //Armes 
@@ -205,26 +205,26 @@ namespace JeuWithGuigui3
 
             if (VoldeVie)
             {
-                if (weapon1 != null && weapon1.VoldeVie)
+                if (weapon1 != null && weapon1.VolDevieBool)
                 {
                     if (chooseattak == "ca")
                     {
-                        Potion.Heal(weapon1.Dmg, p1);
+                        Potion.Heal(weapon1.ClassicDmg, p1);
                     }
                     else
                     {
-                        Potion.Heal(weapon1.MagicDamage, p1);
+                        Potion.Heal(weapon1.MagicDmg, p1);
                     }
                 }
-                if (weapon2 != null && weapon2.VoldeVie)
+                if (weapon2 != null && weapon2.VolDevieBool)
                 {
                     if (chooseattak == "ca")
                     {
-                        Potion.Heal(weapon2.Dmg, p1);
+                        Potion.Heal(weapon2.ClassicDmg, p1);
                     }
                     else
                     {
-                        Potion.Heal(weapon2.MagicDamage, p1);
+                        Potion.Heal(weapon2.MagicDmg, p1);
                     }
                 }
             }
@@ -245,6 +245,7 @@ namespace JeuWithGuigui3
             //Applique les dégats
             int finaldamageint = Convert.ToInt32(Finaldmg);
             m1.Vie -= finaldamageint;
+            if (m1.Name == "Zombie" || m1.Name == "Gobelin")
             m1.MonsterCapacity(m1); //Pour le Gobelin et le Zombie
             
             if (m1.Vie < 0)
@@ -287,17 +288,17 @@ namespace JeuWithGuigui3
 
             else if (p1.weapon1 == null && p1.weapon2 != null)
             {
-                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon2.MagicDamage;
-                p1.Damage = p1.BaseDamage + p1.weapon2.Dmg;
-                if (p1.weapon2.PoisonDamage)
+                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon2.MagicDmg;
+                p1.Damage = p1.BaseDamage + p1.weapon2.ClassicDmg;
+                if (p1.weapon2.PoisonBool)
                 { p1.Poison = true;}
                 else
                 { p1.Poison = false;}
-                if (p1.weapon2.FireDamage)
+                if (p1.weapon2.FireBool)
                 { p1.Fire = true;}
                 else if (p1.RaceOfPlayer.Name != "Cracheur de feu")
                 { p1.Fire = false;}
-                if (p1.weapon2.VoldeVie)
+                if (p1.weapon2.VolDevieBool)
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
@@ -308,17 +309,17 @@ namespace JeuWithGuigui3
 
             else if (p1.weapon1 != null && p1.weapon2 == null)
             {
-                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon1.MagicDamage;
-                p1.Damage = p1.BaseDamage + p1.weapon1.Dmg;
-                if (p1.weapon1.PoisonDamage)
+                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon1.MagicDmg;
+                p1.Damage = p1.BaseDamage + p1.weapon1.ClassicDmg;
+                if (p1.weapon1.PoisonBool)
                 { p1.Poison = true; }
                 else
                 { p1.Poison = false; }
-                if (p1.weapon1.FireDamage)
+                if (p1.weapon1.FireBool)
                 { p1.Fire = true; }
                 else if (p1.RaceOfPlayer != null && p1.RaceOfPlayer.Name != "Cracheur de feu")
                 { p1.Fire = false; }
-                if (p1.weapon1.VoldeVie )
+                if (p1.weapon1.VolDevieBool)
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }
@@ -328,17 +329,17 @@ namespace JeuWithGuigui3
 
             else if (p1.weapon1 != null && p1.weapon2 != null)
             {
-                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon2.MagicDamage + p1.weapon1.MagicDamage;
-                p1.Damage = p1.BaseDamage + p1.weapon1.Dmg + p1.weapon2.Dmg;
-                if (p1.weapon1.PoisonDamage || p1.weapon2.PoisonDamage)
+                p1.MagicDmg = p1.BaseMagicDmg + p1.weapon2.MagicDmg + p1.weapon1.MagicDmg;
+                p1.Damage = p1.BaseDamage + p1.weapon1.ClassicDmg + p1.weapon2.ClassicDmg;
+                if (p1.weapon1.PoisonBool || p1.weapon2.PoisonBool)
                 { p1.Poison = true; }
                 else
                 { p1.Poison = false; }
-                if (p1.weapon2.FireDamage || p1.weapon1.PoisonDamage)
+                if (p1.weapon2.FireBool || p1.weapon1.FireBool)
                 { p1.Fire = true; }
                 else if (p1.RaceOfPlayer.Name != "Cracheur de feu")
                 { p1.Fire = false; }
-                if (p1.weapon1.VoldeVie || p1.weapon1.VoldeVie)
+                if (p1.weapon1.VolDevieBool || p1.weapon1.VolDevieBool)
                 { p1.VoldeVie = true; }
                 else
                 { p1.VoldeVie = false; }

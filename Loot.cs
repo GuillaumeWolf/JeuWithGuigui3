@@ -21,7 +21,11 @@ namespace JeuWithGuigui3
                 ChanceOfGettingArmor = -1;
             }
             int ChanceWeapon = ChanceOfGettingWeapon;
+            if(p1.weapon1 != null && p1.weapon2 != null )
+            {ChanceWeapon -= 20;}
             int ChanceArmor = ChanceOfGettingArmor + ChanceWeapon;
+            if (p1.armor != null)
+            { ChanceArmor -= 15; }
             int ChanceMaxhpPotion = ChanceOfGettingMaxHpPotion + ChanceArmor;
             int ChancePuissancePotions = ChanceOfGettingPuissancePotions + ChanceMaxhpPotion;
             int Chance3Potion = ChanceOfGetting2Potion + ChancePuissancePotions;

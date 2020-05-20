@@ -30,6 +30,10 @@ namespace JeuWithGuigui3
                 }
                 //Check si le monstre est mort
                 bool MonsterisDead = m1.CheckDie();
+                if (p1.FightBoos)
+                {
+                    m1.MonsterCapacity(m1);
+                }
 
                 if (MonsterisDead == true)
                 {
@@ -65,10 +69,7 @@ namespace JeuWithGuigui3
             p1.InFight = false;
             p1.PuissancePotionsused = 0;
             Player.ChangeDamage(p1);
-            if (m1.Name == "Golem of Armagedon" && m1.Vie < 500)
-            {
-                GolemOfArmagedon.GolemRage(m1);
-            }
+            
         }
 
     }

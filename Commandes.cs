@@ -28,7 +28,7 @@ namespace JeuWithGuigui3
                 //Player stats
                 else if (PlayerCommande == "ps")
                 {
-                    Console.WriteLine("Name: {0}. Race: {1}. Classe : {6}. HP: {2}/{3}.\nClassic Damage: {4}. Magic Damage : {5}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg, p1.COfP.ClassName);
+                    Console.WriteLine("Name: {0}. Race: {1}. Classe : {6}. HP: {2}/{3}.\nClassic Damage: {4}. Magic Damage : {5}. Crit: {6}. ", p1.name, p1.RaceOfPlayer.Name, p1.HP, p1.BaseHP, p1.Damage, p1.MagicDmg, p1.COfP.ClassName, p1.ChanceCrit);
                 }
 
                 //Monster stats
@@ -124,16 +124,26 @@ namespace JeuWithGuigui3
                 {
                     LeechSword lee1 = new LeechSword();
                     Weapon.AddWeapon(p1, lee1, null);
+                    Player.ChangeDamage(p1);
                 }
-                else if (PlayerCommande == "zgold")
+                else if (PlayerCommande == "addpo")
                 {
-                    p1.money = 0;
+                    Potion.GetMaxHPPotions(20,p1);
+                    Potion.GetPotions(20, p1);
+                    Potion.GetPuissancePotions(20, p1);
                 }
-                else if (PlayerCommande == "crsw")
+                else if (PlayerCommande == "crit")
                 {
                     CritSword crit1 = new CritSword();
                     Weapon.AddWeapon(p1, crit1, null);
+                    Player.ChangeDamage(p1);
                 }
+                else if (PlayerCommande == "maxhp")
+                {
+                    p1.BaseHP += 100;
+                    p1.HP += 100;
+                }
+
 
                 //Autre
                 else
@@ -236,28 +246,40 @@ namespace JeuWithGuigui3
             }
             else if (p1.weapon1 == null && p1.weapon2 != null)
             {
-                Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
-                if (p1.weapon2.PoisonDamage) { Console.Write("Poison Damage. "); }
-                if (p1.weapon2.FireDamage) { Console.Write("Fire Damage. "); }
+                Console.Write("Weapon: {0}. ", p1.weapon2.Name);
+                if (p1.weapon2.ClassicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon2.ClassicDmg); }
+                if (p1.weapon2.MagicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon2.MagicDmg); }
+                if (p1.weapon2.CritBool) { Console.Write("Crit: {0}. ", p1.weapon2.Crit); }
+                if (p1.weapon2.PoisonBool) { Console.Write("Poison Damage. "); }
+                if (p1.weapon2.FireBool) { Console.Write("Fire Damage. "); }
                 Console.WriteLine();
             }
             else if (p1.weapon1 != null && p1.weapon2 == null)
             {
-                Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
-                if (p1.weapon1.PoisonDamage) { Console.Write("Poison Damage. "); }
-                if (p1.weapon1.FireDamage) { Console.Write("Fire Damage. "); }
+                Console.Write("Weapon: {0}. ", p1.weapon1.Name);
+                if (p1.weapon1.ClassicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon1.ClassicDmg); }
+                if (p1.weapon1.MagicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon1.MagicDmg); }
+                if (p1.weapon1.CritBool) { Console.Write("Crit: {0}. ", p1.weapon1.Crit); }
+                if (p1.weapon1.PoisonBool) { Console.Write("Poison Damage. "); }
+                if (p1.weapon1.FireBool) { Console.Write("Fire Damage. "); }
                 Console.WriteLine();
             }
             else
             {
-                Console.Write("Weapon 1: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon1.Name, p1.weapon1.Dmg, p1.weapon1.MagicDamage);
-                if (p1.weapon1.PoisonDamage) { Console.Write("Poison Damage. "); }
-                if (p1.weapon1.FireDamage) { Console.Write("Fire Damage. "); }
+                Console.Write("Weapon 1: {0}. ", p1.weapon1.Name);
+                if (p1.weapon1.ClassicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon1.ClassicDmg); }
+                if (p1.weapon1.MagicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon1.MagicDmg); }
+                if (p1.weapon1.CritBool) { Console.Write("Crit: {0}. ", p1.weapon1.Crit); }
+                if (p1.weapon1.PoisonBool) { Console.Write("Poison Damage. "); }
+                if (p1.weapon1.FireBool) { Console.Write("Fire Damage. "); }
                 Console.WriteLine();
 
-                Console.Write("Weapon 2: {0}. Damage: {1}. Magic Damage : {2}. ", p1.weapon2.Name, p1.weapon2.Dmg, p1.weapon2.MagicDamage);
-                if (p1.weapon2.PoisonDamage) { Console.Write("Poison Damage. "); }
-                if (p1.weapon2.FireDamage) { Console.Write("Fire Damage. "); }
+                Console.Write("Weapon 2: {0}. ", p1.weapon2.Name);
+                if (p1.weapon2.ClassicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon2.ClassicDmg); }
+                if (p1.weapon2.MagicDamageBool) { Console.Write("Damage: {0}. ", p1.weapon2.MagicDmg); }
+                if (p1.weapon2.CritBool) { Console.Write("Crit: {0}. ", p1.weapon2.Crit); }
+                if (p1.weapon2.PoisonBool) { Console.Write("Poison Damage. "); }
+                if (p1.weapon2.FireBool) { Console.Write("Fire Damage. "); }
                 Console.WriteLine();
             }
         }

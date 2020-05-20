@@ -6,15 +6,24 @@ namespace JeuWithGuigui3
 {
     class Weapon
     {
-        public int Dmg;
-        public int Crit;
-        public int MagicDamage;
-        public bool Magic;
-        public bool VoldeVie;
-        public bool FireDamage;
-        public bool PoisonDamage;
+        #region public Porpreties
+        //Name
+        public string Name;
 
-        public string Name { get; set; }
+        //Caractéristique Bool
+        public bool ClassicDamageBool;
+        public bool MagicDamageBool;
+        public bool CritBool;
+        public bool VolDevieBool;
+        public bool FireBool;
+        public bool PoisonBool;
+
+        //Dégats et Crit
+        public int ClassicDmg;
+        public int MagicDmg;
+        public int Crit;
+
+        #endregion
 
         public static void DeleteWeapon(Player p1, int position)
         {
@@ -194,10 +203,21 @@ namespace JeuWithGuigui3
         static public double ChanceOfLooting = ChanceOfLootingWeapon.MagicSwordLoot;
         public MagicWand()
         {
-            MagicDamage = 30;
+            //Name
             Name = "Magic Wand";
-            Magic = true;
-            ChanceOfLooting /= 2;
+
+            //Caractéristique Bool
+            ClassicDamageBool = false;
+            MagicDamageBool = true;
+            CritBool = false;
+            VolDevieBool = false;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 0;
+            MagicDmg = 30;
+            Crit = 0;
         }
 
     }
@@ -207,11 +227,21 @@ namespace JeuWithGuigui3
 
         public Sword()
         {
-            Dmg = 15;
+            //Name
             Name = "Sword";
+
+            //Caractéristique Bool
+            ClassicDamageBool = true;
+            MagicDamageBool = false;
+            CritBool = true;
+            VolDevieBool = false;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 15;
+            MagicDmg = 0;
             Crit = 5;
-            Magic = false;
-            ChanceOfLooting /= 2;
         }
     }
     class Dague : Weapon
@@ -219,11 +249,21 @@ namespace JeuWithGuigui3
         static public double ChanceOfLooting = ChanceOfLootingWeapon.DagueLoot;
         public Dague()
         {
-            Dmg = 10;
+            //Name
             Name = "Dague";
+
+            //Caractéristique Bool
+            ClassicDamageBool = true;
+            MagicDamageBool = false;
+            CritBool = true;
+            VolDevieBool = false;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 10;
+            MagicDmg = 0;
             Crit = 1;
-            Magic = false;
-            ChanceOfLooting /= 2;
         }
     }
     class CritSword : Weapon    //épée Critique
@@ -232,12 +272,21 @@ namespace JeuWithGuigui3
 
         public CritSword()
         {
-            Dmg = 30;
-            Crit = 20;
-            MagicDamage = 0;
+            //Name
             Name = "Crit Sword";
-            Magic = false;
-            ChanceOfLooting /= 2;
+
+            //Caractéristique Bool
+            ClassicDamageBool = true;
+            MagicDamageBool = false;
+            CritBool = true;
+            VolDevieBool = false;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 30;
+            MagicDmg = 0;
+            Crit = 30;
         }
 
     }
@@ -247,11 +296,21 @@ namespace JeuWithGuigui3
 
         public MagicSword()
         {
-            Dmg = 30;
-            MagicDamage = 30;
+            //Name
             Name = "Magic Sword";
-            Magic = true;
-            ChanceOfLooting /= 2;
+
+            //Caractéristique Bool
+            ClassicDamageBool = true;
+            MagicDamageBool = true;
+            CritBool = false;
+            VolDevieBool = false;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 30;
+            MagicDmg = 30;
+            Crit = 0;
         }
 
     }
@@ -259,27 +318,45 @@ namespace JeuWithGuigui3
     {
         public static double ChanceOfLooting = ChanceOfLootingWeapon.LeechSwordLoot;    
         public LeechSword()
-        {
-            Dmg = 30;
+        {            
+            //Name
             Name = "LeechSword";
-            Magic = false;
-            VoldeVie = true;
-            ChanceOfLooting /= 2;
+
+            //Caractéristique Bool
+            ClassicDamageBool = true;
+            MagicDamageBool = false;
+            CritBool = false;
+            VolDevieBool = true;
+            FireBool = false;
+            PoisonBool = false;
+
+            //Dégats et Crit
+            ClassicDmg = 30;
+            MagicDmg = 0;
+            Crit = 0;
         }
     }
     class LegendarySword : Weapon
     {
         public static double ChanceOfLooting = ChanceOfLootingWeapon.LegendaryLoot;
         public LegendarySword()
-        {
-            Dmg = 70;
+        {            
+            //Name
             Name = "LegendarySword";
+
+            //Caractéristique Bool
+            ClassicDamageBool = true;
+            MagicDamageBool = false;
+            CritBool = true;
+            VolDevieBool = false;
+            FireBool = true;
+            PoisonBool = true;
+
+            //Dégats et Crit
+            ClassicDmg = 70;
+            MagicDmg = 0;
             Crit = 10;
-            Magic = false;
-            FireDamage = true;
-            PoisonDamage = true;
-            ChanceOfLooting /= 2;
-            LegendarySword.ChanceOfLooting = 0;
+
         }
     }
 

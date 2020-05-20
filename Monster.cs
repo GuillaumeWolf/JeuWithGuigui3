@@ -42,6 +42,15 @@ namespace JeuWithGuigui3
                 m1.Usepower = true;
                 Console.WriteLine("The Zombie is dead one time but you have to kill him twice. But now he is a little bit weaker. ");
             }
+            if (m1.Name == "Golem of Armagedon" && m1.Vie < m1.MaxLife / 2 && !m1.Usepower)
+            {
+                Console.WriteLine("The Golem of Armagedon is angry ! He enter the \"RAAAAGE MOD\"!");
+                m1.Dmg = m1.baseDmg * 15 / 10;
+                m1.FireDmg = true;
+                m1.PoisonDmg = true;
+                m1.inRage = true;
+                m1.Usepower = true;
+            }
         }
 
         public void Attak(Player p1)
@@ -310,26 +319,5 @@ namespace JeuWithGuigui3
             Console.WriteLine("It is the final Fight. You can not run away.");
 
         }
-        public static void GolemRage(Monster m1)
-        {
-            
-            if (m1.Name == "Golem of Armagedon" && m1.Vie < m1.MaxLife/2 && !m1.Usepower)
-            {
-                Console.WriteLine("The Golem of Armagedon is angry ! He enter in rage mode !");
-                m1.Dmg = m1.baseDmg * 15 / 10;
-                m1.FireDmg = true;
-                m1.PoisonDmg = true;
-                m1.inRage = true;
-                m1.Usepower = true;
-            }
-            else
-            {
-                m1.Dmg = m1.baseDmg;
-                m1.FireDmg = false;
-                m1.PoisonDmg = false;
-                m1.inRage = false;
-            }
-        }
-
     }
 }
