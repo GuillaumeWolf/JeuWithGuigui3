@@ -44,7 +44,6 @@ namespace JeuWithGuigui3
             {
                 indexRoom = 1;
             }
-            indexRoom = 1;
             if (Game.RoomCount != GolemOfArmagedon.RoomOfSpawning)
             {
                 switch (indexRoom)

@@ -282,15 +282,35 @@ namespace JeuWithGuigui3
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     class CommandeMarchand
     {
+        #region public static propreties
+        //Class object on shop or not
+        public static int ShopPotions = 0;
+        public static int ShopArmor = 0;
+        public static int ShopWeapon = 0;
+
         //Object dans le shop on non
+        //potions 0-2
         public static bool hppotion = false;
         public static bool mhppotion = false;
         public static bool pppotion = false;
+            //armures 3-5
         public static bool smallarmor = false;
         public static bool mediumarmor = false;
         public static bool bigarmor = false;
+            //armes 6-12
         public static bool dague = false;
         public static bool sword = false;
         public static bool magicwand = false;
@@ -299,12 +319,14 @@ namespace JeuWithGuigui3
         public static bool leechsword = false;
         public static bool critsword = false;
 
-        //Special
+        //Special 
         public static bool legendarysword = false;
 
         //Arrays
         public static bool[] boolobject = { hppotion, mhppotion, pppotion, smallarmor, mediumarmor, bigarmor, dague, sword, magicwand, magicsword, lépéecalice, leechsword, critsword };
         public static int[] intobject = new int[boolobject.Count()];
+        #endregion
+
 
         public static void Commande(Player p1)
         {
@@ -316,8 +338,11 @@ namespace JeuWithGuigui3
 
             //Objet dans le shop
             MakeMarchandObject(p1); //Crée les idfférents objets qui vont apparaitre
-            TriObject(); // Fait une array pour les numero d'article
-            ProposeObjects(); //Montre les articles
+            refreshPrice(p1);
+            refreshArray();
+            TriObject();
+            ProposeObjects(p1); //Montre les articles
+            //Achat des articles
             bool lool = false;
             while (true)
             {
@@ -337,7 +362,7 @@ namespace JeuWithGuigui3
                 {
                     if (legendarysword && p1.money > 200)
                     {
-                        Console.WriteLine("Are you sure ? I have maybe something that will interest you. Want to check ? (yes or no)");
+                        Console.WriteLine("Wait ! I have maybe something that will interest you. Want to check ? (yes or no)");
                         while (true)
                         {
                             Console.Write(" --> ");
@@ -374,7 +399,7 @@ namespace JeuWithGuigui3
                             }
                             else if (rep3 == "no")
                             {
-                                Console.WriteLine("Ok. You wast a good weapons...");
+                                Console.WriteLine("Ok. You wast a good weapon...");
                                 break;
                             }
                             else
@@ -407,14 +432,20 @@ namespace JeuWithGuigui3
                         else
                         {
                             int indexx = Array.IndexOf(intobject, sortie);
-                            Console.WriteLine("Article choisi: {0}. index: {1}.", boolobject[indexx], indexx);
-                            boolobject[indexx] = false;
+                            BuyObject(indexx, p1);
+                            Console.WriteLine("\n");
                             break;
                         }
                     }
-                    //TriObject();
-                    ProposeObjects();
+                    refreshPrice(p1);
+                    ProposeObjects(p1);
                     lool = true;
+                    //Shop vide:
+                    if (!intobject.Contains(1))
+                    {
+                        Console.WriteLine("Hei, you buy all my stuf... I hope that I never see you again...");
+                        break;
+                    }
                     continue;
                 }
                 else
@@ -445,22 +476,25 @@ namespace JeuWithGuigui3
         public static void MakeMarchandObject(Player p1)
         {
             //Potion
-            int Potions = RandomInt(100);
+            int y = RandomInt(100);
             int numpotionexpos = 0;
-            if (Potions < 100)
+            if (y < 100)
             {
                 hppotion = true;
                 numpotionexpos++;
+                ShopPotions++;
             }
-            if (Potions < 50)
+            if (y < 50)
             {
                 pppotion = true;
                 numpotionexpos++;
+                ShopPotions++;
             }
-            if (Potions < 100 && numpotionexpos < 2)
+            if (y < 100 && numpotionexpos < 2)
             {
                 mhppotion = true;
                 numpotionexpos++;
+                ShopPotions++;
             }
             Console.WriteLine();
 
@@ -473,10 +507,12 @@ namespace JeuWithGuigui3
                 if (p1.armor != null && p1.armor.Name == "Small Armor")
                 {
                     mediumarmor = true;
+                    ShopArmor++;
                 }
                 else
                 {
                     smallarmor = true;
+                    ShopArmor++;
                 }
 
             }
@@ -486,74 +522,72 @@ namespace JeuWithGuigui3
                 if (p1.armor != null && p1.armor.Name == "Medium Armor")
                 {
                     bigarmor = true;
+                    ShopArmor++;
                 }
                 else
                 {
                     mediumarmor = true;
+                    ShopArmor++;
                 }
             }
             //Fin de Game
             else if (x <= 31)
             {
                 bigarmor = true;
+                ShopArmor++;
             }
 
-            int y = RandomInt(1000);
+            int z = RandomInt(1000);
 
             //Weapon
             if (x <= 11)
             {
                 dague = true;
+                ShopWeapon++;
                 sword = true;
+                ShopWeapon++;
                 magicwand = true;
-                if (y < 1000)
+                ShopWeapon++;
+                if (z < 1)
                 {
                     legendarysword = true;
+                    
                 }
+
             }
             //Millieu de la Game
             else if (x <= 21)
             {
                 magicsword = true;
-                if (y < 10)
+                ShopWeapon++;
+                if (z < 10)
                 {
                     legendarysword = true;
+                    
                 }
             }
             //Fin de Game
             else if (x <= 31)
             {
                 critsword = true;
+                ShopWeapon++;
                 lépéecalice = true;
+                ShopWeapon++;
                 leechsword = true;
-                if (y < 100)
+                ShopWeapon++;
+                if (z < 100)
                 {
                     legendarysword = true;
+                    
                 }
             }
 
         }
 
-
-        public static void TriObject()
-        {
-            refreshArray();
-            int x = 1;
-            for (int i = 0; i < boolobject.Count(); i++)
-            {
-                if (boolobject[i])
-                {
-                    intobject[i] = x;
-                    x++;
-                }
-            }
-        }
-
-
-        public static void ProposeObjects ()
+        public static void ProposeObjects (Player p1)
         {
             //Potions
-            if (true)
+            if (ShopPotions > 0)
             {
                 Console.WriteLine("Potions:");
             }
@@ -561,92 +595,210 @@ namespace JeuWithGuigui3
             {
                 int number = Game.RoomCount / 2 + 1;
                 int cost = 10;
-                Console.WriteLine("Article {0}: {1} Heal Potions: {2} gold ({3} gold/unit) ", intobject[0], number, number * cost, cost);
+                if (number * cost > p1.money)
+                {
+                    hppotion = false;
+                    ShopPotions--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: {1} Heal Potions: {2} gold ({3} gold/unit) ", intobject[0], number, number * cost, cost);
+                }
             }
             if (mhppotion)
             {
                 int number = Game.RoomCount / 5 + 1;
                 int cost = 15;
-                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[1], number, number * cost, cost);
+                if (number * cost > p1.money)
+                {
+                    mhppotion = false;
+                    ShopPotions--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[1], number, number * cost, cost);
+                }
             }
             if (pppotion)
             {
                 int number = Game.RoomCount / 4 + 1;
-                int cost = 15;  
-                Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[2], number, number * cost, cost);
+                int cost = 15;
+                if (number * cost > p1.money)
+                {
+                    pppotion = false;
+                    ShopPotions--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: {1} MaxHP Potions: {2} gold ({3} gold/unit)", intobject[2], number, number * cost, cost);
+                }
             }
             Console.WriteLine();
+            //Console.WriteLine("ShopPotion: {0}.", ShopPotions);
 
             //Armor
-            if (true)
+            if (ShopArmor > 0)
             {
                 Console.WriteLine("Armor:");
             }
             if (smallarmor)
             {
                 int cost = 30;
-                Console.WriteLine("Article {0}: Small Armor: {1} gold ", intobject[3], cost);
+                if (cost > p1.money)
+                {
+                    smallarmor = false;
+                    ShopArmor--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Small Armor: {1} gold ", intobject[3], cost);
+                }
             }
             if (mediumarmor)
             {
                 int cost = 100;
-                Console.WriteLine("Article {0}: Medium Armor: {1} gold ", intobject[4], cost);
+                if (cost > p1.money)
+                {
+                    mediumarmor = false;
+                    ShopArmor--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Medium Armor: {1} gold ", intobject[4], cost);
+                }
             }
             if (bigarmor)
             {
                 int cost = 300;
-                Console.WriteLine("Article {0}: Big Armor: {1} gold ", intobject[5], cost);
+                if (cost > p1.money)
+                {
+                    bigarmor = false;
+                    ShopArmor--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Big Armor: {1} gold ", intobject[5], cost);
+                }
             }
             Console.WriteLine();
+            //Console.WriteLine("ShopArmor: {0}.", ShopArmor);
 
             //Weapons
-            if (true)
+            if (ShopWeapon > 0)
             {
                 Console.WriteLine("Weapons:");
             }
             if (dague)
             {
                 int cost = 30;
-                Console.WriteLine("Article {0}: Dague: {1} gold ", intobject[6], cost);
+                if (cost > p1.money)
+                {
+                    dague = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Dague: {1} gold ", intobject[6], cost);
+                }
             }
             if (sword)
             {
                 int cost = 100;
-                Console.WriteLine("Article {0}: Sword: {1} gold ", intobject[7], cost);
+                if (cost > p1.money)
+                {
+                    sword = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Sword: {1} gold ", intobject[7], cost);
+                }
             }
             if (magicwand)
             {
                 int cost = 120;
-                Console.WriteLine("Article {0}: Magic Wand: {1} gold ", intobject[8], cost);
+                if (cost > p1.money)
+                {
+                    magicwand = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Magic Wand: {1} gold ", intobject[8], cost);
+                }
             }
             if (magicsword)
             {
                 int cost = 250;
-                Console.WriteLine("Article {0}: Magic Sword: {1} gold ", intobject[9], cost);
+                if (cost > p1.money)
+                {
+                    magicsword = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: Magic Sword: {1} gold ", intobject[9], cost);
+                }
             }
             if (lépéecalice)
             {
                 int cost = 400;
-                Console.WriteLine("Article {0}: L'épée Calice: {1} gold ", intobject[10], cost);
+                if (cost > p1.money)
+                {
+                    lépéecalice = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: L'épée Calice: {1} gold ", intobject[10], cost);
+                }
             }
             if (leechsword)
             {
                 int cost = 400;
-                Console.WriteLine(" Article {0}: Leech sword: {1} gold ", intobject[11], cost);
+                if (cost > p1.money)
+                {
+                    leechsword = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine(" Article {0}: Leech sword: {1} gold ", intobject[11], cost);
+                }
             }
             if (critsword)
             {
                 int cost = 400;
-                Console.WriteLine(" Article {0}: Crit Sword: {1} gold ", intobject[12], cost);
+                if (cost > p1.money)
+                {
+                    critsword = false;
+                    ShopWeapon--;
+                }
+                else
+                {
+                    Console.WriteLine(" Article {0}: Crit Sword: {1} gold ", intobject[12], cost);
+                }
             }
-           
             Console.WriteLine();
-
-
+            //Console.WriteLine("ShopWeapon: {0}.", ShopWeapon);
 
         }
 
-
+        public static void TriObject()
+        {
+            int x = 0;
+            //Console.Write("Array: ");
+            for (int i = 0; i < boolobject.Count(); i++)
+            {
+                if (boolobject[i])
+                {
+                    x++;
+                }
+                intobject[i] = x;
+                //Console.Write(x + " ");
+            }
+            //Console.WriteLine();
+        }
 
         public static void refreshArray()
         {
@@ -665,6 +817,151 @@ namespace JeuWithGuigui3
             boolobject[12] = critsword;
         }
 
+        public static void refreshBool()
+        {
+            hppotion = boolobject[0] ;
+            mhppotion = boolobject[1] ;
+            pppotion = boolobject[2] ;
+            smallarmor = boolobject[3] ;
+            mediumarmor = boolobject[4] ;
+            bigarmor = boolobject[5] ;
+            dague = boolobject[6];
+            sword = boolobject[7] ;
+            magicwand = boolobject[8] ;
+            lépéecalice = boolobject[9] ;
+            magicsword = boolobject[10] ;
+            leechsword = boolobject[11] ;
+            critsword = boolobject[12] ;
+        }
+
+        public static void refreshPrice (Player p1)
+        {
+            if (hppotion)
+            {
+                int number = Game.RoomCount / 2 + 1;
+                int cost = 10;
+                if (number * cost > p1.money)
+                {
+                    hppotion = false;
+                    ShopPotions--;
+                }
+            }
+            if (mhppotion)
+            {
+                int number = Game.RoomCount / 5 + 1;
+                int cost = 15;
+                if (number * cost > p1.money)
+                {
+                    mhppotion = false;
+                    ShopPotions--;
+                }
+
+            }
+            if (pppotion)
+            {
+                int number = Game.RoomCount / 4 + 1;
+                int cost = 15;
+                if (number * cost > p1.money)
+                {
+                    pppotion = false;
+                    ShopPotions--;
+                }
+
+            }
+            if (smallarmor)
+            {
+                int cost = 30;
+                if (cost > p1.money)
+                {
+                    smallarmor = false;
+                    ShopArmor--;
+                }
+            }
+            if (mediumarmor)
+            {
+                int cost = 100;
+                if (cost > p1.money)
+                {
+                    mediumarmor = false;
+                    ShopArmor--;
+                }
+            }
+            if (bigarmor)
+            {
+                int cost = 300;
+                if (cost > p1.money)
+                {
+                    bigarmor = false;
+                    ShopArmor--;
+                }
+            }
+            if (dague)
+            {
+                int cost = 30;
+                if (cost > p1.money)
+                {
+                    dague = false;
+                    ShopWeapon--;
+                }
+            }
+            if (sword)
+            {
+                int cost = 100;
+                if (cost > p1.money)
+                {
+                    sword = false;
+                    ShopWeapon--;
+                }
+            }
+            if (magicwand)
+            {
+                int cost = 120;
+                if (cost > p1.money)
+                {
+                    magicwand = false;
+                    ShopWeapon--;
+                }
+            }
+            if (magicsword)
+            {
+                int cost = 250;
+                if (cost > p1.money)
+                {
+                    magicsword = false;
+                    ShopWeapon--;
+                }
+            }
+            if (lépéecalice)
+            {
+                int cost = 400;
+                if (cost > p1.money)
+                {
+                    lépéecalice = false;
+                    ShopWeapon--;
+                }
+            }
+            if (leechsword)
+            {
+                int cost = 400;
+                if (cost > p1.money)
+                {
+                    leechsword = false;
+                    ShopWeapon--;
+                }
+            }
+            if (critsword)
+            {
+                int cost = 400;
+                if (cost > p1.money)
+                {
+                    critsword = false;
+                    ShopWeapon--;
+                }
+            }
+
+            refreshArray();
+            TriObject();
+        }
 
         public static int CheckRep2 (string rep)
         {
@@ -678,14 +975,14 @@ namespace JeuWithGuigui3
                 Console.WriteLine("Enter a number.");
                 return 0;
             }
-            if (IntRep > intobject.Max())
-            {
-                Console.WriteLine("I don't have as much article.");
-                return 0;
-            }
-            else if (IntRep < 0)
+            if (IntRep < 0)
             {
                 Console.WriteLine("Negativ number... Are you kidding ?");
+                return 0;
+            }
+            else if (!intobject.Contains(IntRep))
+            {
+                Console.WriteLine("I don't have as much article.");
                 return 0;
             }
             else
@@ -695,8 +992,109 @@ namespace JeuWithGuigui3
 
         }
 
+        public static void BuyObject(int indexx, Player p1)
+        {
+            boolobject[indexx] = false;
+            refreshBool();
+
+            if (indexx == 0)
+            {
+                int number = Game.RoomCount / 2 + 1;
+                int cost = 10;
+                p1.money -= number * cost;
+                Potion.GetPotions(number, p1);
+                ShopPotions--;
+            }
+            if (indexx == 1)
+            {
+                int number = Game.RoomCount / 5 + 1;
+                int cost = 15;
+                p1.money -= number * cost;
+                Potion.GetMaxHPPotions(number, p1);
+                ShopPotions--;
+            }
+            if (indexx == 2)
+            {
+                int number = Game.RoomCount / 4 + 1;
+                int cost = 15;
+                p1.money -= number * cost;
+                Potion.GetPuissancePotions(number, p1);
+                ShopPotions--;
+            }
+
+            if (indexx == 3)
+            {
+                int cost = 30;
+                p1.money -= cost;
+                Armor.AddArmor(p1, new SmallArmor());
+                ShopArmor--;
+            }
+            if (indexx == 4)
+            {
+                int cost = 100;
+                p1.money -= cost;
+                Armor.AddArmor(p1, new MediumArmor());
+                ShopArmor--;
+            }
+            if (indexx == 5)
+            {
+                int cost = 300;
+                p1.money -= cost;
+                Armor.AddArmor(p1, new BigArmor());
+                ShopArmor--;
+            }
+            if (indexx == 6)
+            {
+                int cost = 30;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new Dague(), null);
+                ShopWeapon--;
+            }
+            if (indexx == 7)
+            {
+                int cost = 100;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new Sword(), null);
+                ShopWeapon--;
+            }
+            if (indexx == 8)
+            {
+                int cost = 120;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new MagicWand(), null);
+                ShopWeapon--;
+            }
+            if (indexx == 9)
+            {
+                int cost = 250;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new MagicSword(), null);
+                ShopWeapon--;
+            }
+            if (indexx == 10)
+            {
+                int cost = 400;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new Lépéecalice(), null);
+                ShopWeapon--;
+            }
+            if (indexx == 11)
+            {
+                int cost = 400;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new LeechSword(), null);
+                ShopWeapon--;
+            }
+            if (indexx == 12)
+            {
+                int cost = 400;
+                p1.money -= cost;
+                Weapon.AddWeapon(p1, new CritSword(), null);
+                ShopWeapon--;
+            }
 
 
+        }
 
 
 
