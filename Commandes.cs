@@ -10,9 +10,9 @@ namespace JeuWithGuigui3
     class Commandes
     {
         /// <summary>
-        /// Commande normal fight/autre
+        /// Commande normal fight/autre ligne 18*
         /// 
-        /// --> commande du marchand lignes 280*
+        /// --> commande du marchand lignes 310*
         /// </summary>
 
         public static string Commande(Player p1, Monster m1)
@@ -81,6 +81,12 @@ namespace JeuWithGuigui3
                     }
 
                 }
+                
+                //Use stones
+                else if ( PlayerCommande == "us" && !p1.InFight && p1.EnchantStone > 0 && (p1.weapon1 != null || p1.weapon2 != null))
+                {
+                    bool usedStone = PlayerObjects.UseBlancEnchantStone(p1);
+                }
 
                 //Enter room
                 else if (PlayerCommande == "er" && !p1.InFight)
@@ -139,6 +145,7 @@ namespace JeuWithGuigui3
                     Potion.GetMaxHPPotions(20, p1);
                     Potion.GetPotions(20, p1);
                     Potion.GetPuissancePotions(20, p1);
+                    p1.EnchantStone += 10000;
                     p1.money = 100000;
                 }
                 else if (PlayerCommande == "crit")
@@ -152,6 +159,9 @@ namespace JeuWithGuigui3
                     p1.BaseHP += 100;
                     p1.HP += 100;
                 }
+                else if (PlayerCommande == "q" && p1.InFight)
+                { m1.Vie = 0; return ""; }
+                //else if(PlayerCommande == )
 
 
                 //Autre
@@ -204,6 +214,10 @@ namespace JeuWithGuigui3
             if (true)
             {
                 Console.Write(" - use potions: up");
+            }
+            if (!p1.InFight && p1.EnchantStone > 0 && (p1.weapon1 != null || p1.weapon2 != null))
+            {
+                Console.Write(" - use stones: us");
             }
             if (true)
             {
@@ -300,6 +314,7 @@ namespace JeuWithGuigui3
         public static int ShopPotions = 0;
         public static int ShopArmor = 0;
         public static int ShopWeapon = 0;
+        public static int ShopSpecial = 0;
 
         //Object dans le shop on non
         //potions 0-2
@@ -318,12 +333,16 @@ namespace JeuWithGuigui3
         public static bool lépéecalice= false; 
         public static bool leechsword = false;
         public static bool critsword = false;
+        //Spécial
+        public static bool pierredanchentement = false;
+        public static bool pierredanchentement2 = false;
 
-        //Special 
+        //Très Special 
         public static bool legendarysword = false;
 
+
         //Arrays
-        public static bool[] boolobject = { hppotion, mhppotion, pppotion, smallarmor, mediumarmor, bigarmor, dague, sword, magicwand, magicsword, lépéecalice, leechsword, critsword };
+        public static bool[] boolobject = { hppotion, mhppotion, pppotion, smallarmor, mediumarmor, bigarmor, dague, sword, magicwand, magicsword, lépéecalice, leechsword, critsword, pierredanchentement, pierredanchentement2 };
         public static int[] intobject = new int[boolobject.Count()];
         #endregion
 
@@ -582,6 +601,18 @@ namespace JeuWithGuigui3
                 }
             }
 
+            //Special
+            if (x <= 11)
+            {
+                pierredanchentement = true;
+                ShopSpecial++;
+            }
+            else if (x <= 31)
+            {
+                pierredanchentement2 = true;
+                ShopSpecial++;
+            }
+
         }
 
         public static void ProposeObjects (Player p1)
@@ -782,12 +813,47 @@ namespace JeuWithGuigui3
             Console.WriteLine();
             //Console.WriteLine("ShopWeapon: {0}.", ShopWeapon);
 
+            //Special
+            if(ShopSpecial > 0)
+            {
+                Console.WriteLine("Spécial:");
+            }
+            if (pierredanchentement)
+            {
+                int cost = 200;
+                int number = Game.RoomCount / 10 + 1;
+                if (cost > p1.money)
+                {
+                    pierredanchentement = false;
+                    ShopSpecial--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: {1} enchantment stone: {2} gold ({3} gold/unit) (One stone give + 15 damages to a weapon.)", intobject[13], number, cost*number, cost);
+                }
+            }
+            if(pierredanchentement2)
+            {
+                int cost = 200;
+                int number = Game.RoomCount / 10 + 1;
+                if (cost > p1.money)
+                {
+                    pierredanchentement = false;
+                    ShopSpecial--;
+                }
+                else
+                {
+                    Console.WriteLine("Article {0}: {1} enchantment stone blue: {2} gold ({3} gold/unit) (One stone give + 30 damages to a weapon.)", intobject[14], number, cost * number, cost);
+                }
+            }
+            Console.WriteLine();
+
         }
 
         public static void TriObject()
         {
             int x = 0;
-            //Console.Write("Array: ");
+            Console.Write("Array: ");
             for (int i = 0; i < boolobject.Count(); i++)
             {
                 if (boolobject[i])
@@ -795,9 +861,9 @@ namespace JeuWithGuigui3
                     x++;
                 }
                 intobject[i] = x;
-                //Console.Write(x + " ");
+                Console.Write(x + " ");
             }
-            //Console.WriteLine();
+            Console.WriteLine();
         }
 
         public static void refreshArray()
@@ -815,6 +881,8 @@ namespace JeuWithGuigui3
             boolobject[10] = magicsword;
             boolobject[11] = leechsword;
             boolobject[12] = critsword;
+            boolobject[13] = pierredanchentement;
+            boolobject[14] = pierredanchentement2;
         }
 
         public static void refreshBool()
@@ -832,6 +900,8 @@ namespace JeuWithGuigui3
             magicsword = boolobject[10] ;
             leechsword = boolobject[11] ;
             critsword = boolobject[12] ;
+            pierredanchentement = boolobject[13];
+            pierredanchentement2 = boolobject[14];
         }
 
         public static void refreshPrice (Player p1)
@@ -958,7 +1028,24 @@ namespace JeuWithGuigui3
                     ShopWeapon--;
                 }
             }
-
+            if (pierredanchentement)
+            {
+                int cost = 200;
+                if (cost > p1.money)
+                {
+                    pierredanchentement = false;
+                    ShopSpecial--;
+                }
+            }
+            if (pierredanchentement2)
+            {
+                int cost = 400;
+                if (cost > p1.money)
+                {
+                    pierredanchentement2 = false;
+                    ShopSpecial--;
+                }
+            }
             refreshArray();
             TriObject();
         }
@@ -1043,6 +1130,7 @@ namespace JeuWithGuigui3
                 Armor.AddArmor(p1, new BigArmor());
                 ShopArmor--;
             }
+
             if (indexx == 6)
             {
                 int cost = 30;
@@ -1093,7 +1181,22 @@ namespace JeuWithGuigui3
                 ShopWeapon--;
             }
 
-
+            if (indexx == 13)
+            {
+                int cost = 200;
+                int number = Game.RoomCount / 10; 
+                p1.money -= cost*number;
+                p1.EnchantStone += number;
+                ShopSpecial--;
+            }
+            if (indexx == 14)
+            {
+                int cost = 400;
+                int number = Game.RoomCount / 10;
+                p1.money -= cost * number;
+                p1.EnchantStone2 += number;
+                ShopSpecial--;
+            }
         }
 
 
