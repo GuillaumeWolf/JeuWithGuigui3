@@ -5,19 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace JeuWithGuigui3
 
-/*
-à faire: 
 
-    Obligatoirement :
-
-
-    Nouveau (idée):
-        - room pour acheter des armes(Guillaume -> confirmation de lidée par leander ??) 
-
-
-
-
-*/
 {
     class Game
     {

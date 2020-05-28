@@ -174,8 +174,6 @@ namespace JeuWithGuigui3
 
 
 
-
-
         public static void WritePoss(Player p1)
         {
             Console.Write("(");
